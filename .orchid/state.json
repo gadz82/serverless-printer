@@ -110,12 +110,14 @@
     },
     "P-010": {
       "id": "P-010",
-      "status": "running",
+      "status": "done",
       "step": "implement",
       "attempt": 1,
       "runId": "01a1c14e-52ce-7942-b882-b12853e7069b",
       "startedAt": "2026-11-09T17:14:58Z",
-      "updatedAt": "2026-11-09T17:14:58Z"
+      "updatedAt": "2026-11-09T18:37:02Z",
+      "note": "Two independent reviews approve after precedence, TF_VARS, smoke and preflight fixes; build and script checks pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-010/report.md"
     }
   },
   "runs": {
@@ -389,7 +391,7 @@
       "phase": "build",
       "attempt": 1,
       "step": "implement",
-      "status": "running",
+      "status": "completed",
       "startedAt": "2026-11-09T17:14:58Z",
       "routing": {
         "phase": "build",
@@ -412,12 +414,14 @@
         "message": "No agent/model is assigned to effort \"high\". Set models.efforts.high.agent and/or .model in orchid-sdd.yml.",
         "expectedText": "",
         "currentText": "agent=opencode model=unknown"
-      }
+      },
+      "completedAt": "2026-11-09T18:37:02Z",
+      "note": "Two independent reviews approve after precedence, TF_VARS, smoke and preflight fixes; build and script checks pass; worktree and branch removed"
     }
   },
-  "currentPrompt": "P-010",
-  "currentRun": "01a1c14e-52ce-7942-b882-b12853e7069b",
+  "currentPrompt": null,
+  "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c14e-52cf-7cd2-ac95-dfacb6c0aed6",
+  "lastEvent": "01a1c199-786b-7c9f-afa7-96f7ef622b8a",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }
