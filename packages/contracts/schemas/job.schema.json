@@ -1,0 +1,339 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://printer.dev/contracts/1.0.0/job.schema.json",
+  "title": "PrintJob",
+  "description": "A single print job submitted to the Printer jobs queue.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["templateId", "refId", "webhooks"],
+  "properties": {
+    "templateId": {
+      "description": "Template UUID, the reserved _smoke slug, or a public template slug.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^_smoke$"
+        },
+        {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{2,63}$"
+        },
+        {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        }
+      ]
+    },
+    "refId": {
+      "description": "Opaque caller reference echoed unchanged in the result.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      ]
+    },
+    "options": {
+      "$ref": "#/$defs/jobOptions"
+    },
+    "webhooks": {
+      "$ref": "#/$defs/jobWebhooks"
+    },
+    "payload": {
+      "description": "Handlebars context used to render the template.",
+      "type": "object",
+      "additionalProperties": {}
+    }
+  },
+  "$defs": {
+    "jobOptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pdfA": {
+          "description": "false for a standard PDF, or one of the eight supported PDF/A levels.",
+          "enum": [
+            false,
+            "PDF/A-1b",
+            "PDF/A-1a",
+            "PDF/A-2b",
+            "PDF/A-2u",
+            "PDF/A-2a",
+            "PDF/A-3b",
+            "PDF/A-3u",
+            "PDF/A-3a"
+          ]
+        }
+      }
+    },
+    "jobWebhooks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["success"],
+      "properties": {
+        "success": {
+          "$ref": "#/$defs/jobSuccessWebhook"
+        },
+        "failure": {
+          "$ref": "#/$defs/jobFailureWebhook"
+        }
+      }
+    },
+    "jobSuccessWebhook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "value"],
+      "properties": {
+        "pingUrl": {
+          "description": "Optional HTTPS URL that receives a ping after delivery. null disables the ping.",
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "channel": {
+          "enum": ["http", "lambda", "sqs", "eventBridge", "s3"]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "http"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "lambda"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^arn:aws[a-z-]*:lambda:[a-z0-9-]+:[0-9]{12}:function:[A-Za-z0-9-_]+(?::[A-Za-z0-9-_$]+)?$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "sqs"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^arn:aws[a-z-]*:sqs:[a-z0-9-]+:[0-9]{12}:[A-Za-z0-9_-]+(?:\\.fifo)?$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "eventBridge"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^arn:aws[a-z-]*:events:[a-z0-9-]+:[0-9]{12}:event-bus/[A-Za-z0-9._/-]+$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "s3"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?/[^\\s?#]*\\?(?=[^\\s]*X-Amz-Signature=)[^\\s]+$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "jobFailureWebhook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "value"],
+      "properties": {
+        "pingUrl": {
+          "description": "Optional HTTPS URL that receives a ping after delivery. null disables the ping.",
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "channel": {
+          "enum": ["http", "lambda", "sqs", "eventBridge"]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "http"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "lambda"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^arn:aws[a-z-]*:lambda:[a-z0-9-]+:[0-9]{12}:function:[A-Za-z0-9-_]+(?::[A-Za-z0-9-_$]+)?$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "sqs"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^arn:aws[a-z-]*:sqs:[a-z0-9-]+:[0-9]{12}:[A-Za-z0-9_-]+(?:\\.fifo)?$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "const": "eventBridge"
+              }
+            },
+            "required": ["channel"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^arn:aws[a-z-]*:events:[a-z0-9-]+:[0-9]{12}:event-bus/[A-Za-z0-9._/-]+$"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
