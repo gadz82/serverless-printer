@@ -172,6 +172,18 @@ importers:
         specifier: 'catalog:'
         version: 3.2.7(@types/node@24.19.2)(jiti@2.7.0)(tsx@4.23.15)
 
+  packages/domain:
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.7(@types/node@24.19.2)(jiti@2.7.0)(tsx@4.23.15)
+
 packages:
 
   '@actions/core@3.0.1':

@@ -41,6 +41,15 @@
       "updatedAt": "2026-11-09T12:29:42Z",
       "note": "Independent review LGTM; 174 contract tests pass; lockfile regenerated on main; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-002/report.md"
+    },
+    "P-003": {
+      "id": "P-003",
+      "status": "running",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c049-42ec-78cd-96e3-d1478708220e",
+      "startedAt": "2026-11-09T12:29:49Z",
+      "updatedAt": "2026-11-09T12:29:49Z"
     }
   },
   "runs": {
@@ -109,11 +118,42 @@
       },
       "completedAt": "2026-11-09T12:29:42Z",
       "note": "Independent review LGTM; 174 contract tests pass; lockfile regenerated on main; worktree and branch removed"
+    },
+    "01a1c049-42ec-78cd-96e3-d1478708220e": {
+      "id": "01a1c049-42ec-78cd-96e3-d1478708220e",
+      "prompt": "P-003",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "running",
+      "startedAt": "2026-11-09T12:29:49Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-003",
+        "effort": "medium",
+        "requestedEffort": "medium",
+        "source": "P-003.effort",
+        "requestedSource": "P-003.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      }
     }
   },
-  "currentPrompt": null,
-  "currentRun": null,
+  "currentPrompt": "P-003",
+  "currentRun": "01a1c049-42ec-78cd-96e3-d1478708220e",
   "lastHandoff": null,
-  "lastEvent": "01a1c049-297a-7281-9a59-19434f5b890a",
+  "lastEvent": "01a1c049-42ee-7a6d-ac07-92055c8732c3",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }
