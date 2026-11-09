@@ -85,6 +85,15 @@
       "updatedAt": "2026-11-09T15:47:19Z",
       "note": "Two independent reviews accept; review fixes applied; 74 worker tests pass; lockfile refreshed on main; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-005/report.md"
+    },
+    "P-008": {
+      "id": "P-008",
+      "status": "running",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c0fe-40b6-77b5-a841-6abd67679f54",
+      "startedAt": "2026-11-09T15:47:30Z",
+      "updatedAt": "2026-11-09T15:47:30Z"
     }
   },
   "runs": {
@@ -285,11 +294,42 @@
       },
       "completedAt": "2026-11-09T15:47:19Z",
       "note": "Two independent reviews accept; review fixes applied; 74 worker tests pass; lockfile refreshed on main; worktree and branch removed"
+    },
+    "01a1c0fe-40b6-77b5-a841-6abd67679f54": {
+      "id": "01a1c0fe-40b6-77b5-a841-6abd67679f54",
+      "prompt": "P-008",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "running",
+      "startedAt": "2026-11-09T15:47:30Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-008",
+        "effort": "high",
+        "requestedEffort": "high",
+        "source": "P-008.effort",
+        "requestedSource": "P-008.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"high\". Set models.efforts.high.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      }
     }
   },
-  "currentPrompt": null,
-  "currentRun": null,
+  "currentPrompt": "P-008",
+  "currentRun": "01a1c0fe-40b6-77b5-a841-6abd67679f54",
   "lastHandoff": null,
-  "lastEvent": "01a1c0fe-135f-7cfb-b7ed-2f21368de90f",
+  "lastEvent": "01a1c0fe-40b8-7d9a-b176-81bacbeab42e",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }

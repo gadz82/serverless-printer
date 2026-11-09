@@ -216,7 +216,7 @@ data "aws_iam_policy_document" "deploy_permissions" {
     ]
 
     resources = [
-      "arn:${local.partition}:sqs:${var.region}:${local.account_id}:${var.name_prefix}-jobs*",
+      "arn:${local.partition}:sqs:${var.region}:${local.account_id}:${var.name_prefix}-jobs",
     ]
   }
 

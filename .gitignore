@@ -22,6 +22,8 @@ templates.manifest.json
 .terraform/
 *.tfstate
 *.tfstate.*
+infra/terraform.tfvars
+*.tfplan
 
 # macOS metadata
 .DS_Store
