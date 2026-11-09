@@ -88,12 +88,14 @@
     },
     "P-008": {
       "id": "P-008",
-      "status": "running",
+      "status": "done",
       "step": "implement",
       "attempt": 1,
       "runId": "01a1c0fe-40b6-77b5-a841-6abd67679f54",
       "startedAt": "2026-11-09T15:47:30Z",
-      "updatedAt": "2026-11-09T15:47:30Z"
+      "updatedAt": "2026-11-09T16:39:29Z",
+      "note": "Two independent reviews LGTM after queue-policy and validation fixes; Terraform fmt/init/validate/tflint pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-008/report.md"
     }
   },
   "runs": {
@@ -301,7 +303,7 @@
       "phase": "build",
       "attempt": 1,
       "step": "implement",
-      "status": "running",
+      "status": "completed",
       "startedAt": "2026-11-09T15:47:30Z",
       "routing": {
         "phase": "build",
@@ -324,12 +326,14 @@
         "message": "No agent/model is assigned to effort \"high\". Set models.efforts.high.agent and/or .model in orchid-sdd.yml.",
         "expectedText": "",
         "currentText": "agent=opencode model=unknown"
-      }
+      },
+      "completedAt": "2026-11-09T16:39:29Z",
+      "note": "Two independent reviews LGTM after queue-policy and validation fixes; Terraform fmt/init/validate/tflint pass; worktree and branch removed"
     }
   },
-  "currentPrompt": "P-008",
-  "currentRun": "01a1c0fe-40b6-77b5-a841-6abd67679f54",
+  "currentPrompt": null,
+  "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c0fe-40b8-7d9a-b176-81bacbeab42e",
+  "lastEvent": "01a1c12d-d998-7f66-9f38-01d5e5c35548",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }
