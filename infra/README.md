@@ -85,6 +85,38 @@ If the first apply fails with `AccessDenied` while creating or tagging the KMS k
 five minutes and retry. The bootstrap deploy role scopes KMS administration with
 `aws:ResourceTag/Project`, and KMS tag authorization is eventually consistent.
 
+## Release workflow configuration
+
+A GitHub-hosted checkout cannot see the gitignored `infra/terraform.tfvars`. Set the repository
+variable `TF_VARS` to the full non-secret contents of `terraform.tfvars` (at minimum `name_prefix`,
+sender/callback settings, alarms, tags and any non-default network settings). The release workflow
+materializes it into `infra/terraform.tfvars` and fails closed when it is absent or empty.
+
+Workflow-owned values override the file: `release`, `artifacts_bucket`, `region` and
+`deploy_role_arn` are passed as `-var` after `-var-file`, so the deploy always targets the
+computed release and the role actually assumed through OIDC.
+
+Required repository variables:
+
+| Variable              | Purpose                                                     |
+| --------------------- | ----------------------------------------------------------- |
+| `TF_VARS`             | Non-secret operator values from `terraform.tfvars.example`  |
+| `AWS_DEPLOY_ROLE_ARN` | Bootstrap deploy role assumed through GitHub OIDC           |
+| `AWS_REGION`          | Deployment region, also used by the state backend and smoke |
+| `TF_STATE_BUCKET`     | Bootstrap state bucket                                      |
+| `ARTIFACTS_BUCKET`    | Bootstrap artifacts bucket                                  |
+| `TF_STATE_KEY`        | Optional state key; defaults to `printer/terraform.tfstate` |
+
+Operational notes:
+
+- Run `workflow_dispatch` from `main`; the OIDC trust accepts only `refs/heads/main`.
+- Branch protection/rulesets must allow the GitHub Actions token or a GitHub App to push the
+  semantic-release `CHANGELOG.md` commit. Otherwise semantic-release fails before deploy.
+- A rollback dispatch applies an existing release and skips build/upload; the artifact must already
+  exist in the artifacts bucket.
+- `pnpm smoke:test` requires `RELEASE` plus `AWS_REGION`, `JOBS_QUEUE_URL`,
+  `SMOKE_QUEUE_URL` and `SMOKE_QUEUE_ARN`.
+
 ## Outputs
 
 ```sh

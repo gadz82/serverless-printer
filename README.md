@@ -143,7 +143,9 @@ The release path is authoritative:
 1. CI validates lint, formatting, types, unit, contract, LocalStack integration and Terraform.
 2. A push to `main` lets semantic-release compute a SemVer tag (or a `sha-<short>` release),
    builds the worker zip, uploads it to the artifacts bucket and applies Terraform through
-   GitHub OIDC. There are no static AWS keys.
+   GitHub OIDC. There are no static AWS keys. The workflow requires the repository variables
+   documented in [`infra/README.md`](infra/README.md#release-workflow-configuration), including
+   `TF_VARS` for the non-secret operator configuration.
 3. The release workflow sends a `_smoke` job to the deployed queue and waits for the SQS
    callback. A successful smoke proves the deployed queue, worker, S3 storage and callback path.
 

@@ -1,4 +1,6 @@
 # Copy this file to infra/terraform.tfvars and replace the example values.
+# Keep it out of commits. In CI, the release workflow materializes the same
+# content from the non-secret TF_VARS repository variable.
 # The release workflow supplies release and artifacts_bucket with -var, so the
 # values here only affect manual applies and plans.
 
