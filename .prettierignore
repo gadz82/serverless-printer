@@ -1,0 +1,17 @@
+# Generated and local-only output
+node_modules/
+dist/
+coverage/
+.local/
+.terraform/
+templates.manifest.json
+.release-version
+pnpm-lock.yaml
+
+# Harness-managed inputs and knowledge artifacts
+.knowledge/
+.orchid/
+.opencode/
+AGENTS.md
+SPEC.md
+orchid-sdd.yml

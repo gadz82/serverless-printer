@@ -6,3 +6,22 @@
 .orchid/worktrees/
 .orchid-migration-bck/
 # orchid-sdd:end
+
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+
+# Local development and generated artifacts
+.local/
+templates.manifest.json
+.release-version
+.husky/_/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# macOS metadata
+.DS_Store

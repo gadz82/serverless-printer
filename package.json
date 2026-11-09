@@ -1,0 +1,51 @@
+{
+  "name": "printer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "vitest run --passWithNoTests --exclude 'tests/integration/**'",
+    "test:contract": "pnpm --filter @printer/contracts test",
+    "test:integration": "vitest run tests/integration --passWithNoTests",
+    "template:manifest": "node scripts/template-manifest.mjs",
+    "build:worker": "node scripts/build-worker.mjs",
+    "local:setup": "node scripts/local-setup.mjs",
+    "worker:local": "node scripts/local-worker.mjs",
+    "sink:local": "node scripts/local-callback-sink.mjs",
+    "smoke:local": "node scripts/smoke-local.mjs",
+    "smoke:test": "node scripts/smoke-test.mjs",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "catalog:",
+    "@commitlint/config-conventional": "catalog:",
+    "@eslint/js": "catalog:",
+    "@semantic-release/changelog": "catalog:",
+    "@semantic-release/commit-analyzer": "catalog:",
+    "@semantic-release/exec": "catalog:",
+    "@semantic-release/git": "catalog:",
+    "@semantic-release/github": "catalog:",
+    "@semantic-release/release-notes-generator": "catalog:",
+    "@types/aws-lambda": "catalog:",
+    "@types/node": "catalog:",
+    "esbuild": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "globals": "catalog:",
+    "husky": "catalog:",
+    "json-schema-to-typescript": "catalog:",
+    "prettier": "catalog:",
+    "semantic-release": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
+  }
+}
