@@ -1,0 +1,36 @@
+{
+  "name": "@printer/render-worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lambda worker that turns SQS print jobs into stored PDFs and SQS results.",
+  "main": "./src/handler.ts",
+  "types": "./src/handler.ts",
+  "exports": {
+    ".": {
+      "types": "./src/handler.ts",
+      "import": "./src/handler.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "catalog:",
+    "@aws-sdk/client-sqs": "catalog:",
+    "@aws-sdk/s3-request-presigner": "catalog:",
+    "@printer/contracts": "workspace:*",
+    "@printer/domain": "workspace:*",
+    "uuid": "catalog:"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

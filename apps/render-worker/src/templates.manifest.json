@@ -1,0 +1,15 @@
+{
+  "release": "local",
+  "templates": [
+    {
+      "id": "72803074-1601-4a08-a5a5-49db9feacd66",
+      "slug": "_smoke",
+      "name": "Smoke test",
+      "path": "templates/_smoke",
+      "contentHash": "0471e548d4a26d54937f991e68b03756f5651215865176bbba3cf996db7ede51",
+      "placeholders": {
+        "message": "string"
+      }
+    }
+  ]
+}

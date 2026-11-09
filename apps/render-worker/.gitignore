@@ -1,0 +1,4 @@
+# The root ignore pattern covers generated manifests everywhere. This copy is
+# committed deliberately as the worker's default bundle until a release build
+# replaces it with the generated manifest.
+!src/templates.manifest.json
