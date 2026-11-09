@@ -30,6 +30,15 @@
       "updatedAt": "2026-11-09T11:56:13Z",
       "note": "Independent review LGTM; all acceptance commands pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-001/report.md"
+    },
+    "P-002": {
+      "id": "P-002",
+      "status": "running",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c02a-dfd8-73a0-8585-857358c467cc",
+      "startedAt": "2026-11-09T11:56:37Z",
+      "updatedAt": "2026-11-09T11:56:37Z"
     }
   },
   "runs": {
@@ -65,11 +74,42 @@
       },
       "completedAt": "2026-11-09T11:56:13Z",
       "note": "Independent review LGTM; all acceptance commands pass; worktree and branch removed"
+    },
+    "01a1c02a-dfd8-73a0-8585-857358c467cc": {
+      "id": "01a1c02a-dfd8-73a0-8585-857358c467cc",
+      "prompt": "P-002",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "running",
+      "startedAt": "2026-11-09T11:56:37Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-002",
+        "effort": "medium",
+        "requestedEffort": "medium",
+        "source": "P-002.effort",
+        "requestedSource": "P-002.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      }
     }
   },
-  "currentPrompt": null,
-  "currentRun": null,
+  "currentPrompt": "P-002",
+  "currentRun": "01a1c02a-dfd8-73a0-8585-857358c467cc",
   "lastHandoff": null,
-  "lastEvent": "01a1c02a-8200-7ced-90ce-08d29e39681a",
+  "lastEvent": "01a1c02a-dfd9-7f22-aa16-7e96e395e793",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }

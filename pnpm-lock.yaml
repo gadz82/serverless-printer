@@ -39,6 +39,9 @@ catalogs:
     '@types/node':
       specifier: ^24.19.2
       version: 24.19.2
+    ajv:
+      specifier: ^8.20.0
+      version: 8.20.0
     esbuild:
       specifier: ^0.28.2
       version: 0.28.2
@@ -146,6 +149,25 @@ importers:
       typescript-eslint:
         specifier: 'catalog:'
         version: 8.72.1(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.7(@types/node@24.19.2)(jiti@2.7.0)(tsx@4.23.15)
+
+  packages/contracts:
+    dependencies:
+      ajv:
+        specifier: 'catalog:'
+        version: 8.20.0
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
+      json-schema-to-typescript:
+        specifier: 'catalog:'
+        version: 16.0.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
       vitest:
         specifier: 'catalog:'
         version: 3.2.7(@types/node@24.19.2)(jiti@2.7.0)(tsx@4.23.15)
