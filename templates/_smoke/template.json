@@ -1,0 +1,6 @@
+{
+  "id": "72803074-1601-4a08-a5a5-49db9feacd66",
+  "slug": "_smoke",
+  "name": "Smoke test",
+  "description": "Minimal template used by post-deploy smoke tests."
+}
