@@ -58,10 +58,12 @@ export default tseslint.config(
             { name: "http", message: boundaryMessage },
             { name: "https", message: boundaryMessage },
             { name: "@printer/render-worker", message: boundaryMessage },
+            { name: "@printer/contracts", message: boundaryMessage },
           ],
           patterns: [
             { group: ["@aws-sdk/*"], message: boundaryMessage },
             { group: ["@printer/render-worker/*"], message: boundaryMessage },
+            { group: ["@printer/contracts/*"], message: boundaryMessage },
           ],
         },
       ],
@@ -69,7 +71,7 @@ export default tseslint.config(
         "error",
         {
           selector:
-            "ImportExpression > Literal[value=/^(@aws-sdk\\/|aws-lambda$|node:fs$|node:fs\\/promises$|node:http$|node:https$|@printer\\/render-worker)/]",
+            "ImportExpression > Literal[value=/^(@aws-sdk\\/|aws-lambda$|node:fs$|node:fs\\/promises$|node:http$|node:https$|@printer\\/render-worker|@printer\\/contracts)/]",
           message: boundaryMessage,
         },
       ],

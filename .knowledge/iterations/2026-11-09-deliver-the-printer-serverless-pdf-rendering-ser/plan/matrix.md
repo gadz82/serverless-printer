@@ -29,8 +29,13 @@ P-001 → P-002 → P-005 → P-006 → P-009, with P-007 → P-008 → P-010 as
 
 ## Notes
 
-- P-001 owns all shared files (`package.json`, `pnpm-workspace.yaml`, lockfile, lint/format
-  config). Later prompts must not edit them.
+- P-001 owns the catalog and the initial lockfile. Prompts declare `catalog:` references and must
+  not edit `pnpm-lock.yaml` by hand; the orchestrator regenerates the lockfile on `main` after
+  each wave so `pnpm install --frozen-lockfile` stays valid.
 - No prompt adds a dependency outside the P-001 catalog.
 - No cross-repo dependency rows are required; single repository.
 - Acceptance commands are executable in the repository root unless stated otherwise.
+- P-009 plans with `-lock=false` because the read-only plan role cannot write the S3 native lock
+  file.
+- P-008 must tag the KMS key `Project = name_prefix` and follow the queue/bucket/role naming
+  contract expected by the bootstrap deploy policy.

@@ -74,6 +74,15 @@
       "updatedAt": "2026-11-09T14:33:07Z",
       "note": "Final review LGTM after IAM fixes; Terraform fmt/init/validate/tflint pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-007/report.md"
+    },
+    "P-005": {
+      "id": "P-005",
+      "status": "running",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c0ba-5fd7-7c92-a78e-eca8fa6027d8",
+      "startedAt": "2026-11-09T14:33:22Z",
+      "updatedAt": "2026-11-09T14:33:22Z"
     }
   },
   "runs": {
@@ -241,11 +250,42 @@
       },
       "completedAt": "2026-11-09T14:33:07Z",
       "note": "Final review LGTM after IAM fixes; Terraform fmt/init/validate/tflint pass; worktree and branch removed"
+    },
+    "01a1c0ba-5fd7-7c92-a78e-eca8fa6027d8": {
+      "id": "01a1c0ba-5fd7-7c92-a78e-eca8fa6027d8",
+      "prompt": "P-005",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "running",
+      "startedAt": "2026-11-09T14:33:22Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-005",
+        "effort": "high",
+        "requestedEffort": "high",
+        "source": "P-005.effort",
+        "requestedSource": "P-005.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"high\". Set models.efforts.high.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      }
     }
   },
-  "currentPrompt": null,
-  "currentRun": null,
+  "currentPrompt": "P-005",
+  "currentRun": "01a1c0ba-5fd7-7c92-a78e-eca8fa6027d8",
   "lastHandoff": null,
-  "lastEvent": "01a1c0ba-2659-7b37-af4e-883a3881af7e",
+  "lastEvent": "01a1c0ba-5fd9-7084-af98-6658e8a361ac",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }
