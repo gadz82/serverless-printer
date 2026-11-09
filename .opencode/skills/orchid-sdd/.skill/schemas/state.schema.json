@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://orchid.dev/spec/schemas/state.json",
+  "title": "orchid-sdd state",
+  "type": "object",
+  "required": ["schemaVersion", "skillVersion", "phase", "gates"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "skillVersion": { "type": "string" },
+    "configHash": { "type": ["string", "null"] },
+    "activeIteration": { "type": ["string", "null"] },
+    "lastIteration": { "type": ["string", "null"] },
+    "iterationTitle": { "type": ["string", "null"] },
+    "iterationRigor": { "enum": ["S", "M", "L", null] },
+    "phase": { "type": "string" },
+    "gates": {
+      "type": "object",
+      "additionalProperties": { "enum": ["pending", "passed", "failed", "in_progress"] }
+    },
+    "locks": { "type": "object" },
+    "prompts": { "type": "object" },
+    "runs": { "type": "object" },
+    "currentPrompt": { "type": ["string", "null"] },
+    "currentRun": { "type": ["string", "null"] },
+    "lastHandoff": { "type": ["string", "null"] },
+    "lastEvent": { "type": ["string", "null"] },
+    "memoryEvent": { "type": ["string", "null"] },
+    "migration": { "type": ["object", "null"] }
+  }
+}

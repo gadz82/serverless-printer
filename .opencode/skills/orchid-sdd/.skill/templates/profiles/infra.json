@@ -1,0 +1,11 @@
+{
+  "id": "infra",
+  "description": "Infrastructure-only repository",
+  "personas": ["PM", "DEV", "QE", "TECH_LEAD", "DEVOPS", "SECURITY", "ARCHITECT"],
+  "tests": {
+    "unit": "make test",
+    "integration": "make integration",
+    "e2e": "make e2e"
+  },
+  "constitution": ["guidelines/observability.md", "guidelines/security.md", "patterns/README.md"]
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://orchid.dev/spec/schemas/manifest.json",
+  "title": "orchid-sdd manifest",
+  "type": "object",
+  "required": ["@context", "@id", "@type", "schemaVersion", "gates", "indexes", "history", "nodes"],
+  "properties": {
+    "@context": { "type": "string" },
+    "@id": { "type": "string" },
+    "@type": { "const": "orchid:Manifest" },
+    "schemaVersion": { "type": "string" },
+    "generatedAt": { "type": "string" },
+    "project": { "type": "object" },
+    "workspace": { "type": "object" },
+    "iteration": { "type": ["object", "null"] },
+    "gates": { "type": "object" },
+    "indexes": { "type": "object" },
+    "history": { "type": "array" },
+    "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": ["@id", "@type", "description", "status", "topics", "provenance"],
+      "properties": {
+        "@id": { "type": "string" },
+        "@type": { "type": "string" },
+        "description": { "type": "string", "maxLength": 160 },
+        "status": { "type": "string" },
+        "topics": { "type": "array", "items": { "type": "string" }, "minItems": 3, "maxItems": 7 },
+        "answers": { "type": "array", "items": { "type": "string" } },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "artifact": { "type": ["string", "null"] },
+        "codeAnchor": { "type": ["string", "null"] },
+        "relations": { "type": "array" },
+        "provenance": { "type": "object" },
+        "hash": { "type": ["string", "null"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "iteration": { "type": ["string", "null"] },
+        "scope": { "enum": ["project", "iteration"] },
+        "repo": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

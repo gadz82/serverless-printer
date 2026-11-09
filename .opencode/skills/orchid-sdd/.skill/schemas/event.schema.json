@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://orchid.dev/spec/schemas/event.json",
+  "title": "orchid-sdd event",
+  "type": "object",
+  "required": ["eventId", "ts", "phase", "actor", "type", "payload"],
+  "additionalProperties": false,
+  "properties": {
+    "eventId": { "type": "string" },
+    "ts": { "type": "string" },
+    "iteration": { "type": ["string", "null"] },
+    "phase": { "type": "string" },
+    "actor": { "type": "string" },
+    "type": { "type": "string" },
+    "subject": { "type": ["string", "null"] },
+    "payload": { "type": "object" },
+    "prev": { "type": ["string", "null"] }
+  }
+}

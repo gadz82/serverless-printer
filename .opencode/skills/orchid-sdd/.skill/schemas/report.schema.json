@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://orchid.dev/spec/schemas/report.json",
+  "title": "orchid-sdd bus message",
+  "type": "object",
+  "required": ["id", "from", "type", "severity"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string" },
+    "from": { "type": "string" },
+    "type": { "enum": ["blocker", "interface-change", "decision-needed", "handoff", "risk", "fyi"] },
+    "severity": { "enum": ["critical", "high", "medium", "low"] },
+    "affects": { "type": "array", "items": { "type": "string" } },
+    "needs": { "type": "string" },
+    "expires": { "type": "string" }
+  }
+}

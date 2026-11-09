@@ -1,0 +1,11 @@
+{
+  "id": "frontend",
+  "description": "Browser or mobile application",
+  "personas": ["PM", "DEV", "QE", "TECH_LEAD", "UX", "ARCHITECT", "SECURITY"],
+  "tests": {
+    "unit": "npm test",
+    "integration": "npm run test:integration",
+    "e2e": "npm run test:e2e"
+  },
+  "constitution": ["guidelines/ux.md", "guidelines/api.md", "testing/e2e.md"]
+}

@@ -1,0 +1,40 @@
+{
+  "@context": "context/orchid-v1.jsonld",
+  "@id": "urn:orchid:manifest:serverless-printer:none",
+  "@type": "orchid:Manifest",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-11-09T11:20:21Z",
+  "project": {
+    "name": "serverless-printer",
+    "profile": "backend"
+  },
+  "iteration": null,
+  "gates": {
+    "G0": "passed",
+    "G1": "pending",
+    "G2": "pending",
+    "G3": "pending",
+    "G4": "pending",
+    "G5": "pending",
+    "G6": "pending",
+    "G7": "pending",
+    "G8": "pending"
+  },
+  "indexes": {
+    "topics": "index/topics.json",
+    "questions": "index/questions.json",
+    "codeAnchors": "index/code-anchors.json",
+    "requirements": "index/requirements.json",
+    "dependencies": "index/dependencies.json",
+    "timeline": "index/timeline.json",
+    "repos": "index/repos.json",
+    "crossRepoDependencies": "index/cross-repo-dependencies.json",
+    "recall": "index/recall.json"
+  },
+  "workspace": {
+    "enabled": false,
+    "repos": []
+  },
+  "history": [],
+  "nodes": []
+}

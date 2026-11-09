@@ -1,0 +1,11 @@
+{
+  "id": "backend",
+  "description": "API or service application",
+  "personas": ["PM", "DEV", "QE", "TECH_LEAD", "DBA", "ARCHITECT", "SECURITY"],
+  "tests": {
+    "unit": "npm test",
+    "integration": "npm run test:integration",
+    "e2e": "npm run test:e2e"
+  },
+  "constitution": ["guidelines/api.md", "guidelines/data.md", "guidelines/errors.md"]
+}

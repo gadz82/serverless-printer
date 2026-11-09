@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://orchid.dev/spec/schemas/config.json",
+  "title": "orchid-sdd.yml",
+  "type": "object",
+  "required": ["version", "project", "knowledge_folder"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "project": {
+      "type": "object",
+      "required": ["name", "profile"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "profile": { "enum": ["backend", "frontend", "infra", "monorepo", "custom"] },
+        "default_branch": { "type": "string" }
+      }
+    },
+    "workspace": {
+      "type": "object",
+      "required": ["enabled", "repos"],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "repos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "path", "profile"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "path": { "type": "string" },
+              "profile": { "enum": ["backend", "frontend", "infra", "monorepo", "custom"] },
+              "enabled": { "type": "boolean" },
+              "git": { "type": "boolean" },
+              "config": { "type": "string" },
+              "test_commands": { "type": "object" },
+              "personas": { "type": "array", "items": { "type": "string" } },
+              "constitution": { "type": "array", "items": { "type": "string" } },
+              "sources": { "type": "array" }
+            }
+          }
+        }
+      }
+    },
+    "knowledge_folder": { "type": "string" },
+    "docblocks_folder": { "type": "string" },
+    "constitution_folder": { "type": "string" },
+    "customizations_folder": { "type": "string" },
+    "knowledge": { "type": "object" },
+    "docblocks": { "type": "object" },
+    "personas": { "type": "object" },
+    "constitution": { "type": "object" },
+    "models": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default_effort": { "enum": ["low", "medium", "high", "extra-high", "ultra"] },
+        "mismatch": { "enum": ["warn", "block"] },
+        "efforts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "low": { "$ref": "#/$defs/effortMapping" },
+            "medium": { "$ref": "#/$defs/effortMapping" },
+            "high": { "$ref": "#/$defs/effortMapping" },
+            "extra-high": { "$ref": "#/$defs/effortMapping" },
+            "ultra": { "$ref": "#/$defs/effortMapping" }
+          }
+        },
+        "phases": {
+          "type": "object",
+          "additionalProperties": { "enum": ["low", "medium", "high", "extra-high", "ultra"] }
+        },
+        "prompts": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              { "enum": ["low", "medium", "high", "extra-high", "ultra"] },
+              {
+                "type": "object",
+                "additionalProperties": { "enum": ["low", "medium", "high", "extra-high", "ultra"] }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "steering": {
+      "type": "object",
+      "required": ["enabled", "search_paths", "phases"],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "array", "items": { "type": "string" } },
+        "search_paths": { "type": "array", "items": { "type": "string" } },
+        "overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "authority": { "enum": ["advisory", "blocking"] },
+              "file": { "type": "string" },
+              "phases": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "phases": {
+          "type": "object",
+          "additionalProperties": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "sources": { "type": "array" },
+    "phases": { "type": "object" },
+    "execution": { "type": "object" },
+    "reviews": { "type": "object" },
+    "budgets": { "type": "object" },
+    "governance": { "type": "object" },
+    "telemetry": { "type": "object" }
+  },
+  "$defs": {
+    "effortMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "agent": { "type": ["string", "null"] },
+        "model": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

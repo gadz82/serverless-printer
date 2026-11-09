@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://orchid.dev/spec/schemas/steering.json",
+  "title": "orchid-sdd steering rule front matter",
+  "type": "object",
+  "required": ["id"],
+  "additionalProperties": true,
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{0,63}$" },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "kind": {
+      "enum": ["architecture", "code_style", "example", "repository", "process", "custom"]
+    },
+    "authority": { "enum": ["advisory", "blocking"] },
+    "phases": {
+      "type": "array",
+      "items": {
+        "enum": ["intent", "discovery", "assessment", "planning", "build", "code_review", "logic_review"]
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "references": { "type": "array", "items": { "type": "string" } },
+    "extends": { "type": "string" },
+    "examples": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "required": ["path"],
+            "properties": {
+              "path": { "type": "string" },
+              "title": { "type": "string" },
+              "language": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "skillVersion": "1.0.0",
+  "configHash": "sha256:2b4bf4cb79f0f4526ef3310a0523aabd0ef2117df918481e6818aafc5dac7632",
+  "activeIteration": null,
+  "lastIteration": null,
+  "iterationTitle": null,
+  "iterationRigor": null,
+  "phase": "setup",
+  "gates": {
+    "G0": "passed",
+    "G1": "pending",
+    "G2": "pending",
+    "G3": "pending",
+    "G4": "pending",
+    "G5": "pending",
+    "G6": "pending",
+    "G7": "pending",
+    "G8": "pending"
+  },
+  "locks": {},
+  "prompts": {},
+  "runs": {},
+  "currentPrompt": null,
+  "currentRun": null,
+  "lastHandoff": null,
+  "lastEvent": null,
+  "memoryEvent": null
+}

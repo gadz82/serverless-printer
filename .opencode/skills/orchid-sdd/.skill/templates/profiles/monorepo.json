@@ -1,0 +1,11 @@
+{
+  "id": "monorepo",
+  "description": "Workspace with backend, frontend, and infrastructure",
+  "personas": ["PM", "DEV", "QE", "TECH_LEAD", "DBA", "DEVOPS", "ARCHITECT", "SECURITY", "UX"],
+  "tests": {
+    "unit": "npm test",
+    "integration": "npm run test:integration",
+    "e2e": "npm run test:e2e"
+  },
+  "constitution": ["guidelines/api.md", "guidelines/data.md", "guidelines/observability.md"]
+}

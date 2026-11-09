@@ -1,0 +1,17 @@
+name: orchid-sdd
+on:
+  push:
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      # Install the CLI from your registry, or use a linked/local package in CI.
+      - run: npm install -g orchid-sdd
+      - run: orchid-sdd doctor --ci
+      - run: orchid-sdd lint --check
+      - run: orchid-sdd index --check

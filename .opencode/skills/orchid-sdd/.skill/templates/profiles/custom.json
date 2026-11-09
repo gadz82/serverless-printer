@@ -1,0 +1,11 @@
+{
+  "id": "custom",
+  "description": "Minimal profile; enable personas as needed",
+  "personas": ["PM", "DEV", "QE"],
+  "tests": {
+    "unit": "npm test",
+    "integration": "npm run test:integration",
+    "e2e": "npm run test:e2e"
+  },
+  "constitution": []
+}

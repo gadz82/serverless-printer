@@ -1,0 +1,8 @@
+# orchid-sdd:begin
+.knowledge/run-log/
+.knowledge/index/recall.json
+.knowledge/iterations/*/execution/runs/
+.knowledge/iterations/*/plan/prompts/_bus/
+.orchid/worktrees/
+.orchid-migration-bck/
+# orchid-sdd:end

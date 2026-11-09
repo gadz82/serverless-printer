@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "orchid": "https://orchid.dev/spec/ns#",
+    "id": "@id",
+    "type": "@type",
+    "description": "orchid:description",
+    "topics": {
+      "@id": "orchid:topic",
+      "@container": "@set"
+    },
+    "answers": {
+      "@id": "orchid:answers",
+      "@container": "@set"
+    },
+    "relations": {
+      "@id": "orchid:relations",
+      "@container": "@set"
+    },
+    "codeAnchor": "orchid:codeAnchor",
+    "aliases": {
+      "@id": "orchid:alias",
+      "@container": "@set"
+    }
+  }
+}

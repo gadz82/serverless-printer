@@ -1,0 +1,127 @@
+version: 1
+
+project:
+  name: "serverless-printer"
+  profile: backend
+  default_branch: main
+
+workspace:
+  enabled: false
+  repos: []
+
+knowledge_folder: ".knowledge"
+docblocks_folder: "docs/knowledge/docblocks"
+constitution_folder: ".orchid/constitution"
+customizations_folder: ".orchid/custom"
+
+knowledge:
+  manifest: manifest.jsonld
+  iteration_naming: "{date}-{slug}"
+  indexing: [topics, questions, code_anchors, requirements, dependencies, timeline, repos]
+  bus_expiry_days: 7
+  commit: true
+
+docblocks:
+  enabled: true
+  layout: uuid
+  granularity: symbol
+  max_behavior_comment_chars: 500
+  anchor_prefix: ORCHID-MEM
+  require_docblock_for_anchor: true
+
+personas:
+  enabled: [PM, DEV, QE, TECH_LEAD, DBA, ARCHITECT, SECURITY, DEVOPS]
+  search_paths:
+    - .orchid/personas
+    - domains/*/personas
+  overrides: {}
+
+constitution:
+  layers: [skill:default, profile, project]
+  require_adr_for_deviation: true
+  lock: true
+
+steering:
+  enabled: [architecture-boundaries, solid-principles, dependency-inversion-container, code-style, code-examples, repository-flow, saga-pattern, discovery-steering, logic-review-steering, architecture-hexagonal, code-style-typescript, repository-trunk-based]
+  search_paths:
+    - ".orchid/steering"
+    - "domains/*/steering"
+  overrides: {}
+  phases:
+    discovery: [architecture-boundaries, solid-principles, dependency-inversion-container, code-style, code-examples, repository-flow, saga-pattern, discovery-steering, architecture-hexagonal, repository-trunk-based]
+    assessment: [architecture-boundaries, solid-principles, dependency-inversion-container, code-style, code-examples, repository-flow, saga-pattern, architecture-hexagonal, code-style-typescript, repository-trunk-based]
+    planning: [architecture-boundaries, solid-principles, dependency-inversion-container, code-examples, repository-flow, saga-pattern, architecture-hexagonal, repository-trunk-based]
+    build: [architecture-boundaries, solid-principles, dependency-inversion-container, code-style, code-examples, repository-flow, saga-pattern, architecture-hexagonal, code-style-typescript, repository-trunk-based]
+    code_review: [architecture-boundaries, solid-principles, dependency-inversion-container, code-style, code-examples, repository-flow, saga-pattern, architecture-hexagonal, code-style-typescript, repository-trunk-based]
+    logic_review: [architecture-boundaries, solid-principles, dependency-inversion-container, code-style, code-examples, repository-flow, saga-pattern, logic-review-steering, architecture-hexagonal, code-style-typescript, repository-trunk-based]
+
+models:
+  default_effort: medium
+  mismatch: warn
+  efforts: {}
+  phases:
+    intent: medium
+    discovery: medium
+    assessment: high
+    planning: high
+    build: high
+    code_review: high
+    logic_review: extra-high
+  prompts: {}
+
+sources: []
+
+phases:
+  discovery:
+    personas: [PM]
+  assessment:
+    personas: [TECH_LEAD, DEV, QE, DBA]
+  logic_review:
+    personas: [PM]
+
+execution:
+  max_parallel: 4
+  isolation: worktree
+  require_clean_tree: true
+  integration_branch: "orchid/{iteration}/integration"
+  release_strategy: squash
+  merge: orchestrator
+  max_fix_loops: 3
+  test_commands:
+    unit: "npm test"
+    integration: "npm run test:integration"
+    e2e: "npm run test:e2e"
+
+reviews:
+  adversarial:
+    enabled: true
+    independent_context: true
+    mode: auto
+    min_reviewers: 1
+    by_rigor: { S: 1, M: 1, L: 2 }
+    block_on: [critical, high]
+    routing:
+      "**/migrations/**": [DBA]
+      "infra/**": [DEVOPS]
+      "src/api/**": [ARCHITECT, SECURITY]
+  logic:
+    against: [prd, trd, gherkin]
+    max_loops: 2
+
+budgets:
+  unit: tokens
+  per_iteration_warn: 250000
+  per_iteration_stop: 600000
+  per_prompt_warn: 40000
+
+governance:
+  approvals: [intent, assessment, plan, logic_review, closure, handover]
+  questionnaires: md
+  max_questions_per_round: 7
+  adr_required_for: [breaking_change, new_dependency, constitution_deviation, data_deletion]
+  title_max_chars: 500
+  rigor: auto
+
+telemetry:
+  run_log: ".knowledge/run-log/"
+  redact: [secrets, tokens, pii]
