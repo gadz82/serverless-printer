@@ -1,0 +1,7 @@
+# Local bootstrap state and plans are never committed.
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+terraform.tfvars
+crash.log

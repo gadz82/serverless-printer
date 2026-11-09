@@ -1,0 +1,20 @@
+name_prefix = "printer"
+region      = "eu-central-1"
+
+github_owner = "your-github-owner"
+github_repo  = "serverless-printer"
+
+# Set to false only when token.actions.githubusercontent.com already exists in
+# the account and this bootstrap should look it up instead of creating it.
+create_oidc_provider = true
+
+# The defaults are <name_prefix>-tfstate and <name_prefix>-artifacts. Override
+# them when the globally unique S3 names are already taken.
+# state_bucket_name     = "printer-tfstate-123456789012"
+# artifacts_bucket_name = "printer-artifacts-123456789012"
+
+tags = {
+  # Keep the Project tag equal to name_prefix: the deploy role's KMS identity
+  # policy uses aws:ResourceTag/Project = name_prefix.
+  Project = "printer"
+}
