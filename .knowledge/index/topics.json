@@ -8,7 +8,11 @@
   "bootstrap": [
     "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906",
     "urn:uuid:01a1c012-479d-75d4-a40f-e48f0e3d5346",
-    "urn:uuid:01a1c012-4a44-71f7-a496-57c3fcdbbd90"
+    "urn:uuid:01a1c012-4a44-71f7-a496-57c3fcdbbd90",
+    "urn:uuid:01a1c014-fe07-7bd8-bafe-f168eb652795"
+  ],
+  "build": [
+    "urn:uuid:01a1c014-fd7e-74cb-85db-b83f9b2d2c68"
   ],
   "callbacks": [
     "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c",
@@ -36,7 +40,11 @@
   "contracts": [
     "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f",
     "urn:uuid:01a1c00e-4726-7a49-9484-4da42d157950",
-    "urn:uuid:01a1c012-4821-743a-a984-ccc042a8da2b"
+    "urn:uuid:01a1c012-4821-743a-a984-ccc042a8da2b",
+    "urn:uuid:01a1c014-fd39-72ce-a0fc-1c4ac28698e1"
+  ],
+  "dependencies": [
+    "urn:uuid:01a1c014-fd7e-74cb-85db-b83f9b2d2c68"
   ],
   "deploy": [
     "urn:uuid:01a1c012-468e-7f26-9009-fe336952cc1c",
@@ -111,7 +119,8 @@
   ],
   "json-schema": [
     "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f",
-    "urn:uuid:01a1c012-4432-781e-b2a9-c2fed8d3633b"
+    "urn:uuid:01a1c012-4432-781e-b2a9-c2fed8d3633b",
+    "urn:uuid:01a1c014-fd39-72ce-a0fc-1c4ac28698e1"
   ],
   "lambda": [
     "urn:uuid:01a1c012-47df-7906-9852-4119705e7a0b"
@@ -130,6 +139,12 @@
   "localstack": [
     "urn:uuid:01a1c00e-4612-778e-99d3-3154ed723717",
     "urn:uuid:01a1c012-4930-7d8f-b340-2234d4347495"
+  ],
+  "locking": [
+    "urn:uuid:01a1c014-fe07-7bd8-bafe-f168eb652795"
+  ],
+  "manifest": [
+    "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8"
   ],
   "merge": [
     "urn:uuid:01a1c012-48ed-712c-952c-f1728869d901"
@@ -151,7 +166,8 @@
     "urn:uuid:01a1c012-4a44-71f7-a496-57c3fcdbbd90"
   ],
   "placeholder": [
-    "urn:uuid:01a1c012-4a87-7536-a69f-89b73ccb7619"
+    "urn:uuid:01a1c012-4a87-7536-a69f-89b73ccb7619",
+    "urn:uuid:01a1c014-fdc2-71b4-bdaf-3e9677dd309c"
   ],
   "presign": [
     "urn:uuid:01a1c012-45c6-7b78-81ef-1e5652e644e4"
@@ -180,7 +196,8 @@
     "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8"
   ],
   "rendering": [
-    "urn:uuid:01a1c012-4a87-7536-a69f-89b73ccb7619"
+    "urn:uuid:01a1c012-4a87-7536-a69f-89b73ccb7619",
+    "urn:uuid:01a1c014-fdc2-71b4-bdaf-3e9677dd309c"
   ],
   "result": [
     "urn:uuid:01a1c012-43ab-7049-9e09-f3d83714acb2",
@@ -199,6 +216,9 @@
     "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065",
     "urn:uuid:01a1c012-475a-7657-8ebd-049efd093159"
   ],
+  "runtime": [
+    "urn:uuid:01a1c014-fd7e-74cb-85db-b83f9b2d2c68"
+  ],
   "s3": [
     "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8",
     "urn:uuid:01a1c00e-469d-7e71-b495-782f123e7e9b",
@@ -206,7 +226,9 @@
     "urn:uuid:01a1c012-45c6-7b78-81ef-1e5652e644e4"
   ],
   "scope": [
-    "urn:uuid:01a1c012-4a87-7536-a69f-89b73ccb7619"
+    "urn:uuid:01a1c012-4a87-7536-a69f-89b73ccb7619",
+    "urn:uuid:01a1c014-fdc2-71b4-bdaf-3e9677dd309c",
+    "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8"
   ],
   "security": [
     "urn:uuid:01a1c00e-469d-7e71-b495-782f123e7e9b",
@@ -224,12 +246,17 @@
   ],
   "smoke-test": [
     "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065",
-    "urn:uuid:01a1c012-4717-7464-b0af-b0fce55e6e6e"
+    "urn:uuid:01a1c012-4717-7464-b0af-b0fce55e6e6e",
+    "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8"
   ],
   "sqs": [
     "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c",
     "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8",
-    "urn:uuid:01a1c00e-4727-73f3-ae07-f35118bb503e"
+    "urn:uuid:01a1c00e-4727-73f3-ae07-f35118bb503e",
+    "urn:uuid:01a1c014-fdc2-71b4-bdaf-3e9677dd309c"
+  ],
+  "state": [
+    "urn:uuid:01a1c014-fe07-7bd8-bafe-f168eb652795"
   ],
   "storage": [
     "urn:uuid:01a1c012-44b9-7711-ac21-0591d918aff5"
@@ -240,24 +267,33 @@
   "template-not-found": [
     "urn:uuid:01a1c012-44fb-7841-910a-e126c9cb761e"
   ],
+  "templates": [
+    "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8"
+  ],
   "terraform": [
     "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906",
     "urn:uuid:01a1c00e-4726-7a49-9484-4da42d157950",
     "urn:uuid:01a1c012-479d-75d4-a40f-e48f0e3d5346",
     "urn:uuid:01a1c012-47df-7906-9852-4119705e7a0b",
     "urn:uuid:01a1c012-4821-743a-a984-ccc042a8da2b",
-    "urn:uuid:01a1c012-4867-7070-9f29-2aee9816bc57"
+    "urn:uuid:01a1c012-4867-7070-9f29-2aee9816bc57",
+    "urn:uuid:01a1c014-fe07-7bd8-bafe-f168eb652795"
   ],
   "testing": [
     "urn:uuid:01a1c00e-4612-778e-99d3-3154ed723717",
     "urn:uuid:01a1c00e-4659-78ec-adf2-ed06e5a0f6bd"
   ],
+  "tooling": [
+    "urn:uuid:01a1c014-fd7e-74cb-85db-b83f9b2d2c68"
+  ],
   "typescript": [
-    "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f"
+    "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f",
+    "urn:uuid:01a1c014-fd39-72ce-a0fc-1c4ac28698e1"
   ],
   "validation": [
     "urn:uuid:01a1c012-4432-781e-b2a9-c2fed8d3633b",
-    "urn:uuid:01a1c012-4476-7738-a76e-1d47609a5f26"
+    "urn:uuid:01a1c012-4476-7738-a76e-1d47609a5f26",
+    "urn:uuid:01a1c014-fd39-72ce-a0fc-1c4ac28698e1"
   ],
   "versioning": [
     "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f"

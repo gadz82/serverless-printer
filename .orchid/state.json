@@ -6,11 +6,11 @@
   "lastIteration": null,
   "iterationTitle": "Deliver the Printer serverless PDF rendering service on AWS",
   "iterationRigor": "L",
-  "phase": "discovery",
+  "phase": "assessment",
   "gates": {
     "G0": "passed",
     "G1": "passed",
-    "G2": "pending",
+    "G2": "passed",
     "G3": "pending",
     "G4": "pending",
     "G5": "pending",
@@ -24,6 +24,6 @@
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c012-4a89-7e16-9ef7-4bbd63557e72",
-  "memoryEvent": "01a1c012-4a89-7e16-9ef7-4bbd63557e72"
+  "lastEvent": "01a1c014-fe4e-7704-8876-11d2d8d54ab7",
+  "memoryEvent": "01a1c014-fe4e-7704-8876-11d2d8d54ab7"
 }

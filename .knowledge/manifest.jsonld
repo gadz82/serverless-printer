@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-09T11:29:46Z",
+  "generatedAt": "2026-11-09T11:32:43Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -11,7 +11,7 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
     "title": "Deliver the Printer serverless PDF rendering service on AWS",
-    "phase": "discovery",
+    "phase": "assessment",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
@@ -19,7 +19,7 @@
   "gates": {
     "G0": "passed",
     "G1": "passed",
-    "G2": "pending",
+    "G2": "passed",
     "G3": "pending",
     "G4": "pending",
     "G5": "pending",
@@ -1040,6 +1040,136 @@
       ],
       "artifact": "discovery/questions/Q-001-operational-prerequisites.md",
       "hash": "sha256:7758ec38940c9661794668b1809be91d47a16fcf235ddbbc7b40da6624c3d906"
+    },
+    {
+      "@id": "urn:uuid:01a1c014-fd39-72ce-a0fc-1c4ac28698e1",
+      "@type": "orchid:Decision",
+      "description": "JSON Schema 2020-12 is the public contract; Ajv validates and TypeScript types are generated.",
+      "status": "accepted",
+      "topics": [
+        "contracts",
+        "json-schema",
+        "typescript",
+        "validation"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:32:43Z",
+      "updatedAt": "2026-11-09T11:32:43Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-001"
+      ],
+      "artifact": "assessment/adr/ADR-001-contract-source-of-truth.md",
+      "hash": "sha256:81777ae0d2158b1f1d40f1188743e62a39be7a63d2840f052716df9910b9bb73"
+    },
+    {
+      "@id": "urn:uuid:01a1c014-fd7e-74cb-85db-b83f9b2d2c68",
+      "@type": "orchid:Decision",
+      "description": "Foundation uses AWS SDK v3, Ajv, uuid, pnpm, Vitest, esbuild and semantic-release.",
+      "status": "accepted",
+      "topics": [
+        "dependencies",
+        "tooling",
+        "build",
+        "runtime"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:32:43Z",
+      "updatedAt": "2026-11-09T11:32:43Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-002"
+      ],
+      "artifact": "assessment/adr/ADR-002-dependency-baseline.md",
+      "hash": "sha256:a5cfeae688e5a812dc80b8df235efa05ff7a2c82b5178b1fce5eeb57295890e5"
+    },
+    {
+      "@id": "urn:uuid:01a1c014-fdc2-71b4-bdaf-3e9677dd309c",
+      "@type": "orchid:Decision",
+      "description": "Phase 1 uses a placeholder PDF renderer and SQS-only result delivery; other channels fail explicitly.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "sqs",
+        "scope",
+        "placeholder"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:32:43Z",
+      "updatedAt": "2026-11-09T11:32:43Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-003"
+      ],
+      "artifact": "assessment/adr/ADR-003-placeholder-renderer-sqs-only.md",
+      "hash": "sha256:d716691e5155e3959e4660b86186ed0b07cf1ecb3cfc00f0590f9627763bedb5"
+    },
+    {
+      "@id": "urn:uuid:01a1c014-fe07-7bd8-bafe-f168eb652795",
+      "@type": "orchid:Decision",
+      "description": "Bootstrap uses local state once; the main deployment uses S3 backend with native locking.",
+      "status": "accepted",
+      "topics": [
+        "terraform",
+        "bootstrap",
+        "state",
+        "locking"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:32:43Z",
+      "updatedAt": "2026-11-09T11:32:43Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-004"
+      ],
+      "artifact": "assessment/adr/ADR-004-bootstrap-local-state.md",
+      "hash": "sha256:260c92e25e3cd6d0febe2bf57c1c080c0ee33a1546e95dbb33318b163fe992b7"
+    },
+    {
+      "@id": "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8",
+      "@type": "orchid:Decision",
+      "description": "A minimal _smoke template and manifest script prove resolution; full template tooling is Phase 2.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "manifest",
+        "smoke-test",
+        "scope"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:32:43Z",
+      "updatedAt": "2026-11-09T11:32:43Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-005"
+      ],
+      "artifact": "assessment/adr/ADR-005-minimal-smoke-template-manifest.md",
+      "hash": "sha256:3e1901f1e3fcb0055c3518bb9e0282e7f6ae4678e44ef5b038412d540cf5b72e"
     }
   ]
 }
