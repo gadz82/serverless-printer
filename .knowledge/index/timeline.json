@@ -628,5 +628,19 @@
     "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
     "phase": "closed",
     "subject": "urn:orchid:iteration:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser"
+  },
+  {
+    "ts": "2026-11-09T22:08:22Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+    "phase": "handover",
+    "subject": "phase:handover"
+  },
+  {
+    "ts": "2026-11-09T22:08:45Z",
+    "event": "handover.accepted",
+    "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+    "phase": "complete",
+    "subject": "urn:orchid:iteration:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser"
   }
 ]
