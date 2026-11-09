@@ -14,10 +14,10 @@ fast and the contract stays explicit.
 
 | Field | Type | Rules |
 |---|---|---|
-| `templateId` | string | 1–128 characters; a UUID or a slug matching `^[a-z][a-z0-9-]{2,63}$` |
+| `templateId` | string | 1–128 characters; a UUID, the reserved `_smoke` slug, or a normal slug matching `^[a-z][a-z0-9-]{2,63}$` (ADR-006) |
 | `refId` | string \| number \| object | Echoed unchanged; object values are compared deeply |
 | `options` | object | Optional; `pdfA` is `false` (default) or one of the enabled levels |
-| `options.pdfA` | boolean \| string | `false` or `PDF/A-1b`, `1a`, `2b`, `2u`, `2a`, `3b`, `3u`, `3a` |
+| `options.pdfA` | boolean \| string | `false` or `PDF/A-1b`, `1a`, `2b`, `2u`, `2a`, `3b`, `3u`, `3a`; must be in the configured allowed levels. Phase 1 defaults the allowed list to empty, so archival requests fail with `PDFA_LEVEL_NOT_ALLOWED` |
 | `webhooks.success` | object | Required; `channel` is `http`, `lambda`, `sqs`, `eventBridge` or `s3` |
 | `webhooks.success.pingUrl` | string \| null | Optional HTTPS URL on the allowlist; `null` means no ping |
 | `webhooks.success.value` | string | HTTPS URL, Lambda ARN, SQS queue ARN, EventBridge bus ARN, or presigned PUT URL |

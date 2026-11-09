@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-09T11:32:43Z",
+  "generatedAt": "2026-11-09T11:36:07Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -1170,6 +1170,32 @@
       ],
       "artifact": "assessment/adr/ADR-005-minimal-smoke-template-manifest.md",
       "hash": "sha256:3e1901f1e3fcb0055c3518bb9e0282e7f6ae4678e44ef5b038412d540cf5b72e"
+    },
+    {
+      "@id": "urn:uuid:01a1c018-1877-7937-aa03-61cbeb4ed6f8",
+      "@type": "orchid:Decision",
+      "description": "_smoke is the single reserved internal slug, exempt from the public slug pattern.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "slug",
+        "smoke-test",
+        "validation"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:36:07Z",
+      "updatedAt": "2026-11-09T11:36:07Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-006"
+      ],
+      "artifact": "assessment/adr/ADR-006-reserved-smoke-slug.md",
+      "hash": "sha256:2e9d497221a10f6fd7b436a51544271d1b599897cc99d85974493cb7125b8f6b"
     }
   ]
 }

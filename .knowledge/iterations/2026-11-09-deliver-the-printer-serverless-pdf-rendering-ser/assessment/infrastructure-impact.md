@@ -21,7 +21,7 @@
 | Queue policy | Send allowed only for `allowed_sender_account_ids`, `allowed_sender_principal_arns` or `organization_id`; optional EventBridge rule principal when `job_rule` is later supplied |
 | Prints bucket | SSE-KMS with a project CMK, public access blocked, TLS-only bucket policy, versioning off, lifecycle expiry 1 day, worker-only writes |
 | KMS key | Rotation enabled; key policy grants the worker encrypt/decrypt and the deploy role key administration |
-| Worker Lambda | `nodejs24.x`, `x86_64`, 1,536 MB, 60 s, environment from §4.8 plus `MAX_RECEIVE_COUNT`, code from `s3://<artifacts>/<release>/render-worker.zip`, published version plus `live` alias |
+| Worker Lambda | `nodejs24.x`, `x86_64`, 1,536 MB, 60 s, environment from §4.8 plus `MAX_RECEIVE_COUNT`, code from `s3://<artifacts>/<release>/render-worker.zip`, published version plus `live` alias. `PDFA_ALLOWED_LEVELS` defaults to an empty list in Phase 1 (PDF/A rejected; ADR-003) |
 | Event source mapping | Batch size 1–5, `ReportBatchItemFailures`, `scaling_config.maximum_concurrency` with a minimum of 2, optional reserved concurrency |
 | IAM | Consume the jobs queue, read/write `prints/*`, KMS, CloudWatch Logs, `sqs:SendMessage` on `callback_target_arns` only, with `aws:ResourceOrgID` when `organization_id` is set |
 | CloudWatch | Log group with `log_retention_days` (default 30); DLQ-depth and worker-error alarms behind `enable_alarms = false` |

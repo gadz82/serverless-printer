@@ -36,10 +36,18 @@ limitation.
 The bundled `_smoke` template identity is resolved through the manifest so the path matches the
 future renderer.
 
+PDF/A conversion is not implemented in Phase 1. Set the Terraform `pdfa_allowed_levels` default
+to an empty list in this increment, so any `options.pdfA` request fails non-retryably with
+`PDFA_LEVEL_NOT_ALLOWED`. Phase 3 restores the spec default of every level when conversion
+exists. This is a temporary deployment configuration, not a contract change, and PDF/A requests
+are never silently downgraded to a standard PDF.
+
 ## Consequences
 
 - The end-to-end path is real; only the pixel-producing step is a stub.
 - The placeholder is not evidence of PDF fidelity, font embedding or PDF/A conformance.
+- PDF/A jobs are rejected with `PDFA_LEVEL_NOT_ALLOWED` in Phase 1 instead of returning a
+  non-conformant PDF labelled as archival.
 - The contract stays stable for Phase 3; callers see a clear non-retryable error for channels not
   yet available.
 - The placeholder must never be described as production rendering in release notes.

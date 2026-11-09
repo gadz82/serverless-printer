@@ -244,10 +244,14 @@
   "senders": [
     "urn:uuid:01a1c012-4609-7140-a8cf-4a8b9832f75d"
   ],
+  "slug": [
+    "urn:uuid:01a1c018-1877-7937-aa03-61cbeb4ed6f8"
+  ],
   "smoke-test": [
     "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065",
     "urn:uuid:01a1c012-4717-7464-b0af-b0fce55e6e6e",
-    "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8"
+    "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8",
+    "urn:uuid:01a1c018-1877-7937-aa03-61cbeb4ed6f8"
   ],
   "sqs": [
     "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c",
@@ -268,7 +272,8 @@
     "urn:uuid:01a1c012-44fb-7841-910a-e126c9cb761e"
   ],
   "templates": [
-    "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8"
+    "urn:uuid:01a1c014-fe4c-7e16-a080-6f2530a2b9f8",
+    "urn:uuid:01a1c018-1877-7937-aa03-61cbeb4ed6f8"
   ],
   "terraform": [
     "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906",
@@ -293,7 +298,8 @@
   "validation": [
     "urn:uuid:01a1c012-4432-781e-b2a9-c2fed8d3633b",
     "urn:uuid:01a1c012-4476-7738-a76e-1d47609a5f26",
-    "urn:uuid:01a1c014-fd39-72ce-a0fc-1c4ac28698e1"
+    "urn:uuid:01a1c014-fd39-72ce-a0fc-1c4ac28698e1",
+    "urn:uuid:01a1c018-1877-7937-aa03-61cbeb4ed6f8"
   ],
   "versioning": [
     "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f"

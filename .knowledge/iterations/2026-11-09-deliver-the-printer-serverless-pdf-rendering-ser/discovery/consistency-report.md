@@ -18,6 +18,7 @@ scenario carries an `@req` tag; the terminology matches the glossary and the PRD
 | Breaking change without an ADR | None | There is no existing public contract; the first contract is additive |
 | Regressions to existing users | None | Greenfield repository; local behaviour is the only prior behaviour |
 | Ambiguous terms | None after glossary | `print`, `job`, `template`, `callback`, `release` and `placeholder renderer` are defined |
+| Reserved `_smoke` slug vs public slug regex | Resolved in planning | The spec names `_smoke` by slug while the regex forbids a leading underscore; ADR-006 reserves `_smoke` as the only internal exception |
 | Orphan requirements | None | Each `R-###` maps to a scenario in the traceability table below |
 | Uncovered scenarios | None | Each scenario names an observable outcome |
 | Steering conflicts | None | Hexagonal architecture is the only architecture preset; trunk-based is the only repository preset; saga is explicitly not applicable |

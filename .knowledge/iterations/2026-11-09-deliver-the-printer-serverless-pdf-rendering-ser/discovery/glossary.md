@@ -8,7 +8,7 @@
 | **refId** | Caller-supplied string, number or object echoed unchanged in the result and used by the caller to correlate the job. |
 | **Template** | One folder under `templates/`, identified by an immutable UUID `id` and an immutable unique `slug`. The folder is the template; there are no versions or statuses. |
 | **templateId** | A job field that accepts either the template `id` or its `slug`. |
-| **Slug** | Human-readable template identifier matching `^[a-z][a-z0-9-]{2,63}$`, immutable and unique. |
+| **Slug** | Human-readable template identifier matching `^[a-z][a-z0-9-]{2,63}$`, immutable and unique. `_smoke` is the single reserved internal exception (ADR-006). |
 | **Manifest** | Build-time JSON that lists template identities, bundle paths, content hashes and placeholders; bundled into the worker and attached to releases. In this increment it contains the minimal `_smoke` entry. |
 | **Content hash** | SHA-256 over a template's sorted files, reported on every print for traceability. |
 | **Callback** | The channel where the result is delivered: `http`, `lambda`, `sqs`, `eventBridge` or `s3`. This increment implements `sqs` only. |

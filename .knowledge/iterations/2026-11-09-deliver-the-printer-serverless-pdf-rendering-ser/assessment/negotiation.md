@@ -23,7 +23,8 @@ PDF/A, the remaining channels and production operations are explicit next increm
 - **Risk:** medium (OIDC/bootstrap), low for the local path.
 - **Reversibility:** high.
 - **Business impact:** callers get a stable contract and a working async path sooner; output is
-  not yet production-grade PDF rendering.
+  not yet production-grade PDF rendering. PDF/A requests are rejected with
+  `PDFA_LEVEL_NOT_ALLOWED` until Phase 3, rather than silently downgraded.
 
 ### Option B — Include Chromium and PDF/A now
 
@@ -76,6 +77,8 @@ would be disappointed; the next increment replaces it behind the same contract.
 ## Scope acceptance
 
 - Accepted: R-001–R-012 and scenarios S-001–S-023.
+- Clarified: `_smoke` is the single reserved internal slug (ADR-006), and PDF/A requests are
+  rejected with `PDFA_LEVEL_NOT_ALLOWED` in Phase 1 (ADR-003).
 - Deferred with recorded risk: A-001–A-004.
 - Excluded: template tooling/content, Chromium, PDF/A, non-SQS channels, ping/allowlist
   enforcement, load testing, production alarms/runbook, and everything in PRD non-goals.
