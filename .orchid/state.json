@@ -6,24 +6,70 @@
   "lastIteration": null,
   "iterationTitle": "Deliver the Printer serverless PDF rendering service on AWS",
   "iterationRigor": "L",
-  "phase": "planning",
+  "phase": "build",
   "gates": {
     "G0": "passed",
     "G1": "passed",
     "G2": "passed",
     "G3": "passed",
-    "G4": "pending",
+    "G4": "passed",
     "G5": "pending",
     "G6": "pending",
     "G7": "pending",
     "G8": "pending"
   },
   "locks": {},
-  "prompts": {},
-  "runs": {},
+  "prompts": {
+    "P-001": {
+      "id": "P-001",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c01d-97b4-7df5-9eca-f5112cd61d5b",
+      "startedAt": "2026-11-09T11:42:07Z",
+      "updatedAt": "2026-11-09T11:56:13Z",
+      "note": "Independent review LGTM; all acceptance commands pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-001/report.md"
+    }
+  },
+  "runs": {
+    "01a1c01d-97b4-7df5-9eca-f5112cd61d5b": {
+      "id": "01a1c01d-97b4-7df5-9eca-f5112cd61d5b",
+      "prompt": "P-001",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-09T11:42:07Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-001",
+        "effort": "medium",
+        "requestedEffort": "medium",
+        "source": "P-001.effort",
+        "requestedSource": "P-001.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-09T11:56:13Z",
+      "note": "Independent review LGTM; all acceptance commands pass; worktree and branch removed"
+    }
+  },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c018-199f-72c2-8150-8d4969f305e9",
+  "lastEvent": "01a1c02a-8200-7ced-90ce-08d29e39681a",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }

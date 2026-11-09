@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-09T11:41:13Z",
+  "generatedAt": "2026-11-09T11:56:13Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -11,7 +11,7 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
     "title": "Deliver the Printer serverless PDF rendering service on AWS",
-    "phase": "planning",
+    "phase": "build",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
@@ -21,7 +21,7 @@
     "G1": "passed",
     "G2": "passed",
     "G3": "passed",
-    "G4": "pending",
+    "G4": "passed",
     "G5": "pending",
     "G6": "pending",
     "G7": "pending",

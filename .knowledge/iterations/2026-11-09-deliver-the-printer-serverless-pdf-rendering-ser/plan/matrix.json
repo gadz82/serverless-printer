@@ -2,15 +2,133 @@
   "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
   "generatedAt": "2026-11-09T12:45:00Z",
   "prompts": [
-    { "id": "P-001", "title": "Create the pnpm workspace, shared toolchain and dependency catalog", "wave": 1, "depends_on": [], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-002", "title": "Publish versioned job and result schemas with validated generated types", "wave": 2, "depends_on": ["P-001"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-003", "title": "Implement the print-domain entities, ports and processing use case", "wave": 2, "depends_on": ["P-001"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-004", "title": "Bundle the _smoke template and generate its content-hashed manifest", "wave": 2, "depends_on": ["P-001"], "estimate": "S", "effort": "low", "status": "pending", "step": null },
-    { "id": "P-005", "title": "Implement the Lambda worker, AWS adapters and SQS batch handling", "wave": 3, "depends_on": ["P-002", "P-003", "P-004"], "estimate": "L", "effort": "high", "status": "pending", "step": null },
-    { "id": "P-006", "title": "Run the worker against LocalStack with a callback sink and integration tests", "wave": 4, "depends_on": ["P-004", "P-005"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-007", "title": "Provision the state, artifacts and GitHub OIDC foundation with Terraform", "wave": 2, "depends_on": ["P-001"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-008", "title": "Build the printer Terraform module and single root deployment", "wave": 3, "depends_on": ["P-007"], "estimate": "L", "effort": "high", "status": "pending", "step": null },
-    { "id": "P-009", "title": "Gate pull requests with code, contract, LocalStack and Terraform checks", "wave": 5, "depends_on": ["P-002", "P-003", "P-005", "P-006", "P-008"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-010", "title": "Cut releases and deploy through OIDC with smoke and rollback", "wave": 4, "depends_on": ["P-004", "P-005", "P-008"], "estimate": "L", "effort": "high", "status": "pending", "step": null }
+    {
+      "id": "P-001",
+      "title": "Create the pnpm workspace, shared toolchain and dependency catalog",
+      "wave": 1,
+      "depends_on": [],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "done",
+      "step": "implement",
+      "updatedAt": "2026-11-09T11:56:13Z"
+    },
+    {
+      "id": "P-002",
+      "title": "Publish versioned job and result schemas with validated generated types",
+      "wave": 2,
+      "depends_on": [
+        "P-001"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-003",
+      "title": "Implement the print-domain entities, ports and processing use case",
+      "wave": 2,
+      "depends_on": [
+        "P-001"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-004",
+      "title": "Bundle the _smoke template and generate its content-hashed manifest",
+      "wave": 2,
+      "depends_on": [
+        "P-001"
+      ],
+      "estimate": "S",
+      "effort": "low",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-005",
+      "title": "Implement the Lambda worker, AWS adapters and SQS batch handling",
+      "wave": 3,
+      "depends_on": [
+        "P-002",
+        "P-003",
+        "P-004"
+      ],
+      "estimate": "L",
+      "effort": "high",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-006",
+      "title": "Run the worker against LocalStack with a callback sink and integration tests",
+      "wave": 4,
+      "depends_on": [
+        "P-004",
+        "P-005"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-007",
+      "title": "Provision the state, artifacts and GitHub OIDC foundation with Terraform",
+      "wave": 2,
+      "depends_on": [
+        "P-001"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-008",
+      "title": "Build the printer Terraform module and single root deployment",
+      "wave": 3,
+      "depends_on": [
+        "P-007"
+      ],
+      "estimate": "L",
+      "effort": "high",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-009",
+      "title": "Gate pull requests with code, contract, LocalStack and Terraform checks",
+      "wave": 5,
+      "depends_on": [
+        "P-002",
+        "P-003",
+        "P-005",
+        "P-006",
+        "P-008"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-010",
+      "title": "Cut releases and deploy through OIDC with smoke and rollback",
+      "wave": 4,
+      "depends_on": [
+        "P-004",
+        "P-005",
+        "P-008"
+      ],
+      "estimate": "L",
+      "effort": "high",
+      "status": "pending",
+      "step": null
+    }
   ]
 }
