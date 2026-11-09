@@ -55,13 +55,13 @@ existing provider must trust the `sts.amazonaws.com` audience.
 terraform -chdir=infra/bootstrap output
 ```
 
-| Output | Use |
-|---|---|
-| `state_bucket` | `TF_STATE_BUCKET` repository variable and the main backend bucket |
-| `artifacts_bucket` | `ARTIFACTS_BUCKET` repository variable and the worker zip location |
-| `deploy_role_arn` | `AWS_DEPLOY_ROLE_ARN` repository variable |
-| `plan_role_arn` | `AWS_PLAN_ROLE_ARN` repository variable |
-| `oidc_provider_arn` | Reference for the two role trust policies |
+| Output              | Use                                                                |
+| ------------------- | ------------------------------------------------------------------ |
+| `state_bucket`      | `TF_STATE_BUCKET` repository variable and the main backend bucket  |
+| `artifacts_bucket`  | `ARTIFACTS_BUCKET` repository variable and the worker zip location |
+| `deploy_role_arn`   | `AWS_DEPLOY_ROLE_ARN` repository variable                          |
+| `plan_role_arn`     | `AWS_PLAN_ROLE_ARN` repository variable                            |
+| `oidc_provider_arn` | Reference for the two role trust policies                          |
 
 The main deployment uses the state bucket with S3 native locking, key
 `printer/terraform.tfstate`:
@@ -93,14 +93,14 @@ Bootstrap intentionally uses local state because the state bucket does not exist
 
 Set these as repository variables (not secrets) in the GitHub repository settings:
 
-| Variable | Value |
-|---|---|
-| `AWS_REGION` | `region` from `terraform.tfvars`, default `eu-central-1` |
-| `AWS_DEPLOY_ROLE_ARN` | `deploy_role_arn` output |
-| `AWS_PLAN_ROLE_ARN` | `plan_role_arn` output |
-| `TF_STATE_BUCKET` | `state_bucket` output |
-| `TF_STATE_KEY` | `printer/terraform.tfstate` |
-| `ARTIFACTS_BUCKET` | `artifacts_bucket` output |
+| Variable              | Value                                                    |
+| --------------------- | -------------------------------------------------------- |
+| `AWS_REGION`          | `region` from `terraform.tfvars`, default `eu-central-1` |
+| `AWS_DEPLOY_ROLE_ARN` | `deploy_role_arn` output                                 |
+| `AWS_PLAN_ROLE_ARN`   | `plan_role_arn` output                                   |
+| `TF_STATE_BUCKET`     | `state_bucket` output                                    |
+| `TF_STATE_KEY`        | `printer/terraform.tfstate`                              |
+| `ARTIFACTS_BUCKET`    | `artifacts_bucket` output                                |
 
 Workflows use GitHub OIDC and these role ARNs; they must not use static AWS access keys.
 
