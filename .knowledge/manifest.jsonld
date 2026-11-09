@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-09T11:25:28Z",
+  "generatedAt": "2026-11-09T11:29:46Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -11,14 +11,14 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
     "title": "Deliver the Printer serverless PDF rendering service on AWS",
-    "phase": "intent",
+    "phase": "discovery",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
   },
   "gates": {
     "G0": "passed",
-    "G1": "pending",
+    "G1": "passed",
     "G2": "pending",
     "G3": "pending",
     "G4": "pending",
@@ -357,6 +357,689 @@
       ],
       "artifact": "intent/prd.md",
       "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-43ab-7049-9e09-f3d83714acb2",
+      "@type": "orchid:Scenario",
+      "description": "One valid job yields exactly one success result.",
+      "status": "accepted",
+      "topics": [
+        "job",
+        "result",
+        "contract"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:44Z",
+      "updatedAt": "2026-11-09T11:29:44Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-001"
+      ],
+      "artifact": "discovery/gherkin/job-submission.feature",
+      "hash": "sha256:4ef83d6a069cba01b1bcebfc84a57c0076ee27a4906ef79977a66b95a775f455"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-43ef-76a1-b78d-8703c77794a0",
+      "@type": "orchid:Scenario",
+      "description": "The submitted refId is echoed unchanged in the result.",
+      "status": "accepted",
+      "topics": [
+        "refid",
+        "result",
+        "contract"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:44Z",
+      "updatedAt": "2026-11-09T11:29:44Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-002"
+      ],
+      "artifact": "discovery/gherkin/job-submission.feature",
+      "hash": "sha256:4ef83d6a069cba01b1bcebfc84a57c0076ee27a4906ef79977a66b95a775f455"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4432-781e-b2a9-c2fed8d3633b",
+      "@type": "orchid:Scenario",
+      "description": "A valid job fixture passes the published schema and generated type.",
+      "status": "accepted",
+      "topics": [
+        "contract",
+        "json-schema",
+        "validation"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-003"
+      ],
+      "artifact": "discovery/gherkin/job-submission.feature",
+      "hash": "sha256:4ef83d6a069cba01b1bcebfc84a57c0076ee27a4906ef79977a66b95a775f455"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4476-7738-a76e-1d47609a5f26",
+      "@type": "orchid:Scenario",
+      "description": "A job without templateId fails schema validation before processing.",
+      "status": "accepted",
+      "topics": [
+        "contract",
+        "validation",
+        "invalid-message"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-004"
+      ],
+      "artifact": "discovery/gherkin/job-submission.feature",
+      "hash": "sha256:4ef83d6a069cba01b1bcebfc84a57c0076ee27a4906ef79977a66b95a775f455"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-44b9-7711-ac21-0591d918aff5",
+      "@type": "orchid:Scenario",
+      "description": "A valid _smoke job stores a PDF and returns a success result.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "storage",
+        "s3",
+        "success"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-005"
+      ],
+      "artifact": "discovery/gherkin/worker-processing.feature",
+      "hash": "sha256:6973c3c2463e57e9d1dcdbfe75b3980af9fb5dc576ce40ebab17dbeeae04fcf3"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-44fb-7841-910a-e126c9cb761e",
+      "@type": "orchid:Scenario",
+      "description": "An unknown template returns TEMPLATE_NOT_FOUND without retrying.",
+      "status": "accepted",
+      "topics": [
+        "template-not-found",
+        "errors",
+        "non-retryable"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-006"
+      ],
+      "artifact": "discovery/gherkin/worker-processing.feature",
+      "hash": "sha256:6973c3c2463e57e9d1dcdbfe75b3980af9fb5dc576ce40ebab17dbeeae04fcf3"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-453e-71ba-8dc1-1609324142e1",
+      "@type": "orchid:Scenario",
+      "description": "A retryable failure is retried until the receive count is exhausted, then dead-lettered.",
+      "status": "accepted",
+      "topics": [
+        "retries",
+        "dlq",
+        "errors"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-007"
+      ],
+      "artifact": "discovery/gherkin/worker-processing.feature",
+      "hash": "sha256:6973c3c2463e57e9d1dcdbfe75b3980af9fb5dc576ce40ebab17dbeeae04fcf3"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4582-7d9a-a8eb-bf6d696a59a5",
+      "@type": "orchid:Scenario",
+      "description": "The last allowed attempt delivers a failure result and deletes the job.",
+      "status": "accepted",
+      "topics": [
+        "retries",
+        "failure-result",
+        "dlq"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-008"
+      ],
+      "artifact": "discovery/gherkin/worker-processing.feature",
+      "hash": "sha256:6973c3c2463e57e9d1dcdbfe75b3980af9fb5dc576ce40ebab17dbeeae04fcf3"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-45c6-7b78-81ef-1e5652e644e4",
+      "@type": "orchid:Scenario",
+      "description": "Prints expire after one day and presigned links expire after the configured TTL.",
+      "status": "accepted",
+      "topics": [
+        "retention",
+        "s3",
+        "presign",
+        "lifecycle"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-009"
+      ],
+      "artifact": "discovery/gherkin/worker-processing.feature",
+      "hash": "sha256:6973c3c2463e57e9d1dcdbfe75b3980af9fb5dc576ce40ebab17dbeeae04fcf3"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4609-7140-a8cf-4a8b9832f75d",
+      "@type": "orchid:Scenario",
+      "description": "Only allowed sender accounts, principals or organization may enqueue jobs.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "queue-policy",
+        "senders"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-010"
+      ],
+      "artifact": "discovery/gherkin/delivery-safety.feature",
+      "hash": "sha256:d138afb62a75dc58b05f12e549f3686deed8cc0006df146aa3ad8614392b3a0e"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-464c-7322-9e52-a8fe3102e67b",
+      "@type": "orchid:Scenario",
+      "description": "The worker cannot deliver to a callback target outside the allowed ARNs.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "iam",
+        "callbacks"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-011"
+      ],
+      "artifact": "discovery/gherkin/delivery-safety.feature",
+      "hash": "sha256:d138afb62a75dc58b05f12e549f3686deed8cc0006df146aa3ad8614392b3a0e"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-468e-7f26-9009-fe336952cc1c",
+      "@type": "orchid:Scenario",
+      "description": "A release commit deploys through GitHub OIDC with a SemVer release.",
+      "status": "accepted",
+      "topics": [
+        "release",
+        "oidc",
+        "semantic-release",
+        "deploy"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-012"
+      ],
+      "artifact": "discovery/gherkin/release-pipeline.feature",
+      "hash": "sha256:69efc7ece6a8b6d31cf6920d81d0d79b672a622ff5e75a298824db41d462bbd2"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-46d3-79eb-a501-7ab5fd19d762",
+      "@type": "orchid:Scenario",
+      "description": "A non-release commit deploys a sha-<short> release without a tag.",
+      "status": "accepted",
+      "topics": [
+        "release",
+        "deploy",
+        "semantic-release"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-013"
+      ],
+      "artifact": "discovery/gherkin/release-pipeline.feature",
+      "hash": "sha256:69efc7ece6a8b6d31cf6920d81d0d79b672a622ff5e75a298824db41d462bbd2"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4717-7464-b0af-b0fce55e6e6e",
+      "@type": "orchid:Scenario",
+      "description": "The post-deploy smoke job returns a success result within 60 seconds.",
+      "status": "accepted",
+      "topics": [
+        "smoke-test",
+        "release",
+        "e2e"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-014"
+      ],
+      "artifact": "discovery/gherkin/release-pipeline.feature",
+      "hash": "sha256:69efc7ece6a8b6d31cf6920d81d0d79b672a622ff5e75a298824db41d462bbd2"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-475a-7657-8ebd-049efd093159",
+      "@type": "orchid:Scenario",
+      "description": "A dispatched rollback deploys an earlier release and passes the smoke test.",
+      "status": "accepted",
+      "topics": [
+        "rollback",
+        "release",
+        "operations"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-015"
+      ],
+      "artifact": "discovery/gherkin/release-pipeline.feature",
+      "hash": "sha256:69efc7ece6a8b6d31cf6920d81d0d79b672a622ff5e75a298824db41d462bbd2"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-479d-75d4-a40f-e48f0e3d5346",
+      "@type": "orchid:Scenario",
+      "description": "Bootstrap creates the state bucket, artifacts bucket, OIDC provider and roles.",
+      "status": "accepted",
+      "topics": [
+        "bootstrap",
+        "terraform",
+        "aws",
+        "oidc"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-016"
+      ],
+      "artifact": "discovery/gherkin/infrastructure.feature",
+      "hash": "sha256:e5fd2dab3e7cb091efb117d6e3b8c996229c66cd86167a899b7b366de547c0af"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-47df-7906-9852-4119705e7a0b",
+      "@type": "orchid:Scenario",
+      "description": "The printer module creates the queue, bucket, KMS key, worker and alias.",
+      "status": "accepted",
+      "topics": [
+        "terraform",
+        "infrastructure",
+        "lambda",
+        "aws"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:45Z",
+      "updatedAt": "2026-11-09T11:29:45Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-017"
+      ],
+      "artifact": "discovery/gherkin/infrastructure.feature",
+      "hash": "sha256:e5fd2dab3e7cb091efb117d6e3b8c996229c66cd86167a899b7b366de547c0af"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4821-743a-a984-ccc042a8da2b",
+      "@type": "orchid:Scenario",
+      "description": "A valid pull request passes code, contract, LocalStack and Terraform checks.",
+      "status": "accepted",
+      "topics": [
+        "ci",
+        "quality",
+        "terraform",
+        "contracts"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-018"
+      ],
+      "artifact": "discovery/gherkin/ci-quality.feature",
+      "hash": "sha256:b74cdc43468815f22982aa75e7529fcde2162a2c8757f1c0732dbe9784066646"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4867-7070-9f29-2aee9816bc57",
+      "@type": "orchid:Scenario",
+      "description": "An invalid contract or Terraform error blocks the pull request.",
+      "status": "accepted",
+      "topics": [
+        "ci",
+        "quality",
+        "gates",
+        "terraform"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-019"
+      ],
+      "artifact": "discovery/gherkin/ci-quality.feature",
+      "hash": "sha256:b74cdc43468815f22982aa75e7529fcde2162a2c8757f1c0732dbe9784066646"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-48ab-7bdc-8306-b8c1a52a9071",
+      "@type": "orchid:Scenario",
+      "description": "Commitlint rejects a commit message outside Conventional Commits.",
+      "status": "accepted",
+      "topics": [
+        "governance",
+        "commitlint",
+        "ci"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-020"
+      ],
+      "artifact": "discovery/gherkin/ci-quality.feature",
+      "hash": "sha256:b74cdc43468815f22982aa75e7529fcde2162a2c8757f1c0732dbe9784066646"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-48ed-712c-952c-f1728869d901",
+      "@type": "orchid:Scenario",
+      "description": "Squash merge puts one conventional commit on main without a merge commit.",
+      "status": "accepted",
+      "topics": [
+        "git",
+        "merge",
+        "linear-history",
+        "governance"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-021"
+      ],
+      "artifact": "discovery/gherkin/ci-quality.feature",
+      "hash": "sha256:b74cdc43468815f22982aa75e7529fcde2162a2c8757f1c0732dbe9784066646"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4930-7d8f-b340-2234d4347495",
+      "@type": "orchid:Scenario",
+      "description": "A local job stores a PDF in LocalStack and records a success in the sink.",
+      "status": "accepted",
+      "topics": [
+        "local-development",
+        "localstack",
+        "e2e"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-022"
+      ],
+      "artifact": "discovery/gherkin/local-development.feature",
+      "hash": "sha256:27cffb311a12e2d2704d5b552c6322ddb50fbcc862819e45b0d39a449d77b229"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4974-7589-b49f-e9b6f0ce9132",
+      "@type": "orchid:Scenario",
+      "description": "A local unknown-template job records a TEMPLATE_NOT_FOUND in the sink.",
+      "status": "accepted",
+      "topics": [
+        "local-development",
+        "errors",
+        "failure"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "S-023"
+      ],
+      "artifact": "discovery/gherkin/local-development.feature",
+      "hash": "sha256:27cffb311a12e2d2704d5b552c6322ddb50fbcc862819e45b0d39a449d77b229"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-49ba-7c8c-8091-03c391b5a93c",
+      "@type": "orchid:Scenario",
+      "description": "The operator supplies the GitHub owner and repository name before the first deploy.",
+      "status": "accepted",
+      "topics": [
+        "github",
+        "oidc",
+        "operations"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "A-001"
+      ],
+      "artifact": "discovery/questions/Q-001-operational-prerequisites.md",
+      "hash": "sha256:7758ec38940c9661794668b1809be91d47a16fcf235ddbbc7b40da6624c3d906"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-49ff-7650-b1f6-5b674a0b436c",
+      "@type": "orchid:Scenario",
+      "description": "The operator supplies the AWS account and region before bootstrap; default is eu-central-1.",
+      "status": "accepted",
+      "topics": [
+        "aws",
+        "infrastructure",
+        "operations"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "A-002"
+      ],
+      "artifact": "discovery/questions/Q-001-operational-prerequisites.md",
+      "hash": "sha256:7758ec38940c9661794668b1809be91d47a16fcf235ddbbc7b40da6624c3d906"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4a44-71f7-a496-57c3fcdbbd90",
+      "@type": "orchid:Scenario",
+      "description": "An administrator applies bootstrap once before enabling the release workflow.",
+      "status": "accepted",
+      "topics": [
+        "bootstrap",
+        "release",
+        "operations"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "A-003"
+      ],
+      "artifact": "discovery/questions/Q-001-operational-prerequisites.md",
+      "hash": "sha256:7758ec38940c9661794668b1809be91d47a16fcf235ddbbc7b40da6624c3d906"
+    },
+    {
+      "@id": "urn:uuid:01a1c012-4a87-7536-a69f-89b73ccb7619",
+      "@type": "orchid:Scenario",
+      "description": "A deterministic placeholder PDF is acceptable for the Phase 1 exit; Chromium rendering is Phase 3.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "scope",
+        "placeholder"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:29:46Z",
+      "updatedAt": "2026-11-09T11:29:46Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "A-004"
+      ],
+      "artifact": "discovery/questions/Q-001-operational-prerequisites.md",
+      "hash": "sha256:7758ec38940c9661794668b1809be91d47a16fcf235ddbbc7b40da6624c3d906"
     }
   ]
 }
