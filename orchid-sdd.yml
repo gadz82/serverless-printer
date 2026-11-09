@@ -83,14 +83,14 @@ execution:
   max_parallel: 4
   isolation: worktree
   require_clean_tree: true
-  integration_branch: "orchid/{iteration}/integration"
+  integration_branch: "main"
   release_strategy: squash
   merge: orchestrator
   max_fix_loops: 3
   test_commands:
-    unit: "npm test"
-    integration: "npm run test:integration"
-    e2e: "npm run test:e2e"
+    unit: "pnpm test"
+    integration: "pnpm test:integration"
+    e2e: "pnpm test:e2e"
 
 reviews:
   adversarial:

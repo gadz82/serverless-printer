@@ -1,1 +1,132 @@
-{}
+{
+  "aws": [
+    "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906"
+  ],
+  "bootstrap": [
+    "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906"
+  ],
+  "callbacks": [
+    "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c",
+    "urn:uuid:01a1c00e-4727-73f3-ae07-f35118bb503e"
+  ],
+  "ci": [
+    "urn:uuid:01a1c00e-46e2-75f0-af23-193fca7811e5",
+    "urn:uuid:01a1c00e-4726-7a49-9484-4da42d157950"
+  ],
+  "commitlint": [
+    "urn:uuid:01a1c00e-46e2-75f0-af23-193fca7811e5"
+  ],
+  "contract": [
+    "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c"
+  ],
+  "contracts": [
+    "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f",
+    "urn:uuid:01a1c00e-4726-7a49-9484-4da42d157950"
+  ],
+  "dlq": [
+    "urn:uuid:01a1c00e-4659-78ec-adf2-ed06e5a0f6bd"
+  ],
+  "docker": [
+    "urn:uuid:01a1c00e-4612-778e-99d3-3154ed723717"
+  ],
+  "e2e": [
+    "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8"
+  ],
+  "encryption": [
+    "urn:uuid:01a1c00e-469d-7e71-b495-782f123e7e9b"
+  ],
+  "errors": [
+    "urn:uuid:01a1c00e-4659-78ec-adf2-ed06e5a0f6bd"
+  ],
+  "git": [
+    "urn:uuid:01a1c00e-46e2-75f0-af23-193fca7811e5"
+  ],
+  "github-actions": [
+    "urn:uuid:01a1c00e-469d-7ac8-bf7a-27ae74edfa22"
+  ],
+  "governance": [
+    "urn:uuid:01a1c00e-46e2-75f0-af23-193fca7811e5"
+  ],
+  "iam": [
+    "urn:uuid:01a1c00e-4727-73f3-ae07-f35118bb503e"
+  ],
+  "idempotency": [
+    "urn:uuid:01a1c00e-4659-78ec-adf2-ed06e5a0f6bd"
+  ],
+  "infrastructure": [
+    "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906"
+  ],
+  "jobs": [
+    "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c"
+  ],
+  "json-schema": [
+    "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f"
+  ],
+  "local-development": [
+    "urn:uuid:01a1c00e-4612-778e-99d3-3154ed723717"
+  ],
+  "localstack": [
+    "urn:uuid:01a1c00e-4612-778e-99d3-3154ed723717"
+  ],
+  "oidc": [
+    "urn:uuid:01a1c00e-469d-7ac8-bf7a-27ae74edfa22"
+  ],
+  "operations": [
+    "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065"
+  ],
+  "quality": [
+    "urn:uuid:01a1c00e-4726-7a49-9484-4da42d157950"
+  ],
+  "release": [
+    "urn:uuid:01a1c00e-469d-7ac8-bf7a-27ae74edfa22",
+    "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065"
+  ],
+  "render": [
+    "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8"
+  ],
+  "retention": [
+    "urn:uuid:01a1c00e-469d-7e71-b495-782f123e7e9b"
+  ],
+  "retries": [
+    "urn:uuid:01a1c00e-4659-78ec-adf2-ed06e5a0f6bd"
+  ],
+  "rollback": [
+    "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065"
+  ],
+  "s3": [
+    "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8",
+    "urn:uuid:01a1c00e-469d-7e71-b495-782f123e7e9b"
+  ],
+  "security": [
+    "urn:uuid:01a1c00e-469d-7e71-b495-782f123e7e9b",
+    "urn:uuid:01a1c00e-4727-73f3-ae07-f35118bb503e"
+  ],
+  "semantic-release": [
+    "urn:uuid:01a1c00e-469d-7ac8-bf7a-27ae74edfa22"
+  ],
+  "smoke-test": [
+    "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065"
+  ],
+  "sqs": [
+    "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c",
+    "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8",
+    "urn:uuid:01a1c00e-4727-73f3-ae07-f35118bb503e"
+  ],
+  "terraform": [
+    "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906",
+    "urn:uuid:01a1c00e-4726-7a49-9484-4da42d157950"
+  ],
+  "testing": [
+    "urn:uuid:01a1c00e-4612-778e-99d3-3154ed723717",
+    "urn:uuid:01a1c00e-4659-78ec-adf2-ed06e5a0f6bd"
+  ],
+  "typescript": [
+    "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f"
+  ],
+  "versioning": [
+    "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f"
+  ],
+  "worker": [
+    "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8"
+  ]
+}

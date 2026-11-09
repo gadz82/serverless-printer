@@ -1,14 +1,21 @@
 {
   "@context": "context/orchid-v1.jsonld",
-  "@id": "urn:orchid:manifest:serverless-printer:none",
+  "@id": "urn:orchid:manifest:serverless-printer:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-09T11:20:21Z",
+  "generatedAt": "2026-11-09T11:25:28Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
   },
-  "iteration": null,
+  "iteration": {
+    "@id": "urn:orchid:iteration:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+    "title": "Deliver the Printer serverless PDF rendering service on AWS",
+    "phase": "intent",
+    "status": "active",
+    "specVersion": "1.0.0",
+    "rigor": "L"
+  },
   "gates": {
     "G0": "passed",
     "G1": "pending",
@@ -36,5 +43,320 @@
     "repos": []
   },
   "history": [],
-  "nodes": []
+  "nodes": [
+    {
+      "@id": "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c",
+      "@type": "orchid:Requirement",
+      "description": "A caller sends one job to the SQS queue and receives one result on the chosen callback.",
+      "status": "accepted",
+      "topics": [
+        "sqs",
+        "jobs",
+        "callbacks",
+        "contract"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:17Z",
+      "updatedAt": "2026-11-09T11:25:17Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-001"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f",
+      "@type": "orchid:Requirement",
+      "description": "Job and result contracts are versioned JSON Schemas with generated TypeScript types.",
+      "status": "accepted",
+      "topics": [
+        "contracts",
+        "json-schema",
+        "typescript",
+        "versioning"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-002"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-4612-778e-99d3-3154ed723717",
+      "@type": "orchid:Requirement",
+      "description": "Local development reproduces queue, storage, and callback behaviour with LocalStack.",
+      "status": "accepted",
+      "topics": [
+        "local-development",
+        "localstack",
+        "docker",
+        "testing"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-007"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8",
+      "@type": "orchid:Requirement",
+      "description": "A deployed worker turns a valid dummy job into a stored PDF and an SQS success result.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "render",
+        "s3",
+        "sqs",
+        "e2e"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-003"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-4659-78ec-adf2-ed06e5a0f6bd",
+      "@type": "orchid:Requirement",
+      "description": "Retries, DLQ, deterministic print identifiers, and failure results are tested.",
+      "status": "accepted",
+      "topics": [
+        "retries",
+        "dlq",
+        "errors",
+        "testing",
+        "idempotency"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-008"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-469d-7ac8-bf7a-27ae74edfa22",
+      "@type": "orchid:Requirement",
+      "description": "Releases are cut by semantic-release and deployed through GitHub OIDC without static keys.",
+      "status": "accepted",
+      "topics": [
+        "release",
+        "semantic-release",
+        "oidc",
+        "github-actions"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-004"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-469d-7e71-b495-782f123e7e9b",
+      "@type": "orchid:Requirement",
+      "description": "Prints are encrypted, publicly inaccessible, and expire automatically after one day.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "retention",
+        "s3",
+        "encryption"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-009"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-46e2-75f0-af23-193fca7811e5",
+      "@type": "orchid:Requirement",
+      "description": "Conventional Commits, squash merges, and protected main are enforced locally and in CI.",
+      "status": "accepted",
+      "topics": [
+        "governance",
+        "git",
+        "commitlint",
+        "ci"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-010"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906",
+      "@type": "orchid:Requirement",
+      "description": "All AWS resources are provisioned by Terraform from bootstrap and the printer module.",
+      "status": "accepted",
+      "topics": [
+        "terraform",
+        "infrastructure",
+        "aws",
+        "bootstrap"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-005"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-4726-7a49-9484-4da42d157950",
+      "@type": "orchid:Requirement",
+      "description": "Pull requests validate code, contracts, templates, and Terraform before merge.",
+      "status": "accepted",
+      "topics": [
+        "ci",
+        "quality",
+        "terraform",
+        "contracts"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-006"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-4727-73f3-ae07-f35118bb503e",
+      "@type": "orchid:Requirement",
+      "description": "The worker consumes only the jobs queue and may send results only to allowed targets.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "iam",
+        "sqs",
+        "callbacks"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-011"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    },
+    {
+      "@id": "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065",
+      "@type": "orchid:Requirement",
+      "description": "A deployed smoke test verifies each release, and rollback deploys an earlier release.",
+      "status": "accepted",
+      "topics": [
+        "smoke-test",
+        "release",
+        "rollback",
+        "operations"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T11:25:23Z",
+      "updatedAt": "2026-11-09T11:25:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "aliases": [
+        "R-012"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:68bcbfcfd27166d9f7ad622664c40d587908926084354986e9bf1417390e2b5c"
+    }
+  ]
 }

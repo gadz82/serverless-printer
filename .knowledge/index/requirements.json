@@ -1,1 +1,110 @@
-{}
+{
+  "R-001": {
+    "anchors": [],
+    "decisions": [],
+    "description": "A caller sends one job to the SQS queue and receives one result on the chosen callback.",
+    "id": "urn:uuid:01a1c00e-2d52-7e3e-b042-b64e9814163c",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-002": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Job and result contracts are versioned JSON Schemas with generated TypeScript types.",
+    "id": "urn:uuid:01a1c00e-4611-708f-93d8-38ccbfb7ab8f",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-003": {
+    "anchors": [],
+    "decisions": [],
+    "description": "A deployed worker turns a valid dummy job into a stored PDF and an SQS success result.",
+    "id": "urn:uuid:01a1c00e-4659-7661-915f-f7b2ed6a0aa8",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-004": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Releases are cut by semantic-release and deployed through GitHub OIDC without static keys.",
+    "id": "urn:uuid:01a1c00e-469d-7ac8-bf7a-27ae74edfa22",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-005": {
+    "anchors": [],
+    "decisions": [],
+    "description": "All AWS resources are provisioned by Terraform from bootstrap and the printer module.",
+    "id": "urn:uuid:01a1c00e-46e2-77e3-811b-b16f5848c906",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-006": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Pull requests validate code, contracts, templates, and Terraform before merge.",
+    "id": "urn:uuid:01a1c00e-4726-7a49-9484-4da42d157950",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-007": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Local development reproduces queue, storage, and callback behaviour with LocalStack.",
+    "id": "urn:uuid:01a1c00e-4612-778e-99d3-3154ed723717",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-008": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Retries, DLQ, deterministic print identifiers, and failure results are tested.",
+    "id": "urn:uuid:01a1c00e-4659-78ec-adf2-ed06e5a0f6bd",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-009": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Prints are encrypted, publicly inaccessible, and expire automatically after one day.",
+    "id": "urn:uuid:01a1c00e-469d-7e71-b495-782f123e7e9b",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-010": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Conventional Commits, squash merges, and protected main are enforced locally and in CI.",
+    "id": "urn:uuid:01a1c00e-46e2-75f0-af23-193fca7811e5",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-011": {
+    "anchors": [],
+    "decisions": [],
+    "description": "The worker consumes only the jobs queue and may send results only to allowed targets.",
+    "id": "urn:uuid:01a1c00e-4727-73f3-ae07-f35118bb503e",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-012": {
+    "anchors": [],
+    "decisions": [],
+    "description": "A deployed smoke test verifies each release, and rollback deploys an earlier release.",
+    "id": "urn:uuid:01a1c00e-476a-7d5e-83ea-011c9838c065",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  }
+}
