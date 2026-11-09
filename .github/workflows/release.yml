@@ -1,0 +1,224 @@
+name: release
+
+# Operational constraints:
+# - Branch protection/rulesets on main must allow the GitHub Actions token (or a
+#   GitHub App token) to push semantic-release's CHANGELOG commit (H3).
+# - workflow_dispatch must run from main because the deploy role's OIDC trust
+#   only accepts refs/heads/main.
+# - TF_VARS must contain the non-secret operator values from
+#   infra/terraform.tfvars.example; the workflow writes infra/terraform.tfvars.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Release to roll back to (vX.Y.Z or sha-abcdef0). Leave empty to deploy the current commit."
+        required: false
+        type: string
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  id-token: write
+  actions: read
+
+jobs:
+  deploy:
+    name: Release and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # GitHub-hosted checkouts cannot see the gitignored operator file. TF_VARS
+      # must contain the non-secret values from infra/terraform.tfvars.example
+      # (name_prefix, sender/callback configuration, alarms, tags, and so on).
+      - name: Materialize Terraform variables
+        env:
+          TF_VARS: ${{ vars.TF_VARS }}
+        run: |
+          set -euo pipefail
+          if [ -n "${TF_VARS:-}" ]; then
+            printf '%s\n' "$TF_VARS" > infra/terraform.tfvars
+          fi
+          if [ ! -s infra/terraform.tfvars ] || ! grep -q '[^[:space:]]' infra/terraform.tfvars; then
+            echo "::error::infra/terraform.tfvars is required. Set the TF_VARS repository variable to the non-secret operator values from infra/terraform.tfvars.example."
+            exit 1
+          fi
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Run semantic-release
+        if: github.event_name == 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm exec semantic-release
+
+      - name: Determine release
+        id: release
+        env:
+          DISPATCH_RELEASE: ${{ github.event.inputs.release }}
+        run: |
+          set -euo pipefail
+          if [ -n "${DISPATCH_RELEASE:-}" ]; then
+            release="${DISPATCH_RELEASE}"
+            rollback=true
+          elif [ -s .release-version ]; then
+            release="v$(cat .release-version)"
+            rollback=false
+          else
+            release="sha-$(git rev-parse --short=7 HEAD)"
+            rollback=false
+          fi
+          if [[ ! "${release}" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$ ]]; then
+            echo "::error::Invalid release label '${release}'."
+            exit 1
+          fi
+          if [[ "${release}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            semver=true
+          else
+            semver=false
+          fi
+          {
+            echo "release=${release}"
+            echo "rollback=${rollback}"
+            echo "semver=${semver}"
+          } >> "$GITHUB_OUTPUT"
+          echo "Deploying ${release} (rollback=${rollback}, semver=${semver})"
+
+      - name: Build worker
+        if: steps.release.outputs.rollback != 'true'
+        env:
+          RELEASE: ${{ steps.release.outputs.release }}
+        run: pnpm build:worker
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: printer-release-${{ github.run_id }}
+
+      - name: Upload worker artifact
+        if: steps.release.outputs.rollback != 'true'
+        env:
+          RELEASE: ${{ steps.release.outputs.release }}
+          ARTIFACTS_BUCKET: ${{ vars.ARTIFACTS_BUCKET }}
+        run: aws s3 cp "dist/render-worker.zip" "s3://${ARTIFACTS_BUCKET}/${RELEASE}/render-worker.zip" --no-progress
+
+      - name: Verify worker artifact exists
+        env:
+          ARTIFACTS_BUCKET: ${{ vars.ARTIFACTS_BUCKET }}
+          RELEASE: ${{ steps.release.outputs.release }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+        run: |
+          set -euo pipefail
+          key="${RELEASE}/render-worker.zip"
+          if ! aws s3api head-object --bucket "${ARTIFACTS_BUCKET}" --key "${key}" >/dev/null; then
+            echo "::error::Missing s3://${ARTIFACTS_BUCKET}/${key}. Upload this release before deploying it, or roll back to an existing release."
+            exit 1
+          fi
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.11.0"
+
+      - name: Terraform init
+        env:
+          TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
+          TF_STATE_KEY: ${{ vars.TF_STATE_KEY }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+        run: |
+          set -euo pipefail
+          terraform -chdir=infra init -input=false \
+            -backend-config="bucket=${TF_STATE_BUCKET}" \
+            -backend-config="key=${TF_STATE_KEY:-printer/terraform.tfstate}" \
+            -backend-config="region=${AWS_REGION}"
+
+      - name: Terraform apply
+        env:
+          RELEASE: ${{ steps.release.outputs.release }}
+          ARTIFACTS_BUCKET: ${{ vars.ARTIFACTS_BUCKET }}
+          AWS_DEPLOY_ROLE_ARN: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+        run: |
+          set -euo pipefail
+          # -chdir makes var-file paths relative to infra/. Terraform processes
+          # -var-file before subsequent -var flags, so the workflow-owned
+          # release, artifacts, region and deploy role override the operator file.
+          args=(
+            -input=false
+            -auto-approve
+            -var-file=terraform.tfvars
+            -var "release=${RELEASE}"
+            -var "artifacts_bucket=${ARTIFACTS_BUCKET}"
+            -var "region=${AWS_REGION}"
+            -var "deploy_role_arn=${AWS_DEPLOY_ROLE_ARN}"
+          )
+          applied=false
+          for attempt in 1 2 3; do
+            if terraform -chdir=infra apply "${args[@]}"; then
+              applied=true
+              break
+            fi
+            if [ "${attempt}" -lt 3 ]; then
+              echo "::warning::Terraform apply failed on attempt ${attempt}/3; retrying in 60s in case KMS tag propagation has not completed."
+              sleep 60
+            fi
+          done
+          if [ "${applied}" != "true" ]; then
+            echo "::error::Terraform apply failed after 3 attempts."
+            exit 1
+          fi
+
+      - name: Read Terraform outputs
+        id: terraform
+        run: |
+          set -euo pipefail
+          {
+            echo "jobs_queue_url=$(terraform -chdir=infra output -raw jobs_queue_url)"
+            echo "smoke_queue_url=$(terraform -chdir=infra output -raw smoke_queue_url)"
+            echo "smoke_queue_arn=$(terraform -chdir=infra output -raw smoke_queue_arn)"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Smoke test
+        env:
+          JOBS_QUEUE_URL: ${{ steps.terraform.outputs.jobs_queue_url }}
+          SMOKE_QUEUE_URL: ${{ steps.terraform.outputs.smoke_queue_url }}
+          SMOKE_QUEUE_ARN: ${{ steps.terraform.outputs.smoke_queue_arn }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          RELEASE: ${{ steps.release.outputs.release }}
+        run: node scripts/smoke-test.mjs
+
+      - name: Attach template manifest
+        if: steps.release.outputs.semver == 'true' && steps.release.outputs.rollback != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE: ${{ steps.release.outputs.release }}
+        run: gh release upload "${RELEASE}" templates.manifest.json --clobber
