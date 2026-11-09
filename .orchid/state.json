@@ -52,6 +52,17 @@
       "updatedAt": "2026-11-09T13:16:41Z",
       "note": "Independent review LGTM; 27 domain tests pass; spec correction for missing failure callback; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-003/report.md"
+    },
+    "P-004": {
+      "id": "P-004",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c074-43f2-7819-8b18-8d07cc420b23",
+      "startedAt": "2026-11-09T13:16:47Z",
+      "updatedAt": "2026-11-09T13:51:08Z",
+      "note": "Independent review LGTM; 10 manifest tests pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-004/report.md"
     }
   },
   "runs": {
@@ -153,11 +164,44 @@
       },
       "completedAt": "2026-11-09T13:16:41Z",
       "note": "Independent review LGTM; 27 domain tests pass; spec correction for missing failure callback; worktree and branch removed"
+    },
+    "01a1c074-43f2-7819-8b18-8d07cc420b23": {
+      "id": "01a1c074-43f2-7819-8b18-8d07cc420b23",
+      "prompt": "P-004",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-09T13:16:47Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-004",
+        "effort": "low",
+        "requestedEffort": "low",
+        "source": "P-004.effort",
+        "requestedSource": "P-004.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"low\". Set models.efforts.low.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-09T13:51:08Z",
+      "note": "Independent review LGTM; 10 manifest tests pass; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c074-2c7c-7b58-9621-1f8343dea97c",
+  "lastEvent": "01a1c093-b5f5-77e3-af47-68907b41633d",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }
