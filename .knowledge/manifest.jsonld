@@ -11,7 +11,7 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
     "title": "Deliver the Printer serverless PDF rendering service on AWS",
-    "phase": "assessment",
+    "phase": "planning",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
@@ -20,7 +20,7 @@
     "G0": "passed",
     "G1": "passed",
     "G2": "passed",
-    "G3": "pending",
+    "G3": "passed",
     "G4": "pending",
     "G5": "pending",
     "G6": "pending",

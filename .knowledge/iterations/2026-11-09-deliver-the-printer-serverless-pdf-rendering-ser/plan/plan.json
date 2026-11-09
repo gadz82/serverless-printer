@@ -1,0 +1,234 @@
+{
+  "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+  "generatedAt": "2026-11-09T12:45:00Z",
+  "rigor": "L",
+  "waves": [
+    { "wave": 1, "prompts": ["P-001"] },
+    { "wave": 2, "prompts": ["P-002", "P-003", "P-004", "P-007"] },
+    { "wave": 3, "prompts": ["P-005", "P-008"] },
+    { "wave": 4, "prompts": ["P-006", "P-010"] },
+    { "wave": 5, "prompts": ["P-009"] }
+  ],
+  "prompts": [
+    {
+      "id": "P-001",
+      "title": "Create the pnpm workspace, shared toolchain and dependency catalog",
+      "type": "build",
+      "wave": 1,
+      "depends_on": [],
+      "personas": ["TECH_LEAD", "DEV"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": {
+        "write": [
+          "package.json",
+          "pnpm-workspace.yaml",
+          "pnpm-lock.yaml",
+          "tsconfig.base.json",
+          "eslint.config.js",
+          ".prettierrc.json",
+          ".prettierignore",
+          ".editorconfig",
+          ".npmrc",
+          "vitest.config.ts",
+          "commitlint.config.js",
+          ".husky/commit-msg",
+          ".gitignore",
+          "README.md"
+        ]
+      },
+      "acceptance": [
+        "pnpm install --frozen-lockfile",
+        "pnpm lint",
+        "pnpm exec prettier --check .",
+        "pnpm typecheck",
+        "pnpm test"
+      ]
+    },
+    {
+      "id": "P-002",
+      "title": "Publish versioned job and result schemas with validated generated types",
+      "type": "build",
+      "wave": 2,
+      "depends_on": ["P-001"],
+      "personas": ["TECH_LEAD", "DEV", "QE"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": { "write": ["packages/contracts/**"] },
+      "acceptance": [
+        "pnpm --filter @printer/contracts generate",
+        "pnpm --filter @printer/contracts test",
+        "pnpm --filter @printer/contracts typecheck",
+        "pnpm lint"
+      ]
+    },
+    {
+      "id": "P-003",
+      "title": "Implement the print-domain entities, ports and processing use case",
+      "type": "build",
+      "wave": 2,
+      "depends_on": ["P-001"],
+      "personas": ["TECH_LEAD", "DEV", "QE"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": { "write": ["packages/domain/**"] },
+      "acceptance": [
+        "pnpm --filter @printer/domain test",
+        "pnpm --filter @printer/domain typecheck",
+        "pnpm lint"
+      ]
+    },
+    {
+      "id": "P-004",
+      "title": "Bundle the _smoke template and generate its content-hashed manifest",
+      "type": "build",
+      "wave": 2,
+      "depends_on": ["P-001"],
+      "personas": ["DEV", "QE"],
+      "estimate": "S",
+      "effort": "low",
+      "scope": {
+        "write": ["templates/_smoke/**", "scripts/template-manifest.mjs", "scripts/template-manifest.test.mjs"]
+      },
+      "acceptance": [
+        "pnpm template:manifest",
+        "pnpm vitest run scripts/template-manifest.test.mjs",
+        "pnpm lint"
+      ]
+    },
+    {
+      "id": "P-005",
+      "title": "Implement the Lambda worker, AWS adapters and SQS batch handling",
+      "type": "build",
+      "wave": 3,
+      "depends_on": ["P-002", "P-003", "P-004"],
+      "personas": ["DEV", "QE", "DEVOPS"],
+      "estimate": "L",
+      "effort": "high",
+      "scope": { "write": ["apps/render-worker/**"] },
+      "acceptance": [
+        "pnpm --filter @printer/render-worker test",
+        "pnpm --filter @printer/render-worker typecheck",
+        "pnpm lint"
+      ]
+    },
+    {
+      "id": "P-006",
+      "title": "Run the worker against LocalStack with a callback sink and integration tests",
+      "type": "build",
+      "wave": 4,
+      "depends_on": ["P-004", "P-005"],
+      "personas": ["DEV", "QE"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": {
+        "write": [
+          "docker-compose.yml",
+          "tests/integration/**",
+          "scripts/local-worker.mjs",
+          "scripts/local-callback-sink.mjs",
+          "scripts/smoke-local.mjs"
+        ]
+      },
+      "acceptance": [
+        "docker compose up -d localstack",
+        "pnpm test:integration",
+        "pnpm smoke:local",
+        "pnpm lint",
+        "pnpm typecheck"
+      ]
+    },
+    {
+      "id": "P-007",
+      "title": "Provision the state, artifacts and GitHub OIDC foundation with Terraform",
+      "type": "build",
+      "wave": 2,
+      "depends_on": ["P-001"],
+      "personas": ["DEVOPS", "TECH_LEAD", "SECURITY"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": { "write": ["infra/bootstrap/**"] },
+      "acceptance": [
+        "terraform -chdir=infra/bootstrap fmt -check",
+        "terraform -chdir=infra/bootstrap init -backend=false",
+        "terraform -chdir=infra/bootstrap validate",
+        "tflint --chdir=infra/bootstrap"
+      ]
+    },
+    {
+      "id": "P-008",
+      "title": "Build the printer Terraform module and single root deployment",
+      "type": "build",
+      "wave": 3,
+      "depends_on": ["P-007"],
+      "personas": ["DEVOPS", "TECH_LEAD", "SECURITY"],
+      "estimate": "L",
+      "effort": "high",
+      "scope": {
+        "write": [
+          "infra/main.tf",
+          "infra/variables.tf",
+          "infra/backend.tf",
+          "infra/terraform.tfvars.example",
+          "infra/modules/printer/**",
+          "infra/.terraform.lock.hcl",
+          "infra/README.md"
+        ]
+      },
+      "acceptance": [
+        "terraform -chdir=infra fmt -check",
+        "terraform -chdir=infra init -backend=false",
+        "terraform -chdir=infra validate",
+        "tflint --chdir=infra"
+      ]
+    },
+    {
+      "id": "P-009",
+      "title": "Gate pull requests with code, contract, LocalStack and Terraform checks",
+      "type": "build",
+      "wave": 5,
+      "depends_on": ["P-002", "P-003", "P-005", "P-006", "P-008"],
+      "personas": ["DEVOPS", "QE", "TECH_LEAD"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": { "write": [".github/workflows/ci.yml", "tflint.hcl"] },
+      "acceptance": [
+        "pnpm exec prettier --check .github/workflows/ci.yml",
+        "terraform -chdir=infra fmt -check",
+        "git diff --check"
+      ]
+    },
+    {
+      "id": "P-010",
+      "title": "Cut releases and deploy through OIDC with smoke and rollback",
+      "type": "build",
+      "wave": 4,
+      "depends_on": ["P-004", "P-005", "P-008"],
+      "personas": ["DEVOPS", "QE", "TECH_LEAD"],
+      "estimate": "L",
+      "effort": "high",
+      "scope": {
+        "write": [
+          ".github/workflows/release.yml",
+          ".releaserc.json",
+          "scripts/build-worker.mjs",
+          "scripts/smoke-test.mjs",
+          "scripts/write-release.mjs"
+        ]
+      },
+      "acceptance": [
+        "pnpm build:worker",
+        "node --check scripts/build-worker.mjs",
+        "node --check scripts/smoke-test.mjs",
+        "node --check scripts/write-release.mjs",
+        "pnpm exec prettier --check .github/workflows/release.yml .releaserc.json"
+      ]
+    }
+  ],
+  "critical_path": ["P-001", "P-002", "P-005", "P-006", "P-009"],
+  "budget": {
+    "per_iteration_warn": 250000,
+    "per_iteration_stop": 600000,
+    "estimated_total_tokens": 278000
+  }
+}
