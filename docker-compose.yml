@@ -1,0 +1,34 @@
+# Local development only. Run `pnpm install` on the host before starting the
+# callback sink: the container mounts the repository and uses the workspace
+# node_modules instead of installing its own copy.
+services:
+  localstack:
+    image: localstack/localstack:4
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: sqs,s3
+      AWS_DEFAULT_REGION: eu-central-1
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:4566/_localstack/health >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  callback-sink:
+    image: node:24-alpine
+    working_dir: /workspace
+    command: ["node", "scripts/local-callback-sink.mjs"]
+    volumes:
+      - .:/workspace
+    environment:
+      AWS_ENDPOINT_URL: http://localstack:4566
+      AWS_REGION: eu-central-1
+      AWS_DEFAULT_REGION: eu-central-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      SMOKE_QUEUE_URL: http://localstack:4566/000000000000/printer-smoke-results
+    depends_on:
+      localstack:
+        condition: service_healthy
