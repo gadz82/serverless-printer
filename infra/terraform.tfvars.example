@@ -1,0 +1,58 @@
+# Copy this file to infra/terraform.tfvars and replace the example values.
+# The release workflow supplies release and artifacts_bucket with -var, so the
+# values here only affect manual applies and plans.
+
+name_prefix = "printer"
+region      = "eu-central-1"
+
+# Release label whose render-worker.zip is deployed from the artifacts bucket.
+# The release workflow overrides this with -var release=<release>.
+release = "dev"
+
+# Bootstrap outputs. The defaults (<name_prefix>-artifacts and the
+# <name_prefix>-deploy role) are used when these are omitted, but an operator
+# should still verify them against `terraform -chdir=infra/bootstrap output`.
+artifacts_bucket = "printer-artifacts"
+deploy_role_arn  = "arn:aws:iam::123456789012:role/printer-deploy"
+
+# Who may send jobs to the jobs queue. At least one of these is expected in a
+# real deployment; the deploy role is always allowed so the release smoke can
+# submit its job.
+allowed_sender_account_ids    = ["123456789012"]
+allowed_sender_principal_arns = []
+# organization_id             = "o-a1b2c3d4e5"
+
+# SQS result targets the worker may send to. The <name_prefix>-smoke-results
+# queue is added automatically for the release smoke.
+callback_target_arns = [
+  "arn:aws:sqs:eu-central-1:123456789012:printer-callbacks",
+]
+
+# HTTPS host patterns allowed for http callbacks and ping URLs.
+callback_allowlist = [
+  "https://callbacks.example.com",
+  "https://*.example.net",
+]
+
+handlebars_mode     = "lenient"
+pdfa_allowed_levels = [] # Phase 1 rejects PDF/A requests (ADR-003).
+
+event_source        = "printer"
+presign_ttl_seconds = 900
+max_receive_count   = 5
+batch_size          = 5
+maximum_concurrency = 10
+# reserved_concurrency = 5
+
+enable_alarms       = false
+alarm_sns_topic_arn = null
+log_retention_days  = 30
+
+# Phase 1 supports only "none"; VPC modes arrive in Phase 2.
+vpc_mode = "none"
+
+tags = {
+  # Keep Project equal to name_prefix: the bootstrap deploy role's KMS identity
+  # policy uses aws:ResourceTag/Project = name_prefix.
+  Project = "printer"
+}
