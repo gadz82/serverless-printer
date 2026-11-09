@@ -52,6 +52,7 @@ export type WorkerOverrides = {
  * runtime; no adapter reaches for a global client. The renderer and SQS client
  * overrides are test seams for integration failures, not production choices.
  */
+// ORCHID-MEM: 01a1c1d8-f229-78d0-8db6-dcbfec06856f — Single composition root wiring config, manifest, AWS clients, adapters and the print use case.
 export function composeWorker(
   env: NodeJS.ProcessEnv = process.env,
   overrides: WorkerOverrides = {},

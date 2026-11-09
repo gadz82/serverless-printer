@@ -31,6 +31,7 @@ const SHA256_PATTERN = /^[0-9a-f]{64}$/;
  * The small manifest is read and validated eagerly in the constructor so a
  * missing or corrupt bundle fails the cold-start composition, not every job.
  */
+// ORCHID-MEM: 01a1c1d8-f365-7ef6-977c-6c5ee18cb802 — Resolves template ids and slugs from the bundled, content-hashed manifest.
 export class ManifestTemplateCatalog implements TemplateCatalog {
   private readonly manifest: TemplateManifest;
 

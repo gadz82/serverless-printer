@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-09T19:43:47Z",
+  "generatedAt": "2026-11-09T19:46:54Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -11,7 +11,7 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
     "title": "Deliver the Printer serverless PDF rendering service on AWS",
-    "phase": "build",
+    "phase": "logic_review",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
@@ -22,7 +22,7 @@
     "G2": "passed",
     "G3": "passed",
     "G4": "passed",
-    "G5": "pending",
+    "G5": "passed",
     "G6": "pending",
     "G7": "pending",
     "G8": "pending"
@@ -1196,6 +1196,294 @@
       ],
       "artifact": "assessment/adr/ADR-006-reserved-smoke-slug.md",
       "hash": "sha256:2e9d497221a10f6fd7b436a51544271d1b599897cc99d85974493cb7125b8f6b"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f018-7fa1-8f4a-34775562fc02",
+      "@type": "orchid:CodeUnit",
+      "description": "Validates inbound print jobs against the JSON Schema contract before domain mapping.",
+      "status": "accepted",
+      "topics": [
+        "contracts",
+        "validation",
+        "jobs",
+        "json-schema"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:22Z",
+      "updatedAt": "2026-11-09T19:46:22Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f018-7fa1-8f4a-34775562fc02.md",
+      "codeAnchor": "packages/contracts/src/validation.ts#validateJob",
+      "hash": "sha256:e9fc12fe35fe7ff049f1df6ff3086d07a86aa2d1669409c90f48f62061b05d38"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f085-734b-9df3-a3da92ea4d6c",
+      "@type": "orchid:CodeUnit",
+      "description": "Validates outbound results against the JSON Schema contract, including error codes and metadata.",
+      "status": "accepted",
+      "topics": [
+        "contracts",
+        "validation",
+        "results",
+        "json-schema"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:22Z",
+      "updatedAt": "2026-11-09T19:46:22Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f085-734b-9df3-a3da92ea4d6c.md",
+      "codeAnchor": "packages/contracts/src/validation.ts#validateResult",
+      "hash": "sha256:c844afb1ad2f54fe5aa0e2321be11d48809be7579d38a34614b44b8aaa6bee6b"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f0ed-7e00-b4c3-0d86a2e00678",
+      "@type": "orchid:CodeUnit",
+      "description": "Orchestrates one print job through template resolution, rendering, storage and result delivery.",
+      "status": "accepted",
+      "topics": [
+        "domain",
+        "use-case",
+        "printing",
+        "orchestration"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:22Z",
+      "updatedAt": "2026-11-09T19:46:22Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f0ed-7e00-b4c3-0d86a2e00678.md",
+      "codeAnchor": "packages/domain/src/application/process-print-job.ts#ProcessPrintJob",
+      "hash": "sha256:3f4f14754df0821e0cb8563604ee34fc2261842ad4bc348ea28a6f1d4093cba8"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f158-78ca-96a6-d1794b435d16",
+      "@type": "orchid:CodeUnit",
+      "description": "Base domain error carrying a public error code and retryability for every print failure.",
+      "status": "accepted",
+      "topics": [
+        "domain",
+        "errors",
+        "retryability",
+        "contract"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:22Z",
+      "updatedAt": "2026-11-09T19:46:22Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f158-78ca-96a6-d1794b435d16.md",
+      "codeAnchor": "packages/domain/src/domain/errors.ts#PrintJobError",
+      "hash": "sha256:37bd1e8ea3e1289c0be303c31253917966f89b7532fa38ddc1e3589a7c97f20e"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f1c0-7c6e-8a78-68b1df5d94f4",
+      "@type": "orchid:CodeUnit",
+      "description": "Lambda SQS entry point that validates records, processes jobs and reports batch item failures.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "lambda",
+        "sqs",
+        "entry-point"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:22Z",
+      "updatedAt": "2026-11-09T19:46:22Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f1c0-7c6e-8a78-68b1df5d94f4.md",
+      "codeAnchor": "apps/render-worker/src/handler.ts#handler",
+      "hash": "sha256:9c8cf882d1770303933140cf55e00b04edea3a1c54326c68d80bc0b0c5bad752"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f229-78d0-8db6-dcbfec06856f",
+      "@type": "orchid:CodeUnit",
+      "description": "Single composition root wiring config, manifest, AWS clients, adapters and the print use case.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "composition",
+        "adapters",
+        "dependency-injection"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:22Z",
+      "updatedAt": "2026-11-09T19:46:22Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f229-78d0-8db6-dcbfec06856f.md",
+      "codeAnchor": "apps/render-worker/src/composition-root.ts#composeWorker",
+      "hash": "sha256:528ee215a76af1e7bb3489e0f2a6f3c24ca37e7fefe0a3e382f0e26034dfd58f"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f292-7843-9137-1a7992a59d52",
+      "@type": "orchid:CodeUnit",
+      "description": "Stores one PDF under prints/<printId>.pdf with SHA-256, size and a presigned GET.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "s3",
+        "storage",
+        "presign"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:23Z",
+      "updatedAt": "2026-11-09T19:46:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f292-7843-9137-1a7992a59d52.md",
+      "codeAnchor": "apps/render-worker/src/adapters/s3-print-repository.ts#S3PrintRepository",
+      "hash": "sha256:2eef9cfbc2b205237bcae8c31fa1e52a0bdf8d89c75473c63836acfb0789a4bd"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f2fd-74ad-98df-82f314ec4228",
+      "@type": "orchid:CodeUnit",
+      "description": "Delivers success or failure results to an SQS queue, including FIFO identifiers.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "sqs",
+        "delivery",
+        "fifo"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:23Z",
+      "updatedAt": "2026-11-09T19:46:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f2fd-74ad-98df-82f314ec4228.md",
+      "codeAnchor": "apps/render-worker/src/adapters/sqs-result-delivery.ts#SqsResultDelivery",
+      "hash": "sha256:f9a1299788847287ca598d21c77fa349227520aa87e95f2814a7bacdcb5ce145"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f365-7ef6-977c-6c5ee18cb802",
+      "@type": "orchid:CodeUnit",
+      "description": "Resolves template ids and slugs from the bundled, content-hashed manifest.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "manifest",
+        "templates",
+        "resolution"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:23Z",
+      "updatedAt": "2026-11-09T19:46:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f365-7ef6-977c-6c5ee18cb802.md",
+      "codeAnchor": "apps/render-worker/src/adapters/manifest-template-catalog.ts#ManifestTemplateCatalog",
+      "hash": "sha256:eaf46c81cc57144ee34085fcc5a9ec0fe4f88243ceade8e736181a83eba80fb3"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f3cf-7510-8a55-e30c74b3499a",
+      "@type": "orchid:CodeUnit",
+      "description": "Phase 1 deterministic placeholder PDF producer behind the renderer port.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "rendering",
+        "placeholder",
+        "phase-1"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:23Z",
+      "updatedAt": "2026-11-09T19:46:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f3cf-7510-8a55-e30c74b3499a.md",
+      "codeAnchor": "apps/render-worker/src/adapters/placeholder-pdf-renderer.ts#PlaceholderPdfRenderer",
+      "hash": "sha256:9d5064a9ab4d5ad5701c6cb2928771625c9a82d28094b1c8747c7289ddd963c8"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f43a-7c14-886e-0e99b8f3511c",
+      "@type": "orchid:CodeUnit",
+      "description": "Derives deterministic UUIDv5 print ids from inbound SQS message ids.",
+      "status": "accepted",
+      "topics": [
+        "worker",
+        "idempotency",
+        "uuid",
+        "print-id"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:23Z",
+      "updatedAt": "2026-11-09T19:46:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f43a-7c14-886e-0e99b8f3511c.md",
+      "codeAnchor": "apps/render-worker/src/adapters/uuid-print-id-generator.ts#UuidPrintIdGenerator",
+      "hash": "sha256:f7079e6074b8f1d7130b75be45c156b38e51ed7326ce47a7d5e12bb36626604f"
+    },
+    {
+      "@id": "urn:uuid:01a1c1d8-f4a3-73ce-8036-12b8b6325602",
+      "@type": "orchid:CodeUnit",
+      "description": "Builds the release-aware template manifest with sorted SHA-256 content hashes.",
+      "status": "accepted",
+      "topics": [
+        "build",
+        "manifest",
+        "templates",
+        "hashing"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-09T19:46:23Z",
+      "updatedAt": "2026-11-09T19:46:23Z",
+      "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c1d8-f4a3-73ce-8036-12b8b6325602.md",
+      "codeAnchor": "scripts/template-manifest.mjs#buildManifest",
+      "hash": "sha256:80d206db568800095a02dbae3cbe534589f4502931090a06960330715c37e6fe"
     }
   ]
 }

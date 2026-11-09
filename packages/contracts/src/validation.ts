@@ -14,7 +14,9 @@ const ajv = new Ajv2020({
   strict: true,
 });
 
+// ORCHID-MEM: 01a1c1d8-f018-7fa1-8f4a-34775562fc02 — Validates inbound print jobs against the JSON Schema contract before domain mapping.
 export const validateJob: ValidateFunction<PrintJob> = ajv.compile<PrintJob>(jobSchema);
+// ORCHID-MEM: 01a1c1d8-f085-734b-9df3-a3da92ea4d6c — Validates outbound results against the JSON Schema contract, including error codes and metadata.
 export const validateResult: ValidateFunction<PrintResult> = ajv.compile<PrintResult>(resultSchema);
 
 export type ValidationIssue = {

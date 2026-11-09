@@ -44,6 +44,7 @@ export function sha256Hex(bytes: Uint8Array): string {
  * the project CMK. The worker deliberately sends no per-object SSE header, so
  * LocalStack only needs SQS and S3.
  */
+// ORCHID-MEM: 01a1c1d8-f292-7843-9137-1a7992a59d52 — Stores one PDF under prints/<printId>.pdf with SHA-256, size and a presigned GET.
 export class S3PrintRepository implements PrintRepository {
   private readonly client: PrintObjectClient;
   private readonly bucket: string;

@@ -98,6 +98,7 @@ function registerUnique(seen, value, kind, source) {
   seen.set(value, source);
 }
 
+// ORCHID-MEM: 01a1c1d8-f4a3-73ce-8036-12b8b6325602 — Builds the release-aware template manifest with sorted SHA-256 content hashes.
 export async function buildManifest(root, release = process.env.RELEASE || "local") {
   const repositoryRoot = path.resolve(root);
   const templatesDirectory = path.join(repositoryRoot, "templates");

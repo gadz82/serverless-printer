@@ -14,6 +14,7 @@ export type ErrorCode =
  * The fixed code and retryable flag are the domain's public error taxonomy;
  * adapters wrap provider errors in one of these before rethrowing.
  */
+// ORCHID-MEM: 01a1c1d8-f158-78ca-96a6-d1794b435d16 — Base domain error carrying a public error code and retryability for every print failure.
 export abstract class PrintJobError extends Error {
   abstract readonly code: ErrorCode;
   abstract readonly retryable: boolean;

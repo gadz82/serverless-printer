@@ -50,6 +50,7 @@ export type ProcessPrintJobDependencies = {
  * redeliver the message. On the last attempt the failure result is delivered;
  * if delivery itself fails the error escapes for the dead-letter queue.
  */
+// ORCHID-MEM: 01a1c1d8-f0ed-7e00-b4c3-0d86a2e00678 — Orchestrates one print job through template resolution, rendering, storage and result delivery.
 export class ProcessPrintJob {
   constructor(private readonly dependencies: ProcessPrintJobDependencies) {}
 

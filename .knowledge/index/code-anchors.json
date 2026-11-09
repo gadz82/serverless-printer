@@ -1,1 +1,38 @@
-{}
+{
+  "apps/render-worker/src/adapters/manifest-template-catalog.ts#ManifestTemplateCatalog": [
+    "urn:uuid:01a1c1d8-f365-7ef6-977c-6c5ee18cb802"
+  ],
+  "apps/render-worker/src/adapters/placeholder-pdf-renderer.ts#PlaceholderPdfRenderer": [
+    "urn:uuid:01a1c1d8-f3cf-7510-8a55-e30c74b3499a"
+  ],
+  "apps/render-worker/src/adapters/s3-print-repository.ts#S3PrintRepository": [
+    "urn:uuid:01a1c1d8-f292-7843-9137-1a7992a59d52"
+  ],
+  "apps/render-worker/src/adapters/sqs-result-delivery.ts#SqsResultDelivery": [
+    "urn:uuid:01a1c1d8-f2fd-74ad-98df-82f314ec4228"
+  ],
+  "apps/render-worker/src/adapters/uuid-print-id-generator.ts#UuidPrintIdGenerator": [
+    "urn:uuid:01a1c1d8-f43a-7c14-886e-0e99b8f3511c"
+  ],
+  "apps/render-worker/src/composition-root.ts#composeWorker": [
+    "urn:uuid:01a1c1d8-f229-78d0-8db6-dcbfec06856f"
+  ],
+  "apps/render-worker/src/handler.ts#handler": [
+    "urn:uuid:01a1c1d8-f1c0-7c6e-8a78-68b1df5d94f4"
+  ],
+  "packages/contracts/src/validation.ts#validateJob": [
+    "urn:uuid:01a1c1d8-f018-7fa1-8f4a-34775562fc02"
+  ],
+  "packages/contracts/src/validation.ts#validateResult": [
+    "urn:uuid:01a1c1d8-f085-734b-9df3-a3da92ea4d6c"
+  ],
+  "packages/domain/src/application/process-print-job.ts#ProcessPrintJob": [
+    "urn:uuid:01a1c1d8-f0ed-7e00-b4c3-0d86a2e00678"
+  ],
+  "packages/domain/src/domain/errors.ts#PrintJobError": [
+    "urn:uuid:01a1c1d8-f158-78ca-96a6-d1794b435d16"
+  ],
+  "scripts/template-manifest.mjs#buildManifest": [
+    "urn:uuid:01a1c1d8-f4a3-73ce-8036-12b8b6325602"
+  ]
+}

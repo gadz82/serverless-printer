@@ -258,4 +258,5 @@ function runtimeForInvocation(): WorkerRuntime {
   return coldStartRuntime;
 }
 
+// ORCHID-MEM: 01a1c1d8-f1c0-7c6e-8a78-68b1df5d94f4 — Lambda SQS entry point that validates records, processes jobs and reports batch item failures.
 export const handler: SqsHandler = createSqsHandler(runtimeForInvocation);

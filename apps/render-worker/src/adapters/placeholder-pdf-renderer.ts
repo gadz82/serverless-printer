@@ -46,6 +46,7 @@ export const PLACEHOLDER_PDF_BYTES = buildPlaceholderPdf();
  * fixed one-page PDF. It proves storage and delivery, not rendering fidelity;
  * Chromium and PDF/A replace this adapter in Phase 3.
  */
+// ORCHID-MEM: 01a1c1d8-f3cf-7510-8a55-e30c74b3499a — Phase 1 deterministic placeholder PDF producer behind the renderer port.
 export class PlaceholderPdfRenderer implements PdfRenderer {
   async render(): Promise<Uint8Array> {
     return PLACEHOLDER_PDF_BYTES.slice();

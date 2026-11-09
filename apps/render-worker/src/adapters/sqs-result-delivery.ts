@@ -101,6 +101,7 @@ export function fifoIdentifiers(refId: RefId, messageId: string): FifoIdentifier
  * Sends the result to an SQS callback queue. Phase 1 supports only the `sqs`
  * channel; the use case rejects the others before this adapter is reached.
  */
+// ORCHID-MEM: 01a1c1d8-f2fd-74ad-98df-82f314ec4228 — Delivers success or failure results to an SQS queue, including FIFO identifiers.
 export class SqsResultDelivery implements ResultDelivery {
   constructor(
     private readonly client: SqsSendClient,
