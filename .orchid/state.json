@@ -33,12 +33,14 @@
     },
     "P-002": {
       "id": "P-002",
-      "status": "running",
+      "status": "done",
       "step": "implement",
       "attempt": 1,
       "runId": "01a1c02a-dfd8-73a0-8585-857358c467cc",
       "startedAt": "2026-11-09T11:56:37Z",
-      "updatedAt": "2026-11-09T11:56:37Z"
+      "updatedAt": "2026-11-09T12:29:42Z",
+      "note": "Independent review LGTM; 174 contract tests pass; lockfile regenerated on main; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-002/report.md"
     }
   },
   "runs": {
@@ -81,7 +83,7 @@
       "phase": "build",
       "attempt": 1,
       "step": "implement",
-      "status": "running",
+      "status": "completed",
       "startedAt": "2026-11-09T11:56:37Z",
       "routing": {
         "phase": "build",
@@ -104,12 +106,14 @@
         "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
         "expectedText": "",
         "currentText": "agent=opencode model=unknown"
-      }
+      },
+      "completedAt": "2026-11-09T12:29:42Z",
+      "note": "Independent review LGTM; 174 contract tests pass; lockfile regenerated on main; worktree and branch removed"
     }
   },
-  "currentPrompt": "P-002",
-  "currentRun": "01a1c02a-dfd8-73a0-8585-857358c467cc",
+  "currentPrompt": null,
+  "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c02a-dfd9-7f22-aa16-7e96e395e793",
+  "lastEvent": "01a1c049-297a-7281-9a59-19434f5b890a",
   "memoryEvent": "01a1c018-1878-7202-9ff9-4ddd956a7c88"
 }
