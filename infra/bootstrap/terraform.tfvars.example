@@ -1,7 +1,7 @@
 name_prefix = "printer"
 region      = "eu-central-1"
 
-github_owner = "your-github-owner"
+github_owner = "gadz82"
 github_repo  = "serverless-printer"
 
 # Set to false only when token.actions.githubusercontent.com already exists in
