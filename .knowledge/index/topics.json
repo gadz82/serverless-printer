@@ -27,6 +27,9 @@
   "browser-reuse": [
     "urn:uuid:01a1c532-6447-7cdd-a0ee-e2d9727dd265"
   ],
+  "budget": [
+    "urn:uuid:01a1c533-b79f-7fbb-a1ec-11b94737c6d9"
+  ],
   "callbacks": [
     "urn:uuid:01a1c524-059b-78ca-96bb-7b7dc7661ccc",
     "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58",
@@ -122,7 +125,8 @@
     "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596",
     "urn:uuid:01a1c532-678c-7002-b598-0375446e54a7",
     "urn:uuid:01a1c532-6a1e-74d4-b58f-e86543066884",
-    "urn:uuid:01a1c532-6a65-7451-84e6-ff1d908eebdf"
+    "urn:uuid:01a1c532-6a65-7451-84e6-ff1d908eebdf",
+    "urn:uuid:01a1c533-b758-7edd-a347-5dc56f3be9d4"
   ],
   "lambda": [
     "urn:uuid:01a1c524-050d-73cd-b07f-7890bd9286ba",
@@ -131,7 +135,8 @@
   ],
   "least-privilege": [
     "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33",
-    "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4"
+    "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4",
+    "urn:uuid:01a1c533-b758-7edd-a347-5dc56f3be9d4"
   ],
   "load-test": [
     "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad",
@@ -182,9 +187,15 @@
     "urn:uuid:01a1c532-65a1-7bdf-9bba-bf88595b27e4",
     "urn:uuid:01a1c532-662d-7b25-b13c-601f2849645e"
   ],
+  "planning": [
+    "urn:uuid:01a1c533-b79f-7fbb-a1ec-11b94737c6d9"
+  ],
   "preview": [
     "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330",
     "urn:uuid:01a1c532-68fb-7e3d-94fe-8ef750e91ba8"
+  ],
+  "process": [
+    "urn:uuid:01a1c533-b79f-7fbb-a1ec-11b94737c6d9"
   ],
   "production": [
     "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c",
@@ -234,7 +245,8 @@
     "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f",
     "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4",
     "urn:uuid:01a1c532-66ff-7f6f-b30c-0e7ba179e04b",
-    "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596"
+    "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596",
+    "urn:uuid:01a1c533-b758-7edd-a347-5dc56f3be9d4"
   ],
   "rollback": [
     "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d",
@@ -273,11 +285,15 @@
     "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58",
     "urn:uuid:01a1c532-6675-7c04-8ac6-c6bef4d68780"
   ],
+  "staging": [
+    "urn:uuid:01a1c533-b79f-7fbb-a1ec-11b94737c6d9"
+  ],
   "terraform": [
     "urn:uuid:01a1c524-078d-70bb-8aeb-a4441811c867",
     "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f",
     "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc",
-    "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4"
+    "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4",
+    "urn:uuid:01a1c533-b758-7edd-a347-5dc56f3be9d4"
   ],
   "testing": [
     "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2",

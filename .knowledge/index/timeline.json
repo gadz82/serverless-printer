@@ -1608,5 +1608,19 @@
     "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "phase": "discovery",
     "subject": "urn:uuid:01a1c532-6aab-74c5-a52f-8b9d93ae5026"
+  },
+  {
+    "ts": "2026-11-10T11:24:23Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c533-b758-7edd-a347-5dc56f3be9d4"
+  },
+  {
+    "ts": "2026-11-10T11:24:23Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c533-b79f-7fbb-a1ec-11b94737c6d9"
   }
 ]
