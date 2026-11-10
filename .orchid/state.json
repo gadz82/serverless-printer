@@ -294,6 +294,17 @@
       "updatedAt": "2026-11-10T18:52:01Z",
       "note": "Two independent reviews PASS after target-metric, TF_VARS, Power Tuning and batch-failure fixes; harness verified with fake SQS and memory query; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-210/report.md"
+    },
+    "P-211": {
+      "id": "P-211",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c6ce-8dc8-753b-950e-ad51981847e9",
+      "startedAt": "2026-11-10T18:53:07Z",
+      "updatedAt": "2026-11-10T19:13:32Z",
+      "note": "Two independent reviews PASS after bootstrap/role/VPC/protection/smoke/rollback corrections; docs and acceptance checks pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-211/report.md"
     }
   },
   "runs": {
@@ -1121,11 +1132,44 @@
       },
       "completedAt": "2026-11-10T18:52:01Z",
       "note": "Two independent reviews PASS after target-metric, TF_VARS, Power Tuning and batch-failure fixes; harness verified with fake SQS and memory query; worktree and branch removed"
+    },
+    "01a1c6ce-8dc8-753b-950e-ad51981847e9": {
+      "id": "01a1c6ce-8dc8-753b-950e-ad51981847e9",
+      "prompt": "P-211",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T18:53:07Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-211",
+        "effort": "low",
+        "requestedEffort": "low",
+        "source": "P-211.effort",
+        "requestedSource": "P-211.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"low\". Set models.efforts.low.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T19:13:32Z",
+      "note": "Two independent reviews PASS after bootstrap/role/VPC/protection/smoke/rollback corrections; docs and acceptance checks pass; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c6cd-894e-73e4-882f-a4663176c83e",
+  "lastEvent": "01a1c6e1-3db7-755f-b6f5-660479a32b05",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }

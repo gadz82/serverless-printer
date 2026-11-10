@@ -148,7 +148,10 @@
     "wave": 5,
     "writeScopes": [
       "docs/cloud-verification.md",
+      "docs/runbook.md",
+      "infra/bootstrap/README.md",
       "infra/README.md",
+      "infra/terraform.tfvars.example",
       "README.md"
     ]
   }
