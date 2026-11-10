@@ -21,8 +21,9 @@
       "depends_on": [],
       "estimate": "M",
       "effort": "medium",
-      "status": "pending",
-      "step": null
+      "status": "done",
+      "step": "implement",
+      "updatedAt": "2026-11-10T09:39:55Z"
     },
     {
       "id": "P-102",

@@ -97,6 +97,7 @@
           "infra/modules/printer/variables.tf",
           "infra/modules/printer/main.tf",
           "infra/modules/printer/lambda.tf",
+          "infra/modules/printer/iam.tf",
           "infra/modules/printer/outputs.tf",
           "infra/terraform.tfvars.example",
           "infra/README.md"

@@ -45,6 +45,7 @@
     "writeScopes": [
       "infra/main.tf",
       "infra/modules/network/**",
+      "infra/modules/printer/iam.tf",
       "infra/modules/printer/lambda.tf",
       "infra/modules/printer/main.tf",
       "infra/modules/printer/outputs.tf",
