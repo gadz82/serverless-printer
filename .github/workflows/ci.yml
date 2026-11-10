@@ -129,6 +129,36 @@ jobs:
           AWS_SECRET_ACCESS_KEY: test
         run: pnpm test:integration
 
+  render-regression:
+    name: Render regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install poppler-utils
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y poppler-utils
+
+      - name: Compare plain and PDF/A renders with the references
+        env:
+          RENDER_REGRESSION_REQUIRED: "1"
+        run: pnpm test:render
+
   terraform:
     name: Terraform validation
     runs-on: ubuntu-latest
