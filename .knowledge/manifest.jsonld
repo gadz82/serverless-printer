@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-finalize-printer-rendering-callbacks-and-product",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T19:15:43Z",
+  "generatedAt": "2026-11-10T19:16:39Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -11,7 +11,7 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "title": "Finalize Printer rendering, callbacks and production readiness",
-    "phase": "build",
+    "phase": "logic_review",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
