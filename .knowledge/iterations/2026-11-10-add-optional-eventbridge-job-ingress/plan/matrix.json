@@ -1,0 +1,17 @@
+{
+  "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+  "generatedAt": "2026-11-10T21:30:00Z",
+  "prompts": [
+    {
+      "id": "P-001",
+      "title": "Add the optional EventBridge job-ingress rule",
+      "wave": 1,
+      "depends_on": [],
+      "estimate": "S",
+      "effort": "low",
+      "status": "done",
+      "step": "implement",
+      "updatedAt": "2026-11-10T20:47:52Z"
+    }
+  ]
+}

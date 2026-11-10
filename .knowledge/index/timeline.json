@@ -1937,5 +1937,124 @@
     "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "phase": "complete",
     "subject": "urn:orchid:iteration:2026-11-10-finalize-printer-rendering-callbacks-and-product"
+  },
+  {
+    "ts": "2026-11-10T20:19:37Z",
+    "event": "iteration.started",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "intent",
+    "subject": "urn:orchid:iteration:2026-11-10-add-optional-eventbridge-job-ingress"
+  },
+  {
+    "ts": "2026-11-10T20:20:58Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "intent",
+    "subject": "gate:G1"
+  },
+  {
+    "ts": "2026-11-10T20:20:58Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "discovery",
+    "subject": "phase:discovery"
+  },
+  {
+    "ts": "2026-11-10T20:21:26Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "discovery",
+    "subject": "gate:G2"
+  },
+  {
+    "ts": "2026-11-10T20:21:26Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "assessment",
+    "subject": "phase:assessment"
+  },
+  {
+    "ts": "2026-11-10T20:21:41Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "assessment",
+    "subject": "gate:G3"
+  },
+  {
+    "ts": "2026-11-10T20:21:41Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "planning",
+    "subject": "phase:planning"
+  },
+  {
+    "ts": "2026-11-10T20:21:49Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "planning",
+    "subject": "gate:G4"
+  },
+  {
+    "ts": "2026-11-10T20:21:49Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "build",
+    "subject": "phase:build"
+  },
+  {
+    "ts": "2026-11-10T20:22:00Z",
+    "event": "prompt.started",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "build",
+    "subject": "prompt:P-001"
+  },
+  {
+    "ts": "2026-11-10T20:47:52Z",
+    "event": "prompt.completed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "build",
+    "subject": "prompt:P-001"
+  },
+  {
+    "ts": "2026-11-10T20:47:52Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "build",
+    "subject": "gate:G5"
+  },
+  {
+    "ts": "2026-11-10T20:48:02Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "logic_review",
+    "subject": "phase:logic_review"
+  },
+  {
+    "ts": "2026-11-10T21:32:51Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "logic_review",
+    "subject": "gate:G6"
+  },
+  {
+    "ts": "2026-11-10T21:32:52Z",
+    "event": "iteration.closed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "closed",
+    "subject": "urn:orchid:iteration:2026-11-10-add-optional-eventbridge-job-ingress"
+  },
+  {
+    "ts": "2026-11-10T21:33:02Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "handover",
+    "subject": "phase:handover"
+  },
+  {
+    "ts": "2026-11-10T21:33:02Z",
+    "event": "handover.accepted",
+    "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+    "phase": "complete",
+    "subject": "urn:orchid:iteration:2026-11-10-add-optional-eventbridge-job-ingress"
   }
 ]

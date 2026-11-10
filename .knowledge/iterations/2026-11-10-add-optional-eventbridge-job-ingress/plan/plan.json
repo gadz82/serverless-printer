@@ -1,0 +1,36 @@
+{
+  "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+  "generatedAt": "2026-11-10T21:30:00Z",
+  "rigor": "S",
+  "waves": [
+    { "wave": 1, "prompts": ["P-001"] }
+  ],
+  "prompts": [
+    {
+      "id": "P-001",
+      "title": "Add the optional EventBridge job-ingress rule",
+      "type": "build",
+      "wave": 1,
+      "depends_on": [],
+      "personas": ["DEVOPS", "SECURITY", "DEV"],
+      "estimate": "S",
+      "effort": "low",
+      "scope": {
+        "write": [
+          "infra/variables.tf",
+          "infra/main.tf",
+          "infra/modules/printer/variables.tf",
+          "infra/modules/printer/main.tf",
+          "infra/terraform.tfvars.example",
+          "infra/README.md",
+          "infra/bootstrap/iam.tf",
+          "infra/bootstrap/README.md",
+          "infra/modules/printer/job-rule.tftest.hcl",
+          "docs/cloud-verification.md"
+        ]
+      }
+    }
+  ],
+  "critical_path": ["P-001"],
+  "budget": { "per_iteration_warn": 50000, "per_iteration_stop": 120000, "estimated_total_tokens": 18000 }
+}

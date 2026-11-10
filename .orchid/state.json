@@ -3,9 +3,9 @@
   "skillVersion": "1.0.0",
   "configHash": "sha256:41703e3feb00993bfe643eccb28fa85849e594be915c08b248618f7e53e2b20b",
   "activeIteration": null,
-  "lastIteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
-  "iterationTitle": "Finalize Printer rendering, callbacks and production readiness",
-  "iterationRigor": "L",
+  "lastIteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+  "iterationTitle": "Add optional EventBridge job ingress",
+  "iterationRigor": "S",
   "phase": "complete",
   "gates": {
     "G0": "passed",
@@ -24,11 +24,11 @@
       "id": "P-001",
       "status": "done",
       "step": "implement",
-      "attempt": 1,
-      "runId": "01a1c01d-97b4-7df5-9eca-f5112cd61d5b",
-      "startedAt": "2026-11-09T11:42:07Z",
-      "updatedAt": "2026-11-09T11:56:13Z",
-      "note": "Independent review LGTM; all acceptance commands pass; worktree and branch removed",
+      "attempt": 2,
+      "runId": "01a1c71f-ecf9-764d-b0d9-1a291f3bc765",
+      "startedAt": "2026-11-10T20:22:00Z",
+      "updatedAt": "2026-11-10T20:47:52Z",
+      "note": "Independent review PASS after detail input_path, scoped bootstrap EventBridge permissions and expanded tests; 6/6 module tests and repo checks pass; branch/worktree removed",
       "evidence": "plan/prompts/_bus/outbox/P-001/report.md"
     },
     "P-002": {
@@ -1165,11 +1165,44 @@
       },
       "completedAt": "2026-11-10T19:13:32Z",
       "note": "Two independent reviews PASS after bootstrap/role/VPC/protection/smoke/rollback corrections; docs and acceptance checks pass; worktree and branch removed"
+    },
+    "01a1c71f-ecf9-764d-b0d9-1a291f3bc765": {
+      "id": "01a1c71f-ecf9-764d-b0d9-1a291f3bc765",
+      "prompt": "P-001",
+      "phase": "build",
+      "attempt": 2,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T20:22:00Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-001",
+        "effort": "low",
+        "requestedEffort": "low",
+        "source": "P-001.effort",
+        "requestedSource": "P-001.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"low\". Set models.efforts.low.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T20:47:52Z",
+      "note": "Independent review PASS after detail input_path, scoped bootstrap EventBridge permissions and expanded tests; 6/6 module tests and repo checks pass; branch/worktree removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c714-937e-7f6d-8333-ae15739b1944",
-  "memoryEvent": "01a1c70d-5b82-7117-962e-6be4e1bd0c55"
+  "lastEvent": "01a1c760-f683-7700-b4fd-22b64c316eb2",
+  "memoryEvent": "01a1c760-cc66-7d86-b778-1883e5b367a2"
 }

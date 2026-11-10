@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:none",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T20:09:36Z",
+  "generatedAt": "2026-11-10T21:33:02Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -40,6 +40,12 @@
       "iteration": "2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser",
       "manifest": "iterations/2026-11-09-deliver-the-printer-serverless-pdf-rendering-ser/iteration.jsonld",
       "summary": "Deliver the Printer serverless PDF rendering service on AWS — closed",
+      "status": "closed"
+    },
+    {
+      "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
+      "manifest": "iterations/2026-11-10-add-optional-eventbridge-job-ingress/iteration.jsonld",
+      "summary": "Add optional EventBridge job ingress — closed",
       "status": "closed"
     },
     {
