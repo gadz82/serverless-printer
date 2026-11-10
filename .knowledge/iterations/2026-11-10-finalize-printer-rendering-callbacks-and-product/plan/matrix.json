@@ -57,8 +57,9 @@
       ],
       "estimate": "S",
       "effort": "low",
-      "status": "pending",
-      "step": null
+      "status": "done",
+      "step": "implement",
+      "updatedAt": "2026-11-10T16:06:01Z"
     },
     {
       "id": "P-204",
