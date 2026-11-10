@@ -59,7 +59,7 @@ The example template in `SPEC.md` is illustrative only; the iteration implements
    `01a1c51f-4289-7e73-8075-584669d85127` — preview CLI — CLI tests
 8. `templates/generic-report/index.html` — the real template and sample data
 9. `infra/modules/network/main.tf` — `none`/`create`/`lookup` network
-10. `infra/modules/printer/lambda.tf` and `iam.tf` — conditional VPC config and ENI IAM
+10. `infra/modules/printer/lambda.tf` and `infra/modules/printer/iam.tf` — conditional VPC config and ENI IAM
 11. `.github/workflows/ci.yml` — the `templates` job
 12. `README.md` and `infra/README.md` — commands, modes and Slice 2/3 scope
 

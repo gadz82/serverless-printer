@@ -37,7 +37,7 @@ A 12-stop reading order. Every command works from the repository root after
 9. `infra/modules/network/main.tf` — optional VPC `none`/`create`/`lookup`.
    - Why: private HTTP callbacks without forcing a VPC by default.
    - Prove it: `terraform -chdir=infra init -backend=false -input=false && terraform -chdir=infra validate`
-10. `infra/modules/printer/lambda.tf` and `iam.tf` — conditional VPC config and ENI IAM.
+10. `infra/modules/printer/lambda.tf` and `infra/modules/printer/iam.tf` — conditional VPC config and ENI IAM.
     - Why: the worker attaches only when asked, with the permissions Lambda VPC needs.
     - Prove it: the network plans in `infra/README.md`
 11. `.github/workflows/ci.yml` — the `templates` job.
@@ -51,4 +51,4 @@ A 12-stop reading order. Every command works from the repository root after
 
 Start at the engine (stops 1–3), follow the CLI (4–7), open the real template (8), then the network
 (9–10), CI (11) and docs (12). Failure paths are in the engine/CLI tests; Slice 2/3 scope is in
-`release-notes.md` and ADR-107.
+the iteration release notes and ADR-107.
