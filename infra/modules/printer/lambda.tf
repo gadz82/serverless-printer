@@ -24,6 +24,15 @@ resource "aws_lambda_function" "worker" {
     variables = local.worker_environment
   }
 
+  dynamic "vpc_config" {
+    for_each = var.vpc_mode == "none" ? [] : [true]
+
+    content {
+      subnet_ids         = var.vpc_subnet_ids
+      security_group_ids = var.vpc_security_group_ids
+    }
+  }
+
   depends_on = [
     aws_cloudwatch_log_group.worker,
     aws_iam_role_policy.worker,
@@ -31,8 +40,8 @@ resource "aws_lambda_function" "worker" {
 
   lifecycle {
     precondition {
-      condition     = var.vpc_mode == "none"
-      error_message = "The render worker does not support VPC create or lookup modes until Phase 2."
+      condition     = var.vpc_mode == "none" || (length(var.vpc_subnet_ids) > 0 && length(var.vpc_security_group_ids) > 0)
+      error_message = "vpc_subnet_ids and vpc_security_group_ids are required when the worker is attached to a VPC."
     }
 
     precondition {

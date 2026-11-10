@@ -52,3 +52,13 @@ output "kms_key_arn" {
   description = "ARN of the project KMS key that encrypts print objects."
   value       = aws_kms_key.prints.arn
 }
+
+output "vpc_subnet_ids" {
+  description = "Private subnets attached to the worker when vpc_mode is create or lookup, otherwise empty."
+  value       = var.vpc_subnet_ids
+}
+
+output "worker_security_group_ids" {
+  description = "Security groups attached to the worker when vpc_mode is create or lookup, otherwise empty."
+  value       = var.vpc_security_group_ids
+}

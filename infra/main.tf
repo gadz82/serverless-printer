@@ -32,16 +32,48 @@ locals {
     var.deploy_role_arn,
     "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:role/${var.name_prefix}-deploy",
   )
+
+  vpc_id                    = try(module.network[0].vpc_id, null)
+  vpc_subnet_ids            = try(module.network[0].private_subnet_ids, [])
+  worker_security_group_ids = try(module.network[0].worker_security_group_ids, [])
+}
+
+module "network" {
+  count  = var.vpc_mode == "none" ? 0 : 1
+  source = "./modules/network"
+
+  name_prefix        = var.name_prefix
+  region             = var.region
+  vpc_mode           = var.vpc_mode
+  vpc_cidr           = var.vpc_cidr
+  az_count           = var.az_count
+  availability_zones = var.availability_zones
+
+  enable_nat_gateway     = var.enable_nat_gateway
+  enable_s3_endpoint     = var.enable_s3_endpoint
+  enable_sqs_endpoint    = var.enable_sqs_endpoint
+  enable_lambda_endpoint = var.enable_lambda_endpoint
+  enable_events_endpoint = var.enable_events_endpoint
+
+  vpc_id                    = var.vpc_id
+  vpc_tags                  = var.vpc_tags
+  subnet_ids                = var.subnet_ids
+  subnet_tags               = var.subnet_tags
+  worker_security_group_ids = var.worker_security_group_ids
+
+  tags = var.tags
 }
 
 module "printer" {
   source = "./modules/printer"
 
-  name_prefix      = var.name_prefix
-  release          = var.release
-  artifacts_bucket = local.artifacts_bucket
-  deploy_role_arn  = local.deploy_role_arn
-  vpc_mode         = var.vpc_mode
+  name_prefix            = var.name_prefix
+  release                = var.release
+  artifacts_bucket       = local.artifacts_bucket
+  deploy_role_arn        = local.deploy_role_arn
+  vpc_mode               = var.vpc_mode
+  vpc_subnet_ids         = local.vpc_subnet_ids
+  vpc_security_group_ids = local.worker_security_group_ids
 
   allowed_sender_account_ids    = var.allowed_sender_account_ids
   allowed_sender_principal_arns = var.allowed_sender_principal_arns
@@ -119,4 +151,19 @@ output "worker_role_arn" {
 output "kms_key_arn" {
   description = "ARN of the project KMS key that encrypts print objects."
   value       = module.printer.kms_key_arn
+}
+
+output "vpc_id" {
+  description = "ID of the worker VPC when vpc_mode is create or lookup, otherwise null."
+  value       = local.vpc_id
+}
+
+output "worker_subnet_ids" {
+  description = "Subnets attached to the worker when vpc_mode is create or lookup, otherwise empty."
+  value       = module.printer.vpc_subnet_ids
+}
+
+output "worker_security_group_ids" {
+  description = "Security groups attached to the worker when vpc_mode is create or lookup, otherwise empty."
+  value       = module.printer.worker_security_group_ids
 }

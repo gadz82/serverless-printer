@@ -50,8 +50,37 @@ enable_alarms       = false
 alarm_sns_topic_arn = null
 log_retention_days  = 30
 
-# Phase 1 supports only "none"; VPC modes arrive in Phase 2.
+# Network. "none" is the default and creates no VPC resources; the worker
+# reaches AWS and callbacks over the AWS network and the internet.
 vpc_mode = "none"
+
+# create mode: a new VPC with private subnets, an S3 gateway endpoint and
+# SQS/Lambda/Events interface endpoints. NAT is off by default.
+vpc_cidr               = "10.0.0.0/16"
+az_count               = 2
+availability_zones     = [] # Empty uses the region's enabled availability zones.
+enable_nat_gateway     = false
+enable_s3_endpoint     = true
+enable_sqs_endpoint    = true
+enable_lambda_endpoint = true
+enable_events_endpoint = true
+
+# lookup mode: exactly one of vpc_id or vpc_tags, and exactly one of
+# subnet_ids or subnet_tags. Leave empty for none/create.
+vpc_id      = null
+vpc_tags    = {}
+subnet_ids  = []
+subnet_tags = {}
+# Optional existing worker security groups in lookup mode; empty creates a
+# managed security group with DNS/HTTPS egress.
+worker_security_group_ids = []
+
+# Example lookup configuration:
+# vpc_mode    = "lookup"
+# vpc_id      = "vpc-0123456789abcdef0"
+# subnet_ids  = ["subnet-0123456789abcdef0", "subnet-0fedcba9876543210"]
+# vpc_tags    = {}
+# subnet_tags = {}
 
 tags = {
   # Keep Project equal to name_prefix: the bootstrap deploy role's KMS identity

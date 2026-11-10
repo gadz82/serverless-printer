@@ -32,6 +32,33 @@ data "aws_iam_policy_document" "worker" {
     resources = [aws_sqs_queue.jobs.arn]
   }
 
+  dynamic "statement" {
+    for_each = var.vpc_mode == "none" ? [] : [true]
+
+    content {
+      sid    = "ManageVpcNetworkInterfaces"
+      effect = "Allow"
+
+      # AWS documents these EC2 actions as requiring Resource "*" for Lambda
+      # Hyperplane ENI management (AWSLambdaVPCAccessExecutionRole).
+      # DescribeNetworkInterfaces and DescribeSubnets have no resource-level
+      # permissions, and Lambda creates/deletes ENIs whose IDs Terraform does
+      # not know in advance. ec2:Subnet and ec2:SecurityGroup conditions are
+      # also not used because Lambda's documented VPC execution policy grants
+      # these actions on all resources; narrowing them can stop ENI creation.
+      actions = [
+        "ec2:AssignPrivateIpAddresses",
+        "ec2:CreateNetworkInterface",
+        "ec2:DeleteNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DescribeSubnets",
+        "ec2:UnassignPrivateIpAddresses",
+      ]
+
+      resources = ["*"]
+    }
+  }
+
   statement {
     sid    = "ReadWritePrints"
     effect = "Allow"

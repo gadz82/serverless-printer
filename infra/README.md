@@ -1,27 +1,32 @@
 # Printer deployment
 
-The single root Terraform deployment for the Phase 1 printer. It creates the jobs queue and
+The single root Terraform deployment for the printer. It creates the jobs queue and
 dead-letter queue, the transient prints bucket, the render worker Lambda and its permissions, the
-release-smoke results queue, and optional CloudWatch alarms. There are no environments or
-workspaces: `infra/` is the only deployment.
+release-smoke results queue, and optional CloudWatch alarms. When `vpc_mode` is `create` or
+`lookup`, it also attaches the worker to a VPC. There are no environments or workspaces: `infra/`
+is the only deployment.
 
 The one-time foundation (state bucket, artifacts bucket, GitHub OIDC roles) is
 `infra/bootstrap`; apply that first. See its [README](bootstrap/README.md).
 
 ## What it creates
 
-| Resource             | Name                                                                 | Purpose                                                                    |
-| -------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Jobs queue           | `<name_prefix>-jobs`                                                 | SSE-SQS queue for print jobs, 360 s visibility timeout, redrive to the DLQ |
-| Dead-letter queue    | `<name_prefix>-jobs-dlq`                                             | SSE-SQS destination after `max_receive_count` receives                     |
-| Smoke-results queue  | `<name_prefix>-smoke-results`                                        | Short-retention SSE-SQS queue for release smoke results                    |
-| Prints bucket        | `<name_prefix>-prints`                                               | SSE-KMS bucket for `prints/*.pdf`, one-day lifecycle expiry                |
-| KMS key              | Alias `<name_prefix>-prints`                                         | Project CMK, rotation enabled, `Project = <name_prefix>` tag               |
-| Worker Lambda        | `<name_prefix>-render-worker`                                        | `nodejs24.x`, x86_64, 1,536 MB, 60 s, published version with `live` alias  |
-| Event source mapping | Jobs queue to the `live` alias                                       | Batch size 1–5, `ReportBatchItemFailures`, maximum concurrency             |
-| Worker role          | `<name_prefix>-render-worker`                                        | Consume jobs, read/write prints, KMS, logs, scoped SQS result sends        |
-| Log group            | `/aws/lambda/<name_prefix>-render-worker`                            | Worker logs with configurable retention                                    |
-| Alarms               | `<name_prefix>-jobs-dlq-depth`, `<name_prefix>-render-worker-errors` | Created only when `enable_alarms = true`                                   |
+| Resource              | Name                                                                                    | Purpose                                                                    |
+| --------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Jobs queue            | `<name_prefix>-jobs`                                                                    | SSE-SQS queue for print jobs, 360 s visibility timeout, redrive to the DLQ |
+| Dead-letter queue     | `<name_prefix>-jobs-dlq`                                                                | SSE-SQS destination after `max_receive_count` receives                     |
+| Smoke-results queue   | `<name_prefix>-smoke-results`                                                           | Short-retention SSE-SQS queue for release smoke results                    |
+| Prints bucket         | `<name_prefix>-prints`                                                                  | SSE-KMS bucket for `prints/*.pdf`, one-day lifecycle expiry                |
+| KMS key               | Alias `<name_prefix>-prints`                                                            | Project CMK, rotation enabled, `Project = <name_prefix>` tag               |
+| Worker Lambda         | `<name_prefix>-render-worker`                                                           | `nodejs24.x`, x86_64, 1,536 MB, 60 s, published version with `live` alias  |
+| Event source mapping  | Jobs queue to the `live` alias                                                          | Batch size 1–5, `ReportBatchItemFailures`, maximum concurrency             |
+| Worker role           | `<name_prefix>-render-worker`                                                           | Consume jobs, read/write prints, KMS, logs, scoped SQS result sends        |
+| Log group             | `/aws/lambda/<name_prefix>-render-worker`                                               | Worker logs with configurable retention                                    |
+| Alarms                | `<name_prefix>-jobs-dlq-depth`, `<name_prefix>-render-worker-errors`                    | Created only when `enable_alarms = true`                                   |
+| VPC and subnets       | `<name_prefix>-vpc`, `<name_prefix>-private-N`                                          | Created only in `vpc_mode = "create"`; private subnets across `az_count`   |
+| NAT gateway           | `<name_prefix>-nat`                                                                     | Created only with `vpc_mode = "create"` and `enable_nat_gateway = true`    |
+| VPC endpoints         | `<name_prefix>-s3`, `<name_prefix>-sqs`, `<name_prefix>-lambda`, `<name_prefix>-events` | Created only in `create` mode when the endpoint flag is enabled            |
+| Worker security group | `<name_prefix>-worker-*`                                                                | Created when the worker uses a VPC and no existing groups are supplied     |
 
 The worker code is deployed from
 `s3://<artifacts_bucket>/<release>/render-worker.zip`. `release` is the release workflow's
@@ -123,15 +128,18 @@ Operational notes:
 terraform -chdir=infra output
 ```
 
-| Output                                 | Use                                                 |
-| -------------------------------------- | --------------------------------------------------- |
-| `jobs_queue_url` / `jobs_queue_arn`    | Sending jobs and callback configuration             |
-| `jobs_dlq_url` / `jobs_dlq_arn`        | Inspecting or redriving failed jobs                 |
-| `prints_bucket`                        | Operational inspection of transient PDFs            |
-| `smoke_queue_url` / `smoke_queue_arn`  | Release smoke polling and the `_smoke` job callback |
-| `function_name` / `function_alias_arn` | Lambda inspection and the invoked `live` alias      |
-| `worker_role_arn`                      | Cross-account callback grants and review            |
-| `kms_key_arn`                          | Decrypt grants for operational tooling              |
+| Output                                 | Use                                                          |
+| -------------------------------------- | ------------------------------------------------------------ |
+| `jobs_queue_url` / `jobs_queue_arn`    | Sending jobs and callback configuration                      |
+| `jobs_dlq_url` / `jobs_dlq_arn`        | Inspecting or redriving failed jobs                          |
+| `prints_bucket`                        | Operational inspection of transient PDFs                     |
+| `smoke_queue_url` / `smoke_queue_arn`  | Release smoke polling and the `_smoke` job callback          |
+| `function_name` / `function_alias_arn` | Lambda inspection and the invoked `live` alias               |
+| `worker_role_arn`                      | Cross-account callback grants and review                     |
+| `kms_key_arn`                          | Decrypt grants for operational tooling                       |
+| `vpc_id`                               | Worker VPC ID in `create`/`lookup`, otherwise null           |
+| `worker_subnet_ids`                    | Worker subnet IDs in `create`/`lookup`, otherwise empty      |
+| `worker_security_group_ids`            | Worker security groups in `create`/`lookup`, otherwise empty |
 
 The release workflow reads `jobs_queue_url`, `smoke_queue_url` and `smoke_queue_arn` to run the
 smoke script.
@@ -185,17 +193,89 @@ alarm_sns_topic_arn = "arn:aws:sns:eu-central-1:123456789012:printer-alerts"
 
 ## Network
 
-`vpc_mode` defaults to `"none"` and validates that it stays `"none"` in Phase 1. The worker runs
-outside a VPC and reaches SQS, S3, KMS and callback endpoints without NAT or VPC endpoints. VPC
-create/lookup modes arrive in Phase 2.
+Networking is optional. `vpc_mode` defaults to `"none"`: the worker runs outside a VPC and reaches
+SQS, S3, KMS and callback endpoints without NAT, subnets or VPC endpoints. `create` builds a VPC;
+`lookup` attaches the worker to an existing one. In both non-`none` modes, the Lambda gets a
+`vpc_config` with `subnet_ids` and `worker_security_group_ids`; in `none` it has no `vpc_config`.
+
+| Mode     | What the module does                                                                                                                                                                                                                |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `none`   | Creates nothing network-related. This is the safe default and the lowest-cost option.                                                                                                                                               |
+| `create` | Creates a VPC (`vpc_cidr`, `az_count`), private subnets, an S3 gateway endpoint and SQS/Lambda/Events interface endpoints. Public subnets, an internet gateway and one NAT gateway are added only with `enable_nat_gateway = true`. |
+| `lookup` | Resolves an existing VPC by `vpc_id` or `vpc_tags`, and subnets by `subnet_ids` or `subnet_tags`. Creates no VPC. A managed worker security group is created unless `worker_security_group_ids` is supplied.                        |
+
+For `lookup`, provide exactly one of `vpc_id` or `vpc_tags`, and exactly one of `subnet_ids` or
+`subnet_tags`. Tags are matched as `tag:<key>` filters; the data sources resolve at plan/apply time
+and therefore need read access to the VPC and subnets.
+
+### Create mode example
+
+```hcl
+vpc_mode           = "create"
+vpc_cidr           = "10.0.0.0/16"
+az_count           = 2
+enable_nat_gateway = false
+```
+
+Private subnets have no default route unless `enable_nat_gateway = true`. The worker security group
+allows outbound DNS (UDP/TCP 53) and HTTPS (TCP 443). Interface endpoints are reachable through
+that egress, and their own security group accepts 443 from the worker group. The S3 gateway
+endpoint is attached to the private route table.
+
+### Lookup mode example
+
+```hcl
+vpc_mode   = "lookup"
+vpc_id     = "vpc-0123456789abcdef0"
+subnet_ids = ["subnet-0123456789abcdef0", "subnet-0fedcba9876543210"]
+# vpc_tags    = { Environment = "shared" }
+# subnet_tags = { Tier = "private" }
+# worker_security_group_ids = ["sg-0123456789abcdef0"]
+```
+
+When `worker_security_group_ids` is empty, the module creates a worker security group in the
+looked-up VPC. Supply existing groups to reuse an operator-managed egress policy instead.
+
+> [!WARNING]
+> Lookup mode only attaches the worker. The existing VPC must already provide connectivity to S3,
+> SQS, Lambda and EventBridge through gateway/interface endpoints or a NAT gateway. Otherwise the
+> worker attaches successfully but cannot reach AWS services.
+
+### Endpoint and NAT trade-offs
+
+- **No NAT (default):** no hourly NAT or public IPv4 cost. `http` callbacks can reach only private
+  hosts routable from the VPC, and AWS service calls use the S3 gateway plus SQS/Lambda/Events
+  interface endpoints.
+- **NAT (`enable_nat_gateway = true`):** adds public subnets, an internet gateway, an Elastic IP and
+  one NAT gateway. This enables `http` callbacks to public hosts. NAT gateways are billed hourly
+  plus data processing, and the public IPv4 address is billed separately.
+- **S3 gateway endpoint:** free; keeps S3 traffic on the AWS network.
+- **SQS/Lambda/Events interface endpoints:** billed hourly per AZ and per GB processed. Disable an
+  endpoint with `enable_sqs_endpoint`, `enable_lambda_endpoint` or `enable_events_endpoint` when the
+  worker does not use that service, or when a NAT gateway already covers it.
+- Endpoints and NAT are only created in `create` mode. In `lookup` mode they belong to the existing
+  VPC and its operator.
+
+`availability_zones` can pin create mode to specific AZ names; when empty the module uses the
+region's enabled zones. The list must contain distinct names, and `az_count` must not exceed the
+available or supplied zones; otherwise the plan fails with a clear precondition. `vpc_cidr` must
+be a canonical IPv4 network address with a `/16` to `/24` prefix, for example `10.0.0.0/16`.
+
+Applying `create` or `lookup` needs EC2/VPC management permissions for VPCs, subnets, route
+tables, endpoints and security groups. The bootstrap deploy role does not currently grant them, so
+a VPC-mode apply needs an administrative profile until the bootstrap policy is expanded in a
+follow-up. The worker VPC execution role is now complete: when `vpc_mode` is `create` or `lookup`
+it includes the Lambda Hyperplane ENI permissions (`ec2:CreateNetworkInterface`,
+`ec2:DescribeNetworkInterfaces`, `ec2:DescribeSubnets`, `ec2:DeleteNetworkInterface`,
+`ec2:AssignPrivateIpAddresses` and `ec2:UnassignPrivateIpAddresses`).
 
 ## Local checks
 
 ```sh
-terraform -chdir=infra fmt -check
+terraform -chdir=infra fmt -check -recursive
 terraform -chdir=infra init -backend=false -input=false
 terraform -chdir=infra validate
-tflint --chdir=infra
+tflint --chdir=infra --config="$PWD/tflint.hcl" --call-module-type=all
 ```
 
 `init -backend=false` does not contact the state bucket; use the backend init command above before

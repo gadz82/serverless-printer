@@ -39,13 +39,54 @@ variable "deploy_role_arn" {
 }
 
 variable "vpc_mode" {
-  description = "Worker network mode. Only \"none\" is supported in Phase 1."
+  description = "Worker network mode: none (default), create a VPC, or look up an existing one."
   type        = string
   default     = "none"
 
   validation {
-    condition     = var.vpc_mode == "none"
-    error_message = "vpc_mode must be \"none\" in Phase 1. VPC create and lookup modes are not implemented yet."
+    condition     = contains(["none", "create", "lookup"], var.vpc_mode)
+    error_message = "vpc_mode must be one of: none, create, lookup."
+  }
+
+  validation {
+    condition = var.vpc_mode == "none" ? (
+      length(var.vpc_subnet_ids) == 0 && length(var.vpc_security_group_ids) == 0
+      ) : (
+      length(var.vpc_subnet_ids) > 0 && length(var.vpc_security_group_ids) > 0
+    )
+    error_message = "vpc_subnet_ids and vpc_security_group_ids are required when vpc_mode is create or lookup, and must be empty when vpc_mode is none."
+  }
+}
+
+variable "vpc_subnet_ids" {
+  description = "Private subnet IDs attached to the worker when vpc_mode is create or lookup."
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition     = length(var.vpc_subnet_ids) <= 16
+    error_message = "vpc_subnet_ids must contain at most sixteen subnets, the Lambda VPC limit."
+  }
+
+  validation {
+    condition     = alltrue([for subnet_id in var.vpc_subnet_ids : can(regex("^subnet-[0-9a-f]+$", subnet_id))])
+    error_message = "vpc_subnet_ids must contain subnet IDs such as subnet-0123456789abcdef0."
+  }
+}
+
+variable "vpc_security_group_ids" {
+  description = "Security group IDs attached to the worker when vpc_mode is create or lookup."
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition     = length(var.vpc_security_group_ids) <= 5
+    error_message = "vpc_security_group_ids must contain at most five security groups, the Lambda VPC limit."
+  }
+
+  validation {
+    condition     = alltrue([for security_group_id in var.vpc_security_group_ids : can(regex("^sg-[0-9a-f]+$", security_group_id))])
+    error_message = "vpc_security_group_ids must contain security group IDs such as sg-0123456789abcdef0."
   }
 }
 
