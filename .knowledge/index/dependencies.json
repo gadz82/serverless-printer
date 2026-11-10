@@ -46,6 +46,8 @@
       "apps/render-worker/src/rendering/template-pdf-renderer.ts",
       "apps/render-worker/test/composition-root.test.ts",
       "apps/render-worker/test/delivery*",
+      "packages/domain/src/application/process-print-job.ts",
+      "packages/domain/test/process-print-job.test.ts",
       "pnpm-lock.yaml"
     ]
   },

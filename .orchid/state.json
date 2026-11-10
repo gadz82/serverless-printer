@@ -239,6 +239,15 @@
       "updatedAt": "2026-11-10T16:06:01Z",
       "note": "Independent review PASS; local Chrome file/error hardening and 211 worker tests pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-206/report.md"
+    },
+    "P-204": {
+      "id": "P-204",
+      "status": "running",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c635-e86a-7833-850e-3f04e80b5699",
+      "startedAt": "2026-11-10T16:06:24Z",
+      "updatedAt": "2026-11-10T16:06:24Z"
     }
   },
   "runs": {
@@ -901,11 +910,42 @@
       },
       "completedAt": "2026-11-10T16:06:01Z",
       "note": "Independent review PASS; local Chrome file/error hardening and 211 worker tests pass; worktree and branch removed"
+    },
+    "01a1c635-e86a-7833-850e-3f04e80b5699": {
+      "id": "01a1c635-e86a-7833-850e-3f04e80b5699",
+      "prompt": "P-204",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "running",
+      "startedAt": "2026-11-10T16:06:24Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-204",
+        "effort": "high",
+        "requestedEffort": "high",
+        "source": "P-204.effort",
+        "requestedSource": "P-204.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"high\". Set models.efforts.high.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      }
     }
   },
-  "currentPrompt": null,
-  "currentRun": null,
+  "currentPrompt": "P-204",
+  "currentRun": "01a1c635-e86a-7833-850e-3f04e80b5699",
   "lastHandoff": null,
-  "lastEvent": "01a1c635-8eed-7c63-9659-f96f6a58ee05",
+  "lastEvent": "01a1c635-e86c-755f-9a54-9968c89407c3",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }
