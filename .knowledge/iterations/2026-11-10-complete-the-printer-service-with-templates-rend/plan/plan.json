@@ -1,0 +1,135 @@
+{
+  "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+  "slice": "Slice 1 — templates and network",
+  "generatedAt": "2026-11-10T07:30:00Z",
+  "rigor": "L",
+  "waves": [
+    { "wave": 1, "prompts": ["P-101", "P-104"] },
+    { "wave": 2, "prompts": ["P-102"] },
+    { "wave": 3, "prompts": ["P-103"] },
+    { "wave": 4, "prompts": ["P-105"] }
+  ],
+  "prompts": [
+    {
+      "id": "P-101",
+      "title": "Build the shared Handlebars template engine and manifest",
+      "type": "build",
+      "wave": 1,
+      "depends_on": [],
+      "personas": ["TECH_LEAD", "DEV", "QE"],
+      "estimate": "L",
+      "effort": "high",
+      "scope": { "write": ["packages/template-engine/**", "pnpm-workspace.yaml", "pnpm-lock.yaml"] },
+      "acceptance": [
+        "pnpm --filter @printer/template-engine test",
+        "pnpm --filter @printer/template-engine typecheck",
+        "pnpm lint",
+        "pnpm exec prettier --check packages/template-engine"
+      ]
+    },
+    {
+      "id": "P-102",
+      "title": "Implement template:new, validate, check and manifest",
+      "type": "build",
+      "wave": 2,
+      "depends_on": ["P-101"],
+      "personas": ["DEV", "QE"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": {
+        "write": [
+          "scripts/template-new.mjs",
+          "scripts/template-validate.mjs",
+          "scripts/template-check.mjs",
+          "scripts/template-manifest.mjs",
+          "scripts/template-*.test.mjs",
+          "package.json"
+        ]
+      },
+      "acceptance": [
+        "pnpm template:validate",
+        "pnpm template:check --base HEAD",
+        "pnpm vitest run scripts/template-new.test.mjs scripts/template-validate.test.mjs scripts/template-check.test.mjs",
+        "pnpm lint"
+      ]
+    },
+    {
+      "id": "P-103",
+      "title": "Add the generic-report template and local Chrome preview",
+      "type": "build",
+      "wave": 3,
+      "depends_on": ["P-101", "P-102"],
+      "personas": ["DEV", "QE"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": {
+        "write": [
+          "templates/generic-report/**",
+          "scripts/template-preview.mjs",
+          "scripts/template-preview.test.mjs",
+          "apps/render-worker/src/rendering/**",
+          "apps/render-worker/test/local-chrome-renderer.test.ts"
+        ]
+      },
+      "acceptance": [
+        "pnpm template:validate",
+        "pnpm template:preview generic-report",
+        "pnpm --filter @printer/render-worker test",
+        "pnpm lint"
+      ]
+    },
+    {
+      "id": "P-104",
+      "title": "Add the optional network module and worker VPC wiring",
+      "type": "build",
+      "wave": 1,
+      "depends_on": [],
+      "personas": ["DEVOPS", "ARCHITECT", "SECURITY"],
+      "estimate": "M",
+      "effort": "medium",
+      "scope": {
+        "write": [
+          "infra/modules/network/**",
+          "infra/main.tf",
+          "infra/variables.tf",
+          "infra/modules/printer/variables.tf",
+          "infra/modules/printer/main.tf",
+          "infra/modules/printer/lambda.tf",
+          "infra/modules/printer/outputs.tf",
+          "infra/terraform.tfvars.example",
+          "infra/README.md"
+        ]
+      },
+      "acceptance": [
+        "terraform -chdir=infra fmt -check -recursive",
+        "terraform -chdir=infra init -backend=false -input=false",
+        "terraform -chdir=infra validate",
+        "tflint --config=tflint.hcl --chdir=infra --call-module-type=all",
+        "terraform -chdir=infra plan (with fake/local credentials and each vpc_mode)"
+      ]
+    },
+    {
+      "id": "P-105",
+      "title": "Wire template validation into CI and document the slice",
+      "type": "build",
+      "wave": 4,
+      "depends_on": ["P-102", "P-103", "P-104"],
+      "personas": ["DEVOPS", "QE", "TECH_LEAD"],
+      "estimate": "S",
+      "effort": "low",
+      "scope": { "write": [".github/workflows/ci.yml", "README.md"] },
+      "acceptance": [
+        "pnpm template:validate",
+        "pnpm template:check --base HEAD",
+        "pnpm exec prettier --check .github/workflows/ci.yml README.md",
+        "terraform -chdir=infra fmt -check -recursive"
+      ]
+    }
+  ],
+  "critical_path": ["P-101", "P-102", "P-103", "P-105"],
+  "budget": {
+    "per_iteration_warn": 250000,
+    "per_iteration_stop": 600000,
+    "estimated_total_tokens": 170000
+  }
+}
