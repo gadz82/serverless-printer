@@ -3,6 +3,7 @@
     "dependsOn": [],
     "wave": 1,
     "writeScopes": [
+      "apps/render-worker/package.json",
       "packages/template-engine/**",
       "pnpm-lock.yaml",
       "pnpm-workspace.yaml"
@@ -30,7 +31,9 @@
     "wave": 3,
     "writeScopes": [
       "apps/render-worker/src/rendering/**",
+      "apps/render-worker/src/templates.manifest.json",
       "apps/render-worker/test/local-chrome-renderer.test.ts",
+      "apps/render-worker/test/support/template-manifest.d.ts",
       "scripts/template-preview.mjs",
       "scripts/template-preview.test.mjs",
       "templates/generic-report/**"
