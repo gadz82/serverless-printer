@@ -6,13 +6,13 @@
   "lastIteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
   "iterationTitle": "Finalize Printer rendering, callbacks and production readiness",
   "iterationRigor": "L",
-  "phase": "planning",
+  "phase": "build",
   "gates": {
     "G0": "passed",
     "G1": "passed",
     "G2": "passed",
     "G3": "passed",
-    "G4": "pending",
+    "G4": "passed",
     "G5": "pending",
     "G6": "pending",
     "G7": "pending",
@@ -184,6 +184,17 @@
       "updatedAt": "2026-11-10T11:00:53Z",
       "note": "Independent review APPROVE; template CI job and docs pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-105/report.md"
+    },
+    "P-201": {
+      "id": "P-201",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c538-01e0-7fca-a7ad-7e841b8f5bbe",
+      "startedAt": "2026-11-10T11:29:04Z",
+      "updatedAt": "2026-11-10T12:21:23Z",
+      "note": "Two independent reviews PASS after deadline/cleanup/crash/symlink/version fixes; 131 tests pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-201/report.md"
     }
   },
   "runs": {
@@ -681,11 +692,44 @@
       },
       "completedAt": "2026-11-10T11:00:53Z",
       "note": "Independent review APPROVE; template CI job and docs pass; worktree and branch removed"
+    },
+    "01a1c538-01e0-7fca-a7ad-7e841b8f5bbe": {
+      "id": "01a1c538-01e0-7fca-a7ad-7e841b8f5bbe",
+      "prompt": "P-201",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T11:29:04Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-201",
+        "effort": "high",
+        "requestedEffort": "high",
+        "source": "P-201.effort",
+        "requestedSource": "P-201.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"high\". Set models.efforts.high.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T12:21:23Z",
+      "note": "Two independent reviews PASS after deadline/cleanup/crash/symlink/version fixes; 131 tests pass; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c534-b991-754b-b3b9-07ab726c2037",
+  "lastEvent": "01a1c567-e939-7542-9495-5399317d7473",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }

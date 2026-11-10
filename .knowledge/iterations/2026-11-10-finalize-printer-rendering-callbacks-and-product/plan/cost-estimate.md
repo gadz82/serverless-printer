@@ -5,7 +5,7 @@
 | P-201 Chromium renderer | L | 55,000 | 10,000 |
 | P-202 PDF/A archiver | L | 45,000 | 9,000 |
 | P-203 callback policy | M | 25,000 | 5,000 |
-| P-204 delivery channels | L | 45,000 | 9,000 |
+| P-204 delivery channels + wiring | L | 55,000 | 10,000 |
 | P-205 render regression | M | 30,000 | 6,000 |
 | P-206 local Chrome hardening | S | 12,000 | 3,000 |
 | P-207 roles/bootstrap | L | 40,000 | 8,000 |

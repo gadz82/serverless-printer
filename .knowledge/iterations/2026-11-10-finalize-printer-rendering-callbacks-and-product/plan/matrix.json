@@ -2,16 +2,140 @@
   "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
   "generatedAt": "2026-11-10T12:00:00Z",
   "prompts": [
-    { "id": "P-201", "title": "Add the Lambda Chromium renderer and shared page settings", "wave": 1, "depends_on": [], "estimate": "L", "effort": "high", "status": "pending", "step": null },
-    { "id": "P-207", "title": "Add generated or provided caller and worker roles", "wave": 1, "depends_on": [], "estimate": "L", "effort": "high", "status": "pending", "step": null },
-    { "id": "P-202", "title": "Implement the PDF/A archiver for all levels", "wave": 2, "depends_on": ["P-201"], "estimate": "L", "effort": "high", "status": "pending", "step": null },
-    { "id": "P-203", "title": "Add the callback allowlist, DNS and SSRF policy", "wave": 2, "depends_on": [], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-206", "title": "Harden local Chrome file access and error handling", "wave": 2, "depends_on": ["P-201"], "estimate": "S", "effort": "low", "status": "pending", "step": null },
-    { "id": "P-204", "title": "Implement all five delivery channels and ping", "wave": 3, "depends_on": ["P-203"], "estimate": "L", "effort": "high", "status": "pending", "step": null },
-    { "id": "P-208", "title": "Add opt-in alarms and the operations runbook", "wave": 3, "depends_on": ["P-207"], "estimate": "S", "effort": "low", "status": "pending", "step": null },
-    { "id": "P-205", "title": "Add render regression and cross-channel integration tests", "wave": 4, "depends_on": ["P-201", "P-202", "P-204"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-209", "title": "Add plain and PDF/A release smoke and Chromium packaging", "wave": 4, "depends_on": ["P-201", "P-202", "P-204"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-210", "title": "Add the load test and Power Tuning harness", "wave": 4, "depends_on": ["P-201", "P-202", "P-207"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-211", "title": "Document cloud verification, rollback and branch protection", "wave": 5, "depends_on": ["P-207", "P-209", "P-210"], "estimate": "S", "effort": "low", "status": "pending", "step": null }
+    {
+      "id": "P-201",
+      "title": "Add the Lambda Chromium renderer and shared page settings",
+      "wave": 1,
+      "depends_on": [],
+      "estimate": "L",
+      "effort": "high",
+      "status": "done",
+      "step": "implement",
+      "updatedAt": "2026-11-10T12:21:23Z"
+    },
+    {
+      "id": "P-207",
+      "title": "Add generated or provided caller and worker roles",
+      "wave": 1,
+      "depends_on": [],
+      "estimate": "L",
+      "effort": "high",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-202",
+      "title": "Implement the PDF/A archiver for all levels",
+      "wave": 2,
+      "depends_on": [
+        "P-201"
+      ],
+      "estimate": "L",
+      "effort": "high",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-203",
+      "title": "Add the callback allowlist, DNS and SSRF policy",
+      "wave": 2,
+      "depends_on": [],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-206",
+      "title": "Harden local Chrome file access and error handling",
+      "wave": 2,
+      "depends_on": [
+        "P-201"
+      ],
+      "estimate": "S",
+      "effort": "low",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-204",
+      "title": "Implement all five delivery channels and ping",
+      "wave": 3,
+      "depends_on": [
+        "P-203"
+      ],
+      "estimate": "L",
+      "effort": "high",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-208",
+      "title": "Add opt-in alarms and the operations runbook",
+      "wave": 3,
+      "depends_on": [
+        "P-207"
+      ],
+      "estimate": "S",
+      "effort": "low",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-205",
+      "title": "Add render regression and cross-channel integration tests",
+      "wave": 4,
+      "depends_on": [
+        "P-201",
+        "P-202",
+        "P-204"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-209",
+      "title": "Add plain and PDF/A release smoke and Chromium packaging",
+      "wave": 4,
+      "depends_on": [
+        "P-201",
+        "P-202",
+        "P-204"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-210",
+      "title": "Add the load test and Power Tuning harness",
+      "wave": 4,
+      "depends_on": [
+        "P-201",
+        "P-202",
+        "P-207"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-211",
+      "title": "Document cloud verification, rollback and branch protection",
+      "wave": 5,
+      "depends_on": [
+        "P-207",
+        "P-209",
+        "P-210"
+      ],
+      "estimate": "S",
+      "effort": "low",
+      "status": "pending",
+      "step": null
+    }
   ]
 }

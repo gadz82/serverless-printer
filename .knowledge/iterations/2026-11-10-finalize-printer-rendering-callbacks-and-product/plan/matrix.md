@@ -7,7 +7,7 @@
 | P-202 — PDF/A archiver | 2 | All eight levels, ICC/XMP/Info/checks | P-201 | L | pending |
 | P-203 — callback policy | 2 | Allowlist, DNS/link-local/metadata SSRF | — | M | pending |
 | P-206 — local Chrome hardening | 2 | File requests scoped to the template dir | P-201 | S | pending |
-| P-204 — delivery channels | 3 | HTTP/Lambda/SQS/EventBridge/S3 + ping | P-203 | L | pending |
+| P-204 — delivery channels | 3 | HTTP/Lambda/SQS/EventBridge/S3 + ping + full worker wiring | P-201, P-202, P-203, P-207 | L | pending |
 | P-208 — alarms/runbook | 3 | Opt-in alarms and operations runbook | P-207 | S | pending |
 | P-205 — render regression | 4 | Reference PDFs, CI comparison, integration | P-201, P-202, P-204 | M | pending |
 | P-209 — release smoke | 4 | Plain + PDF/A smoke, Chromium zip | P-201, P-202, P-204 | M | pending |
