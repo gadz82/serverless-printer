@@ -25,6 +25,7 @@
     "@aws-sdk/s3-request-presigner": "catalog:",
     "@printer/contracts": "workspace:*",
     "@printer/domain": "workspace:*",
+    "puppeteer-core": "catalog:",
     "uuid": "catalog:"
   },
   "devDependencies": {
