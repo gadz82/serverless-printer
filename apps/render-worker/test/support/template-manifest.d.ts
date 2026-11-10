@@ -1,11 +1,15 @@
 declare module "*/template-manifest.mjs" {
+  export type BuiltManifestPlaceholders = {
+    readonly [key: string]: string | BuiltManifestPlaceholders;
+  };
+
   export type BuiltManifestTemplate = {
     readonly id: string;
     readonly slug: string;
     readonly name: string;
     readonly path: string;
     readonly contentHash: string;
-    readonly placeholders: Readonly<Record<string, string>>;
+    readonly placeholders: BuiltManifestPlaceholders;
   };
 
   export type BuiltManifest = {

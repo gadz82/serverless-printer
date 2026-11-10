@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="report-header">
+      <p class="eyebrow">Business report</p>
+      <h1>{{title}}</h1>
+      <dl class="report-meta">
+        <div>
+          <dt>Customer</dt>
+          <dd>{{customer.name}}</dd>
+        </div>
+        <div>
+          <dt>Generated</dt>
+          <dd>
+            <time datetime="{{generatedAt}}">{{formatDate generatedAt "en-US"}}</time>
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    <main>
+      <section aria-labelledby="items-heading">
+        <h2 id="items-heading">Line items</h2>
+        <table>
+          <caption>
+            Items included in this report
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Description</th>
+              <th scope="col" class="numeric">Quantity</th>
+              <th scope="col" class="numeric">Unit price</th>
+              <th scope="col" class="numeric">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+            <tr>
+              <th scope="row">{{description}}</th>
+              <td class="numeric">{{quantity}}</td>
+              <td class="numeric">{{formatCurrency unitPrice "USD" "en-US"}}</td>
+              <td class="numeric">{{formatCurrency amount "USD" "en-US"}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" colspan="3">Total</th>
+              <td class="numeric">{{formatCurrency total "USD" "en-US"}}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+    </main>
+
+    <footer class="report-footer">
+      <p>This report was generated automatically from the supplied data.</p>
+    </footer>
+  </body>
+</html>

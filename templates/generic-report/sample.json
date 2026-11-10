@@ -1,0 +1,28 @@
+{
+  "title": "Quarterly business report",
+  "customer": {
+    "name": "Sample Customer"
+  },
+  "items": [
+    {
+      "description": "Consulting hours",
+      "quantity": 12,
+      "unitPrice": 150,
+      "amount": 1800
+    },
+    {
+      "description": "Support plan",
+      "quantity": 1,
+      "unitPrice": 950,
+      "amount": 950
+    },
+    {
+      "description": "Implementation",
+      "quantity": 1,
+      "unitPrice": 1450,
+      "amount": 1450
+    }
+  ],
+  "total": 4200,
+  "generatedAt": "2026-11-01T09:30:00.000Z"
+}

@@ -10,6 +10,22 @@
       "placeholders": {
         "message": "string"
       }
+    },
+    {
+      "id": "be5b90df-3d3c-438d-8850-1e73c79e957e",
+      "slug": "generic-report",
+      "name": "Generic report",
+      "path": "templates/generic-report",
+      "contentHash": "cab7e13487aca9188a6768cf46aa7eb36adefea9bc15e92eaf1470b863a5bfbf",
+      "placeholders": {
+        "customer": {
+          "name": "string"
+        },
+        "generatedAt": "string",
+        "items": "array",
+        "title": "string",
+        "total": "string"
+      }
     }
   ]
 }

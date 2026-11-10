@@ -1,0 +1,147 @@
+:root {
+  color-scheme: light;
+  --ink: #1f2933;
+  --muted: #52606d;
+  --rule: #cbd2d9;
+  --surface: #f5f7fa;
+  --accent: #1f4e79;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@page {
+  size: A4;
+  margin: 20mm 16mm 18mm;
+}
+
+body {
+  color: var(--ink);
+  font-family: system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.report-header {
+  border-bottom: 2px solid var(--accent);
+  margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 1.9rem;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.75rem;
+}
+
+.report-meta {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.report-meta div {
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  padding: 0.55rem 0.75rem;
+}
+
+.report-meta dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.report-meta dd {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.15rem 0 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+caption {
+  caption-side: bottom;
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding-top: 0.5rem;
+  text-align: left;
+}
+
+thead {
+  display: table-header-group;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.55rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th {
+  background: var(--surface);
+  border-bottom: 2px solid var(--accent);
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+tbody th {
+  font-weight: 500;
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+tfoot th,
+tfoot td {
+  border-bottom: none;
+  border-top: 2px solid var(--accent);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding-top: 0.7rem;
+}
+
+tr {
+  break-inside: avoid;
+}
+
+.report-footer {
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-top: 2rem;
+  padding-top: 0.65rem;
+}
+
+.report-footer p {
+  margin: 0;
+}
