@@ -754,5 +754,306 @@
     "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
     "phase": "intent",
     "subject": "urn:uuid:01a1c42a-2eea-7b22-a33f-cd53e0ef36a7"
+  },
+  {
+    "ts": "2026-11-10T06:35:21Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "intent",
+    "subject": "gate:G1"
+  },
+  {
+    "ts": "2026-11-10T06:35:21Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "phase:discovery"
+  },
+  {
+    "ts": "2026-11-10T06:36:27Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1dbb-760d-b6b0-f4c3de01c504"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1e01-7b44-a410-be97626bc8ed"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1e46-78c2-9342-faa55ada3b60"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1e8b-794e-8174-58cab9fa14cd"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1ed1-7e8e-81a4-781b4b399d59"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1f15-765a-8910-bf72ac162182"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1f58-7670-8f45-0f980cb35c3f"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1f9d-7704-810f-5e81a0d36915"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-1fe3-7995-8384-a15c6bbcaef9"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-2027-75b8-a360-9acd1ed7786f"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-206d-7ba5-bb6d-12dba861e959"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-20b0-7558-9e07-053e5f1e7816"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-20f6-7d82-a858-e3a45d73f7ac"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-2139-718a-b2a2-e2bddbe182c5"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-217e-7f34-b2fb-f7f65e075eb0"
+  },
+  {
+    "ts": "2026-11-10T06:36:28Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-21c3-75be-affd-404cc0b8e73f"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-2208-7c34-a238-f408660f0b5d"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-224b-74b9-90bf-aa389278ceea"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-2290-71b5-b873-75e99380d8f5"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-22d3-760b-9589-c64f435671fd"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-2317-7ff4-9451-db6b4ecf932f"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-235c-765b-81f8-717936af1d5f"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-23a1-7071-a267-b364380457c6"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-23e6-7e74-aa76-ee8a44c0751b"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-2429-7aca-982d-4856e45766c9"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-246e-732c-8c1d-6081ad2f0b3a"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-24b0-70d2-9346-e8e06ffae4f7"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-24f5-70a7-8af3-7b70e43c0608"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a"
+  },
+  {
+    "ts": "2026-11-10T06:36:29Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-259f-7e6c-99e0-f8492fa84425"
+  },
+  {
+    "ts": "2026-11-10T06:36:30Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394"
+  },
+  {
+    "ts": "2026-11-10T06:36:30Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c42c-2632-702e-a679-095b2e18970a"
+  },
+  {
+    "ts": "2026-11-10T06:36:39Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "discovery",
+    "subject": "gate:G2"
+  },
+  {
+    "ts": "2026-11-10T06:36:39Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "assessment",
+    "subject": "phase:assessment"
+  },
+  {
+    "ts": "2026-11-10T06:38:04Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "assessment",
+    "subject": "urn:uuid:01a1c42d-985d-7b7c-9bbd-4054d7544895"
+  },
+  {
+    "ts": "2026-11-10T06:38:04Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "assessment",
+    "subject": "urn:uuid:01a1c42d-98a2-7707-bad7-471c06a6c708"
+  },
+  {
+    "ts": "2026-11-10T06:38:05Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "assessment",
+    "subject": "urn:uuid:01a1c42d-98e7-790c-9576-b861065a184e"
+  },
+  {
+    "ts": "2026-11-10T06:38:05Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "assessment",
+    "subject": "urn:uuid:01a1c42d-992c-7b8c-b9a3-5a6dfe756487"
+  },
+  {
+    "ts": "2026-11-10T06:38:05Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "assessment",
+    "subject": "urn:uuid:01a1c42d-9972-79d2-8713-2f01024e08c0"
+  },
+  {
+    "ts": "2026-11-10T06:38:05Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "assessment",
+    "subject": "urn:uuid:01a1c42d-99b8-737b-abbc-d9e386f4f1b1"
+  },
+  {
+    "ts": "2026-11-10T06:38:05Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "assessment",
+    "subject": "urn:uuid:01a1c42d-99fa-7f74-92be-641ca77a6f8c"
   }
 ]

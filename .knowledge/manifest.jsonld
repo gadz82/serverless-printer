@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-complete-the-printer-service-with-templates-rend",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T06:34:21Z",
+  "generatedAt": "2026-11-10T06:38:05Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -11,7 +11,7 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-10-complete-the-printer-service-with-templates-rend",
     "title": "Complete the Printer service with templates, rendering, callbacks and production readiness",
-    "phase": "intent",
+    "phase": "assessment",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
@@ -440,6 +440,1019 @@
       ],
       "artifact": "intent/prd.md",
       "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1dbb-760d-b6b0-f4c3de01c504",
+      "@type": "orchid:Scenario",
+      "description": "Lenient mode renders missing fields as empty strings.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "handlebars",
+        "modes",
+        "lenient"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:27Z",
+      "updatedAt": "2026-11-10T06:36:27Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-101"
+      ],
+      "artifact": "discovery/gherkin/template-engine.feature",
+      "hash": "sha256:63bbcd0c5bc840dbf25e9cfc36fc932c4b0980e3e9f09cb98f2fe0f32be8d513"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1e01-7b44-a410-be97626bc8ed",
+      "@type": "orchid:Scenario",
+      "description": "Strict mode fails on any missing field.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "handlebars",
+        "modes",
+        "strict"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-102"
+      ],
+      "artifact": "discovery/gherkin/template-engine.feature",
+      "hash": "sha256:63bbcd0c5bc840dbf25e9cfc36fc932c4b0980e3e9f09cb98f2fe0f32be8d513"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1e46-78c2-9342-faa55ada3b60",
+      "@type": "orchid:Scenario",
+      "description": "Assume-objects fails only when a parent object is missing.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "handlebars",
+        "modes",
+        "assume-objects"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-103"
+      ],
+      "artifact": "discovery/gherkin/template-engine.feature",
+      "hash": "sha256:63bbcd0c5bc840dbf25e9cfc36fc932c4b0980e3e9f09cb98f2fe0f32be8d513"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1e8b-794e-8174-58cab9fa14cd",
+      "@type": "orchid:Scenario",
+      "description": "Templates can use only the fixed helper set.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "handlebars",
+        "helpers",
+        "security"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-104"
+      ],
+      "artifact": "discovery/gherkin/template-engine.feature",
+      "hash": "sha256:63bbcd0c5bc840dbf25e9cfc36fc932c4b0980e3e9f09cb98f2fe0f32be8d513"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1ed1-7e8e-81a4-781b4b399d59",
+      "@type": "orchid:Scenario",
+      "description": "The manifest records each/if/unless/with/dotted placeholder shapes.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "manifest",
+        "placeholders",
+        "ast"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-105"
+      ],
+      "artifact": "discovery/gherkin/template-engine.feature",
+      "hash": "sha256:63bbcd0c5bc840dbf25e9cfc36fc932c4b0980e3e9f09cb98f2fe0f32be8d513"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1f15-765a-8910-bf72ac162182",
+      "@type": "orchid:Scenario",
+      "description": "Validation rejects duplicate identity, compile errors and sample mismatch.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "validation",
+        "identity",
+        "sample"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-106"
+      ],
+      "artifact": "discovery/gherkin/template-engine.feature",
+      "hash": "sha256:63bbcd0c5bc840dbf25e9cfc36fc932c4b0980e3e9f09cb98f2fe0f32be8d513"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1f58-7670-8f45-0f980cb35c3f",
+      "@type": "orchid:Scenario",
+      "description": "Check blocks template id/slug changes against the base.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "validation",
+        "git",
+        "governance"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-107"
+      ],
+      "artifact": "discovery/gherkin/template-engine.feature",
+      "hash": "sha256:63bbcd0c5bc840dbf25e9cfc36fc932c4b0980e3e9f09cb98f2fe0f32be8d513"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1f9d-7704-810f-5e81a0d36915",
+      "@type": "orchid:Scenario",
+      "description": "template:new creates a folder and fresh UUID identity.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "cli",
+        "scaffold",
+        "uuid"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-108"
+      ],
+      "artifact": "discovery/gherkin/template-tooling.feature",
+      "hash": "sha256:6a9d74b0d91a43d7be211953d1fcd481ba28de1ccee1b509c928fc1f22f28388"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-1fe3-7995-8384-a15c6bbcaef9",
+      "@type": "orchid:Scenario",
+      "description": "Validation warns about unbundled fonts without failing.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "validation",
+        "fonts",
+        "warnings"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-109"
+      ],
+      "artifact": "discovery/gherkin/template-tooling.feature",
+      "hash": "sha256:6a9d74b0d91a43d7be211953d1fcd481ba28de1ccee1b509c928fc1f22f28388"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-2027-75b8-a360-9acd1ed7786f",
+      "@type": "orchid:Scenario",
+      "description": "template:preview renders sample or supplied data with optional PDF/A and strict.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "cli",
+        "preview",
+        "pdfa"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-110"
+      ],
+      "artifact": "discovery/gherkin/template-tooling.feature",
+      "hash": "sha256:6a9d74b0d91a43d7be211953d1fcd481ba28de1ccee1b509c928fc1f22f28388"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-206d-7ba5-bb6d-12dba861e959",
+      "@type": "orchid:Scenario",
+      "description": "A real template renders by id and slug after deploy, plain and PDF/A.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "deployment",
+        "render",
+        "slug"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-111"
+      ],
+      "artifact": "discovery/gherkin/template-tooling.feature",
+      "hash": "sha256:6a9d74b0d91a43d7be211953d1fcd481ba28de1ccee1b509c928fc1f22f28388"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-20b0-7558-9e07-053e5f1e7816",
+      "@type": "orchid:Scenario",
+      "description": "vpc_mode none creates no network and no worker VPC config.",
+      "status": "accepted",
+      "topics": [
+        "network",
+        "vpc",
+        "default",
+        "worker"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-112"
+      ],
+      "artifact": "discovery/gherkin/network.feature",
+      "hash": "sha256:68ee93975a81ef1d675b96be1ad9196ac48ff6fde34b2f26c476834a9c3b81cb"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-20f6-7d82-a858-e3a45d73f7ac",
+      "@type": "orchid:Scenario",
+      "description": "vpc_mode create attaches the worker to private subnets with optional NAT and endpoints.",
+      "status": "accepted",
+      "topics": [
+        "network",
+        "vpc",
+        "create",
+        "endpoints"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-113"
+      ],
+      "artifact": "discovery/gherkin/network.feature",
+      "hash": "sha256:68ee93975a81ef1d675b96be1ad9196ac48ff6fde34b2f26c476834a9c3b81cb"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-2139-718a-b2a2-e2bddbe182c5",
+      "@type": "orchid:Scenario",
+      "description": "vpc_mode lookup uses resolved existing private subnets.",
+      "status": "accepted",
+      "topics": [
+        "network",
+        "vpc",
+        "lookup",
+        "subnets"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-114"
+      ],
+      "artifact": "discovery/gherkin/network.feature",
+      "hash": "sha256:68ee93975a81ef1d675b96be1ad9196ac48ff6fde34b2f26c476834a9c3b81cb"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-217e-7f34-b2fb-f7f65e075eb0",
+      "@type": "orchid:Scenario",
+      "description": "Chromium renders with JavaScript disabled and external requests blocked.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "security",
+        "network"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-115"
+      ],
+      "artifact": "discovery/gherkin/rendering.feature",
+      "hash": "sha256:c5fcd60e7dd847c8a75c46f0f4eaf4e24af49db6990b4d636c308cd345ef8049"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-21c3-75be-affd-404cc0b8e73f",
+      "@type": "orchid:Scenario",
+      "description": "Chromium applies page settings, header/footer and tagged output.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "pdf",
+        "accessibility"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:28Z",
+      "updatedAt": "2026-11-10T06:36:28Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-116"
+      ],
+      "artifact": "discovery/gherkin/rendering.feature",
+      "hash": "sha256:c5fcd60e7dd847c8a75c46f0f4eaf4e24af49db6990b4d636c308cd345ef8049"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-2208-7c34-a238-f408660f0b5d",
+      "@type": "orchid:Scenario",
+      "description": "Render regression detects page, text and appearance changes.",
+      "status": "accepted",
+      "topics": [
+        "testing",
+        "rendering",
+        "regression",
+        "ci"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-117"
+      ],
+      "artifact": "discovery/gherkin/rendering.feature",
+      "hash": "sha256:c5fcd60e7dd847c8a75c46f0f4eaf4e24af49db6990b4d636c308cd345ef8049"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-224b-74b9-90bf-aa389278ceea",
+      "@type": "orchid:Scenario",
+      "description": "All eight PDF/A levels get version, XMP, sRGB ICC and Info metadata.",
+      "status": "accepted",
+      "topics": [
+        "pdfa",
+        "rendering",
+        "metadata",
+        "conformance"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-118"
+      ],
+      "artifact": "discovery/gherkin/pdfa.feature",
+      "hash": "sha256:684f60d6817f0d6f7f7f59f75f607f5b8f2257b778dbe97e3bb6592df4699a70"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-2290-71b5-b873-75e99380d8f5",
+      "@type": "orchid:Scenario",
+      "description": "Unsafe PDFs fail PDF/A conversion with PDFA_CONVERSION_FAILED.",
+      "status": "accepted",
+      "topics": [
+        "pdfa",
+        "errors",
+        "fonts",
+        "encryption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-119"
+      ],
+      "artifact": "discovery/gherkin/pdfa.feature",
+      "hash": "sha256:684f60d6817f0d6f7f7f59f75f607f5b8f2257b778dbe97e3bb6592df4699a70"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-22d3-760b-9589-c64f435671fd",
+      "@type": "orchid:Scenario",
+      "description": "HTTP delivery posts JSON with the print-id header, timeout and ping.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "http",
+        "delivery",
+        "ping"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-120"
+      ],
+      "artifact": "discovery/gherkin/delivery.feature",
+      "hash": "sha256:851c471255d4ed8b190c4e9a916f45e5da4bc65ad25f98463d424c8ef8afa187"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-2317-7ff4-9451-db6b4ecf932f",
+      "@type": "orchid:Scenario",
+      "description": "Lambda, EventBridge and S3 channels deliver the documented payloads.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "lambda",
+        "eventbridge",
+        "s3"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-121"
+      ],
+      "artifact": "discovery/gherkin/delivery.feature",
+      "hash": "sha256:851c471255d4ed8b190c4e9a916f45e5da4bc65ad25f98463d424c8ef8afa187"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-235c-765b-81f8-717936af1d5f",
+      "@type": "orchid:Scenario",
+      "description": "SQS delivery applies FIFO identifiers and sends the ping.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "sqs",
+        "fifo",
+        "ping"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-122"
+      ],
+      "artifact": "discovery/gherkin/delivery.feature",
+      "hash": "sha256:851c471255d4ed8b190c4e9a916f45e5da4bc65ad25f98463d424c8ef8afa187"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-23a1-7071-a267-b364380457c6",
+      "@type": "orchid:Scenario",
+      "description": "Allowlist and SSRF checks reject dangerous HTTP callbacks.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "callbacks",
+        "ssrf",
+        "allowlist"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-123"
+      ],
+      "artifact": "discovery/gherkin/delivery.feature",
+      "hash": "sha256:851c471255d4ed8b190c4e9a916f45e5da4bc65ad25f98463d424c8ef8afa187"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-23e6-7e74-aa76-ee8a44c0751b",
+      "@type": "orchid:Scenario",
+      "description": "The load test meets the agreed throughput and latency target.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "load-test",
+        "capacity"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-124"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:0be86c1fe059fecd4adc30b45f53201f24094678c9b249c9c5a3e1947acf95b9"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-2429-7aca-982d-4856e45766c9",
+      "@type": "orchid:Scenario",
+      "description": "Opt-in alarms and the runbook cover DLQ, errors, rollback and recovery.",
+      "status": "accepted",
+      "topics": [
+        "operations",
+        "alarms",
+        "runbook",
+        "recovery"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-125"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:0be86c1fe059fecd4adc30b45f53201f24094678c9b249c9c5a3e1947acf95b9"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-246e-732c-8c1d-6081ad2f0b3a",
+      "@type": "orchid:Scenario",
+      "description": "Plain and PDF/A smoke jobs pass and the first real template is live.",
+      "status": "accepted",
+      "topics": [
+        "smoke-test",
+        "release",
+        "pdfa",
+        "production"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-126"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:0be86c1fe059fecd4adc30b45f53201f24094678c9b249c9c5a3e1947acf95b9"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-24b0-70d2-9346-e8e06ffae4f7",
+      "@type": "orchid:Scenario",
+      "description": "Bootstrap, OIDC deploy, branch protection and rollback are verified in AWS.",
+      "status": "accepted",
+      "topics": [
+        "cloud",
+        "oidc",
+        "release",
+        "rollback"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "S-127"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:0be86c1fe059fecd4adc30b45f53201f24094678c9b249c9c5a3e1947acf95b9"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-24f5-70a7-8af3-7b70e43c0608",
+      "@type": "orchid:Scenario",
+      "description": "The candidate throughput target is 10 jobs/min peak, 20-page documents and p95 under 30 seconds.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-101"
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:c919aaf088c9d7ee86074ecad02035bc69feeb28728d113d08d4800f9129cf86"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a",
+      "@type": "orchid:Scenario",
+      "description": "The first cloud run uses the operator AWS account, eu-central-1 and vpc_mode none.",
+      "status": "accepted",
+      "topics": [
+        "aws",
+        "cloud",
+        "region",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-102"
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:c919aaf088c9d7ee86074ecad02035bc69feeb28728d113d08d4800f9129cf86"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-259f-7e6c-99e0-f8492fa84425",
+      "@type": "orchid:Scenario",
+      "description": "The first real template is annual-statement with the spec layout sample data.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "content",
+        "annual-statement",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:29Z",
+      "updatedAt": "2026-11-10T06:36:29Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-103"
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:c919aaf088c9d7ee86074ecad02035bc69feeb28728d113d08d4800f9129cf86"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394",
+      "@type": "orchid:Scenario",
+      "description": "The operator supplies the alarm SNS topic and callback allowlist/targets; alarms stay off until configured.",
+      "status": "accepted",
+      "topics": [
+        "operations",
+        "alarms",
+        "callbacks",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:30Z",
+      "updatedAt": "2026-11-10T06:36:30Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-104"
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:c919aaf088c9d7ee86074ecad02035bc69feeb28728d113d08d4800f9129cf86"
+    },
+    {
+      "@id": "urn:uuid:01a1c42c-2632-702e-a679-095b2e18970a",
+      "@type": "orchid:Scenario",
+      "description": "The remaining scope is staged and may split into follow-up iterations at G4.",
+      "status": "accepted",
+      "topics": [
+        "process",
+        "staging",
+        "budget",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:36:30Z",
+      "updatedAt": "2026-11-10T06:36:30Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-105"
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:c919aaf088c9d7ee86074ecad02035bc69feeb28728d113d08d4800f9129cf86"
+    },
+    {
+      "@id": "urn:uuid:01a1c42d-985d-7b7c-9bbd-4054d7544895",
+      "@type": "orchid:Decision",
+      "description": "Template engine is a shared package with fixed Handlebars helpers, three modes and AST placeholders.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "handlebars",
+        "architecture",
+        "manifest"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:38:04Z",
+      "updatedAt": "2026-11-10T06:38:04Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-101"
+      ],
+      "artifact": "assessment/adr/ADR-101-template-engine.md",
+      "hash": "sha256:1e304dfce6d345d0f956533a33773eae2a10756fb1a5696307c4b372485f27df"
+    },
+    {
+      "@id": "urn:uuid:01a1c42d-98a2-7707-bad7-471c06a6c708",
+      "@type": "orchid:Decision",
+      "description": "Chromium rendering uses puppeteer-core with @sparticuz/chromium, pinned and bundled in the worker zip.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "packaging",
+        "lambda"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:38:04Z",
+      "updatedAt": "2026-11-10T06:38:04Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-102"
+      ],
+      "artifact": "assessment/adr/ADR-102-chromium-renderer.md",
+      "hash": "sha256:3a67c1f7746654ef28a976640a18c2c5e707ded1455cc9c38ce5fbddab61119b"
+    },
+    {
+      "@id": "urn:uuid:01a1c42d-98e7-790c-9576-b861065a184e",
+      "@type": "orchid:Decision",
+      "description": "PDF/A is best-effort pdf-lib post-processing with sRGB ICC, XMP and explicit safety failures.",
+      "status": "accepted",
+      "topics": [
+        "pdfa",
+        "rendering",
+        "metadata",
+        "conformance"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:38:05Z",
+      "updatedAt": "2026-11-10T06:38:05Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-103"
+      ],
+      "artifact": "assessment/adr/ADR-103-pdfa-archiver.md",
+      "hash": "sha256:6d85714fe32a03c8716e4e16ee27279f8d5c04ad33e0300d8c318c40c411dadc"
+    },
+    {
+      "@id": "urn:uuid:01a1c42d-992c-7b8c-b9a3-5a6dfe756487",
+      "@type": "orchid:Decision",
+      "description": "Five delivery adapters share one ResultDelivery port and one callback allowlist/SSRF policy.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "delivery",
+        "security",
+        "architecture"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:38:05Z",
+      "updatedAt": "2026-11-10T06:38:05Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-104"
+      ],
+      "artifact": "assessment/adr/ADR-104-delivery-channels.md",
+      "hash": "sha256:1c0c0fd9552c113eb80ae5acd503adf726f2ee3ece9c43661b1482090a52dedf"
+    },
+    {
+      "@id": "urn:uuid:01a1c42d-9972-79d2-8713-2f01024e08c0",
+      "@type": "orchid:Decision",
+      "description": "Network is optional with vpc_mode none, create or lookup plus endpoints and optional NAT.",
+      "status": "accepted",
+      "topics": [
+        "network",
+        "vpc",
+        "terraform",
+        "endpoints"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:38:05Z",
+      "updatedAt": "2026-11-10T06:38:05Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-105"
+      ],
+      "artifact": "assessment/adr/ADR-105-network-module.md",
+      "hash": "sha256:44de2cdacd16cc1f559a1ae7415afefc8dc51e953b4d8b1353d99a5f9da1fccc"
+    },
+    {
+      "@id": "urn:uuid:01a1c42d-99b8-737b-abbc-d9e386f4f1b1",
+      "@type": "orchid:Decision",
+      "description": "Capacity starts from a candidate 10 jobs/min peak, 20-page documents and p95 under 30 seconds.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "capacity",
+        "load-test"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:38:05Z",
+      "updatedAt": "2026-11-10T06:38:05Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-106"
+      ],
+      "artifact": "assessment/adr/ADR-106-throughput-target.md",
+      "hash": "sha256:eb86a650f0d39437f91afca5c2e3f669e72aaa1f0d97e8d6103d4a5206437a2d"
+    },
+    {
+      "@id": "urn:uuid:01a1c42d-99fa-7f74-92be-641ca77a6f8c",
+      "@type": "orchid:Decision",
+      "description": "The remaining spec is delivered in three staged slices; templates and network come first.",
+      "status": "accepted",
+      "topics": [
+        "process",
+        "staging",
+        "budget",
+        "planning"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:38:05Z",
+      "updatedAt": "2026-11-10T06:38:05Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "ADR-107"
+      ],
+      "artifact": "assessment/adr/ADR-107-staged-slices.md",
+      "hash": "sha256:406abe22c18fa263e6ff1f56331b8cecde648ae61123717236eb9036d445c5de"
     }
   ]
 }
