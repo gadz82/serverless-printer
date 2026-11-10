@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-finalize-printer-rendering-callbacks-and-product",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T11:20:16Z",
+  "generatedAt": "2026-11-10T11:22:58Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -11,7 +11,7 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "title": "Finalize Printer rendering, callbacks and production readiness",
-    "phase": "intent",
+    "phase": "discovery",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
@@ -524,6 +524,655 @@
       ],
       "artifact": "intent/prd.md",
       "hash": "sha256:241a0bf910058a298bda2564d97cac063a028cc69f5bd9fe090c4306b7fbe96b"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-63ff-7d5d-8557-c33eee2887a1",
+      "@type": "orchid:Scenario",
+      "description": "Chromium renders a real template with JavaScript disabled and external requests blocked.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "security",
+        "e2e"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-201"
+      ],
+      "artifact": "discovery/gherkin/rendering.feature",
+      "hash": "sha256:579ca2d62c9cedd88c7b412ec5f941436d3c18e741b561427daffc5859bb498e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6447-7cdd-a0ee-e2d9727dd265",
+      "@type": "orchid:Scenario",
+      "description": "The worker reuses a browser and relaunches after a crash.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "browser-reuse",
+        "resilience"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-202"
+      ],
+      "artifact": "discovery/gherkin/rendering.feature",
+      "hash": "sha256:579ca2d62c9cedd88c7b412ec5f941436d3c18e741b561427daffc5859bb498e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-648c-72f0-bc46-f23ed6f4fed4",
+      "@type": "orchid:Scenario",
+      "description": "A4, print backgrounds, CSS page size, tagged output and page numbers are applied with a 60s timeout.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "page-settings",
+        "timeout"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-203"
+      ],
+      "artifact": "discovery/gherkin/rendering.feature",
+      "hash": "sha256:579ca2d62c9cedd88c7b412ec5f941436d3c18e741b561427daffc5859bb498e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-64cf-7a28-b5be-61d4ee8b7299",
+      "@type": "orchid:Scenario",
+      "description": "Render regression detects page, text and appearance changes.",
+      "status": "accepted",
+      "topics": [
+        "testing",
+        "rendering",
+        "regression",
+        "ci"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-204"
+      ],
+      "artifact": "discovery/gherkin/rendering.feature",
+      "hash": "sha256:579ca2d62c9cedd88c7b412ec5f941436d3c18e741b561427daffc5859bb498e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6517-79dc-8158-1aa2c78019ce",
+      "@type": "orchid:Scenario",
+      "description": "All eight PDF/A levels get version, XMP, sRGB ICC and consistent Info metadata.",
+      "status": "accepted",
+      "topics": [
+        "pdfa",
+        "rendering",
+        "metadata",
+        "conformance"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-205"
+      ],
+      "artifact": "discovery/gherkin/pdfa.feature",
+      "hash": "sha256:30aef7e553e0cf435fdd577addfca8fb34c8cd0b20446ad268807ce3dc9d4fef"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-655d-7998-8565-5192796a9a4a",
+      "@type": "orchid:Scenario",
+      "description": "Unsafe PDFs fail PDF/A conversion with PDFA_CONVERSION_FAILED.",
+      "status": "accepted",
+      "topics": [
+        "pdfa",
+        "errors",
+        "fonts",
+        "encryption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-206"
+      ],
+      "artifact": "discovery/gherkin/pdfa.feature",
+      "hash": "sha256:30aef7e553e0cf435fdd577addfca8fb34c8cd0b20446ad268807ce3dc9d4fef"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-65a1-7bdf-9bba-bf88595b27e4",
+      "@type": "orchid:Scenario",
+      "description": "HTTP delivery posts JSON with the print-id header, 5s timeout and ping.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "http",
+        "delivery",
+        "ping"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-207"
+      ],
+      "artifact": "discovery/gherkin/delivery.feature",
+      "hash": "sha256:83ef9b78386f80b63ae0c8456a36b03b7c6a0becc3172cb670fd5ed3652b98a9"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-65e8-7fe7-9ebd-27a447df0dd8",
+      "@type": "orchid:Scenario",
+      "description": "Lambda, EventBridge and S3 channels deliver the documented payloads.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "lambda",
+        "eventbridge",
+        "s3"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-208"
+      ],
+      "artifact": "discovery/gherkin/delivery.feature",
+      "hash": "sha256:83ef9b78386f80b63ae0c8456a36b03b7c6a0becc3172cb670fd5ed3652b98a9"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-662d-7b25-b13c-601f2849645e",
+      "@type": "orchid:Scenario",
+      "description": "SQS delivery applies FIFO identifiers and sends the ping.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "sqs",
+        "fifo",
+        "ping"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:56Z",
+      "updatedAt": "2026-11-10T11:22:56Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-209"
+      ],
+      "artifact": "discovery/gherkin/delivery.feature",
+      "hash": "sha256:83ef9b78386f80b63ae0c8456a36b03b7c6a0becc3172cb670fd5ed3652b98a9"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6675-7c04-8ac6-c6bef4d68780",
+      "@type": "orchid:Scenario",
+      "description": "Allowlist and SSRF checks reject dangerous HTTP callbacks and pings.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "callbacks",
+        "ssrf",
+        "allowlist"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-210"
+      ],
+      "artifact": "discovery/gherkin/delivery.feature",
+      "hash": "sha256:83ef9b78386f80b63ae0c8456a36b03b7c6a0becc3172cb670fd5ed3652b98a9"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4",
+      "@type": "orchid:Scenario",
+      "description": "Generated caller and worker roles are least privilege and output their ARNs.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "roles",
+        "least-privilege",
+        "terraform"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-211"
+      ],
+      "artifact": "discovery/gherkin/roles.feature",
+      "hash": "sha256:cdbd36067c14396b9e2467fe9b6189a5aa66b16ddcaa3f1e95eff3005365bdca"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-66ff-7f6f-b30c-0e7ba179e04b",
+      "@type": "orchid:Scenario",
+      "description": "Provided caller and worker roles are used without IAM modification and the worker is passable.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "roles",
+        "provided",
+        "pass-role"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-212"
+      ],
+      "artifact": "discovery/gherkin/roles.feature",
+      "hash": "sha256:cdbd36067c14396b9e2467fe9b6189a5aa66b16ddcaa3f1e95eff3005365bdca"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596",
+      "@type": "orchid:Scenario",
+      "description": "Caller and worker roles cannot perform each other's actions.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "roles",
+        "separation",
+        "security"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-213"
+      ],
+      "artifact": "discovery/gherkin/roles.feature",
+      "hash": "sha256:cdbd36067c14396b9e2467fe9b6189a5aa66b16ddcaa3f1e95eff3005365bdca"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-678c-7002-b598-0375446e54a7",
+      "@type": "orchid:Scenario",
+      "description": "The deploy role can manage the optional network after bootstrap expansion.",
+      "status": "accepted",
+      "topics": [
+        "bootstrap",
+        "iam",
+        "network",
+        "oidc"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-214"
+      ],
+      "artifact": "discovery/gherkin/roles.feature",
+      "hash": "sha256:cdbd36067c14396b9e2467fe9b6189a5aa66b16ddcaa3f1e95eff3005365bdca"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-67d5-737e-ad4c-bb1d19447d73",
+      "@type": "orchid:Scenario",
+      "description": "The load test meets the confirmed throughput and latency target.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "load-test",
+        "capacity"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-215"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:bd61b6c68fe52195081c97207529db740cb85ebd358fa82fa709dec1e4d0c84e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6822-7b63-8ace-38b4818df483",
+      "@type": "orchid:Scenario",
+      "description": "Opt-in alarms and the runbook cover DLQ, errors, rollback and recovery.",
+      "status": "accepted",
+      "topics": [
+        "operations",
+        "alarms",
+        "runbook",
+        "recovery"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-216"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:bd61b6c68fe52195081c97207529db740cb85ebd358fa82fa709dec1e4d0c84e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-686d-7496-8435-84218f774861",
+      "@type": "orchid:Scenario",
+      "description": "Plain and PDF/A smoke jobs pass and the first real template is live.",
+      "status": "accepted",
+      "topics": [
+        "smoke-test",
+        "release",
+        "pdfa",
+        "production"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-217"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:bd61b6c68fe52195081c97207529db740cb85ebd358fa82fa709dec1e4d0c84e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-68b4-79e0-b842-b2ffa65452b1",
+      "@type": "orchid:Scenario",
+      "description": "Bootstrap, OIDC deploy, branch protection and rollback are verified in AWS.",
+      "status": "accepted",
+      "topics": [
+        "cloud",
+        "oidc",
+        "release",
+        "rollback"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-218"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:bd61b6c68fe52195081c97207529db740cb85ebd358fa82fa709dec1e4d0c84e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-68fb-7e3d-94fe-8ef750e91ba8",
+      "@type": "orchid:Scenario",
+      "description": "Local Chrome restricts file requests to the template directory.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "chromium",
+        "preview",
+        "hardening"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "S-219"
+      ],
+      "artifact": "discovery/gherkin/production.feature",
+      "hash": "sha256:bd61b6c68fe52195081c97207529db740cb85ebd358fa82fa709dec1e4d0c84e"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6943-732e-9aad-e19f72368b17",
+      "@type": "orchid:Scenario",
+      "description": "The candidate throughput target is 10 jobs/min peak, 20-page documents and p95 under 30 seconds.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "A-201"
+      ],
+      "artifact": "discovery/questions/Q-201-final-inputs.md",
+      "hash": "sha256:5a7e1a175dff9cb0b7805371b3a64957296a5adc6877f076f9f7095a94ea01b2"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-698f-7d6d-82f2-31d73552820e",
+      "@type": "orchid:Scenario",
+      "description": "The first cloud run uses the operator AWS account, eu-central-1 and vpc_mode none.",
+      "status": "accepted",
+      "topics": [
+        "aws",
+        "cloud",
+        "region",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "A-202"
+      ],
+      "artifact": "discovery/questions/Q-201-final-inputs.md",
+      "hash": "sha256:5a7e1a175dff9cb0b7805371b3a64957296a5adc6877f076f9f7095a94ea01b2"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-69d6-7904-9b5a-af17331624cd",
+      "@type": "orchid:Scenario",
+      "description": "The operator supplies the alarm SNS topic and callback allowlist/targets; alarms stay off until configured.",
+      "status": "accepted",
+      "topics": [
+        "operations",
+        "alarms",
+        "callbacks",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "A-203"
+      ],
+      "artifact": "discovery/questions/Q-201-final-inputs.md",
+      "hash": "sha256:5a7e1a175dff9cb0b7805371b3a64957296a5adc6877f076f9f7095a94ea01b2"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6a1e-74d4-b58f-e86543066884",
+      "@type": "orchid:Scenario",
+      "description": "The generated caller role trusts the deployer account root by default; provided caller/integrator ARNs are operator inputs.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "caller",
+        "trust",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:57Z",
+      "updatedAt": "2026-11-10T11:22:57Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "A-204"
+      ],
+      "artifact": "discovery/questions/Q-201-final-inputs.md",
+      "hash": "sha256:5a7e1a175dff9cb0b7805371b3a64957296a5adc6877f076f9f7095a94ea01b2"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6a65-7451-84e6-ff1d908eebdf",
+      "@type": "orchid:Scenario",
+      "description": "The worker role defaults to generated; a provided role is same-account, trusts lambda, and is added to bootstrap PassRole.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "worker",
+        "provided",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:58Z",
+      "updatedAt": "2026-11-10T11:22:58Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "A-205"
+      ],
+      "artifact": "discovery/questions/Q-201-final-inputs.md",
+      "hash": "sha256:5a7e1a175dff9cb0b7805371b3a64957296a5adc6877f076f9f7095a94ea01b2"
+    },
+    {
+      "@id": "urn:uuid:01a1c532-6aab-74c5-a52f-8b9d93ae5026",
+      "@type": "orchid:Scenario",
+      "description": "The operator pushes the repository and enables branch protection plus the required CI checks.",
+      "status": "accepted",
+      "topics": [
+        "git",
+        "ci",
+        "remote",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "discovery",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:22:58Z",
+      "updatedAt": "2026-11-10T11:22:58Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "A-206"
+      ],
+      "artifact": "discovery/questions/Q-201-final-inputs.md",
+      "hash": "sha256:5a7e1a175dff9cb0b7805371b3a64957296a5adc6877f076f9f7095a94ea01b2"
     }
   ]
 }

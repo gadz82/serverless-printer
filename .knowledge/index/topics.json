@@ -1,52 +1,112 @@
 {
   "alarms": [
-    "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f"
+    "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f",
+    "urn:uuid:01a1c532-6822-7b63-8ace-38b4818df483",
+    "urn:uuid:01a1c532-69d6-7904-9b5a-af17331624cd"
   ],
   "allowlist": [
-    "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58"
+    "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58",
+    "urn:uuid:01a1c532-6675-7c04-8ac6-c6bef4d68780"
+  ],
+  "assumption": [
+    "urn:uuid:01a1c532-6943-732e-9aad-e19f72368b17",
+    "urn:uuid:01a1c532-698f-7d6d-82f2-31d73552820e",
+    "urn:uuid:01a1c532-69d6-7904-9b5a-af17331624cd",
+    "urn:uuid:01a1c532-6a1e-74d4-b58f-e86543066884",
+    "urn:uuid:01a1c532-6a65-7451-84e6-ff1d908eebdf",
+    "urn:uuid:01a1c532-6aab-74c5-a52f-8b9d93ae5026"
+  ],
+  "aws": [
+    "urn:uuid:01a1c532-698f-7d6d-82f2-31d73552820e"
   ],
   "bootstrap": [
     "urn:uuid:01a1c524-078d-70bb-8aeb-a4441811c867",
-    "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5"
+    "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5",
+    "urn:uuid:01a1c532-678c-7002-b598-0375446e54a7"
+  ],
+  "browser-reuse": [
+    "urn:uuid:01a1c532-6447-7cdd-a0ee-e2d9727dd265"
   ],
   "callbacks": [
     "urn:uuid:01a1c524-059b-78ca-96bb-7b7dc7661ccc",
     "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58",
     "urn:uuid:01a1c52d-0a1e-77b9-b8a2-c9dd5a0d8807",
-    "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33"
+    "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33",
+    "urn:uuid:01a1c532-65a1-7bdf-9bba-bf88595b27e4",
+    "urn:uuid:01a1c532-65e8-7fe7-9ebd-27a447df0dd8",
+    "urn:uuid:01a1c532-662d-7b25-b13c-601f2849645e",
+    "urn:uuid:01a1c532-6675-7c04-8ac6-c6bef4d68780",
+    "urn:uuid:01a1c532-69d6-7904-9b5a-af17331624cd"
   ],
   "caller": [
     "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc",
     "urn:uuid:01a1c52f-f3be-75b5-b290-814044072560",
-    "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda"
+    "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda",
+    "urn:uuid:01a1c532-6a1e-74d4-b58f-e86543066884"
   ],
   "capacity": [
-    "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad"
+    "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad",
+    "urn:uuid:01a1c532-67d5-737e-ad4c-bb1d19447d73"
   ],
   "channels": [
     "urn:uuid:01a1c524-059b-78ca-96bb-7b7dc7661ccc"
   ],
   "chromium": [
     "urn:uuid:01a1c524-050d-73cd-b07f-7890bd9286ba",
-    "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330"
+    "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330",
+    "urn:uuid:01a1c532-63ff-7d5d-8557-c33eee2887a1",
+    "urn:uuid:01a1c532-6447-7cdd-a0ee-e2d9727dd265",
+    "urn:uuid:01a1c532-648c-72f0-bc46-f23ed6f4fed4",
+    "urn:uuid:01a1c532-68fb-7e3d-94fe-8ef750e91ba8"
   ],
   "ci": [
-    "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2"
+    "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2",
+    "urn:uuid:01a1c532-64cf-7a28-b5be-61d4ee8b7299",
+    "urn:uuid:01a1c532-6aab-74c5-a52f-8b9d93ae5026"
   ],
   "cloud": [
-    "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d"
+    "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d",
+    "urn:uuid:01a1c532-68b4-79e0-b842-b2ffa65452b1",
+    "urn:uuid:01a1c532-698f-7d6d-82f2-31d73552820e"
   ],
   "conformance": [
-    "urn:uuid:01a1c524-0554-7d9b-a3a7-c31a80f6bfb1"
+    "urn:uuid:01a1c524-0554-7d9b-a3a7-c31a80f6bfb1",
+    "urn:uuid:01a1c532-6517-79dc-8158-1aa2c78019ce"
   ],
   "delivery": [
-    "urn:uuid:01a1c524-059b-78ca-96bb-7b7dc7661ccc"
+    "urn:uuid:01a1c524-059b-78ca-96bb-7b7dc7661ccc",
+    "urn:uuid:01a1c532-65a1-7bdf-9bba-bf88595b27e4"
   ],
   "deployment": [
     "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f"
   ],
+  "e2e": [
+    "urn:uuid:01a1c532-63ff-7d5d-8557-c33eee2887a1"
+  ],
+  "encryption": [
+    "urn:uuid:01a1c532-655d-7998-8565-5192796a9a4a"
+  ],
+  "errors": [
+    "urn:uuid:01a1c532-655d-7998-8565-5192796a9a4a"
+  ],
+  "eventbridge": [
+    "urn:uuid:01a1c532-65e8-7fe7-9ebd-27a447df0dd8"
+  ],
+  "fifo": [
+    "urn:uuid:01a1c532-662d-7b25-b13c-601f2849645e"
+  ],
+  "fonts": [
+    "urn:uuid:01a1c532-655d-7998-8565-5192796a9a4a"
+  ],
+  "git": [
+    "urn:uuid:01a1c532-6aab-74c5-a52f-8b9d93ae5026"
+  ],
   "hardening": [
-    "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330"
+    "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330",
+    "urn:uuid:01a1c532-68fb-7e3d-94fe-8ef750e91ba8"
+  ],
+  "http": [
+    "urn:uuid:01a1c532-65a1-7bdf-9bba-bf88595b27e4"
   ],
   "iam": [
     "urn:uuid:01a1c524-078d-70bb-8aeb-a4441811c867",
@@ -56,111 +116,188 @@
     "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc",
     "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33",
     "urn:uuid:01a1c52f-f3be-75b5-b290-814044072560",
-    "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda"
+    "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda",
+    "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4",
+    "urn:uuid:01a1c532-66ff-7f6f-b30c-0e7ba179e04b",
+    "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596",
+    "urn:uuid:01a1c532-678c-7002-b598-0375446e54a7",
+    "urn:uuid:01a1c532-6a1e-74d4-b58f-e86543066884",
+    "urn:uuid:01a1c532-6a65-7451-84e6-ff1d908eebdf"
   ],
   "lambda": [
     "urn:uuid:01a1c524-050d-73cd-b07f-7890bd9286ba",
-    "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5"
+    "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5",
+    "urn:uuid:01a1c532-65e8-7fe7-9ebd-27a447df0dd8"
   ],
   "least-privilege": [
-    "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33"
+    "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33",
+    "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4"
   ],
   "load-test": [
-    "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad"
+    "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad",
+    "urn:uuid:01a1c532-67d5-737e-ad4c-bb1d19447d73"
   ],
   "metadata": [
-    "urn:uuid:01a1c524-0554-7d9b-a3a7-c31a80f6bfb1"
+    "urn:uuid:01a1c524-0554-7d9b-a3a7-c31a80f6bfb1",
+    "urn:uuid:01a1c532-6517-79dc-8158-1aa2c78019ce"
   ],
   "network": [
-    "urn:uuid:01a1c524-078d-70bb-8aeb-a4441811c867"
+    "urn:uuid:01a1c524-078d-70bb-8aeb-a4441811c867",
+    "urn:uuid:01a1c532-678c-7002-b598-0375446e54a7"
   ],
   "oidc": [
-    "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d"
+    "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d",
+    "urn:uuid:01a1c532-678c-7002-b598-0375446e54a7",
+    "urn:uuid:01a1c532-68b4-79e0-b842-b2ffa65452b1"
   ],
   "operations": [
-    "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f"
+    "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f",
+    "urn:uuid:01a1c532-6822-7b63-8ace-38b4818df483",
+    "urn:uuid:01a1c532-69d6-7904-9b5a-af17331624cd"
+  ],
+  "page-settings": [
+    "urn:uuid:01a1c532-648c-72f0-bc46-f23ed6f4fed4"
   ],
   "pass-role": [
-    "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5"
+    "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5",
+    "urn:uuid:01a1c532-66ff-7f6f-b30c-0e7ba179e04b"
   ],
   "pdfa": [
     "urn:uuid:01a1c524-0554-7d9b-a3a7-c31a80f6bfb1",
-    "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c"
+    "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c",
+    "urn:uuid:01a1c532-6517-79dc-8158-1aa2c78019ce",
+    "urn:uuid:01a1c532-655d-7998-8565-5192796a9a4a",
+    "urn:uuid:01a1c532-686d-7496-8435-84218f774861"
   ],
   "performance": [
-    "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad"
+    "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad",
+    "urn:uuid:01a1c532-67d5-737e-ad4c-bb1d19447d73",
+    "urn:uuid:01a1c532-6943-732e-9aad-e19f72368b17"
   ],
   "permissions": [
     "urn:uuid:01a1c52d-0a1e-77b9-b8a2-c9dd5a0d8807"
   ],
   "ping": [
-    "urn:uuid:01a1c524-059b-78ca-96bb-7b7dc7661ccc"
+    "urn:uuid:01a1c524-059b-78ca-96bb-7b7dc7661ccc",
+    "urn:uuid:01a1c532-65a1-7bdf-9bba-bf88595b27e4",
+    "urn:uuid:01a1c532-662d-7b25-b13c-601f2849645e"
   ],
   "preview": [
-    "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330"
+    "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330",
+    "urn:uuid:01a1c532-68fb-7e3d-94fe-8ef750e91ba8"
   ],
   "production": [
-    "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c"
+    "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c",
+    "urn:uuid:01a1c532-686d-7496-8435-84218f774861"
+  ],
+  "provided": [
+    "urn:uuid:01a1c532-66ff-7f6f-b30c-0e7ba179e04b",
+    "urn:uuid:01a1c532-6a65-7451-84e6-ff1d908eebdf"
   ],
   "queue-policy": [
     "urn:uuid:01a1c52f-f3be-75b5-b290-814044072560"
   ],
   "recovery": [
-    "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f"
+    "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f",
+    "urn:uuid:01a1c532-6822-7b63-8ace-38b4818df483"
+  ],
+  "region": [
+    "urn:uuid:01a1c532-698f-7d6d-82f2-31d73552820e"
   ],
   "regression": [
-    "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2"
+    "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2",
+    "urn:uuid:01a1c532-64cf-7a28-b5be-61d4ee8b7299"
   ],
   "release": [
     "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c",
-    "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d"
+    "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d",
+    "urn:uuid:01a1c532-686d-7496-8435-84218f774861",
+    "urn:uuid:01a1c532-68b4-79e0-b842-b2ffa65452b1"
+  ],
+  "remote": [
+    "urn:uuid:01a1c532-6aab-74c5-a52f-8b9d93ae5026"
   ],
   "rendering": [
     "urn:uuid:01a1c524-050d-73cd-b07f-7890bd9286ba",
     "urn:uuid:01a1c524-0554-7d9b-a3a7-c31a80f6bfb1",
-    "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2"
+    "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2",
+    "urn:uuid:01a1c532-63ff-7d5d-8557-c33eee2887a1",
+    "urn:uuid:01a1c532-6447-7cdd-a0ee-e2d9727dd265",
+    "urn:uuid:01a1c532-648c-72f0-bc46-f23ed6f4fed4",
+    "urn:uuid:01a1c532-64cf-7a28-b5be-61d4ee8b7299",
+    "urn:uuid:01a1c532-6517-79dc-8158-1aa2c78019ce"
+  ],
+  "resilience": [
+    "urn:uuid:01a1c532-6447-7cdd-a0ee-e2d9727dd265"
   ],
   "roles": [
-    "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f"
+    "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f",
+    "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4",
+    "urn:uuid:01a1c532-66ff-7f6f-b30c-0e7ba179e04b",
+    "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596"
   ],
   "rollback": [
-    "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d"
+    "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d",
+    "urn:uuid:01a1c532-68b4-79e0-b842-b2ffa65452b1"
   ],
   "runbook": [
-    "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f"
+    "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f",
+    "urn:uuid:01a1c532-6822-7b63-8ace-38b4818df483"
+  ],
+  "s3": [
+    "urn:uuid:01a1c532-65e8-7fe7-9ebd-27a447df0dd8"
   ],
   "security": [
     "urn:uuid:01a1c524-050d-73cd-b07f-7890bd9286ba",
     "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58",
     "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330",
     "urn:uuid:01a1c52f-f3be-75b5-b290-814044072560",
-    "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda"
+    "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda",
+    "urn:uuid:01a1c532-63ff-7d5d-8557-c33eee2887a1",
+    "urn:uuid:01a1c532-6675-7c04-8ac6-c6bef4d68780",
+    "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596",
+    "urn:uuid:01a1c532-68fb-7e3d-94fe-8ef750e91ba8"
+  ],
+  "separation": [
+    "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596"
   ],
   "smoke-test": [
-    "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c"
+    "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c",
+    "urn:uuid:01a1c532-686d-7496-8435-84218f774861"
   ],
   "sqs": [
-    "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc"
+    "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc",
+    "urn:uuid:01a1c532-662d-7b25-b13c-601f2849645e"
   ],
   "ssrf": [
-    "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58"
+    "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58",
+    "urn:uuid:01a1c532-6675-7c04-8ac6-c6bef4d68780"
   ],
   "terraform": [
     "urn:uuid:01a1c524-078d-70bb-8aeb-a4441811c867",
     "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f",
-    "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc"
+    "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc",
+    "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4"
   ],
   "testing": [
-    "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2"
+    "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2",
+    "urn:uuid:01a1c532-64cf-7a28-b5be-61d4ee8b7299"
   ],
   "throughput": [
-    "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad"
+    "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad",
+    "urn:uuid:01a1c532-67d5-737e-ad4c-bb1d19447d73",
+    "urn:uuid:01a1c532-6943-732e-9aad-e19f72368b17"
+  ],
+  "timeout": [
+    "urn:uuid:01a1c532-648c-72f0-bc46-f23ed6f4fed4"
   ],
   "trust": [
-    "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda"
+    "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda",
+    "urn:uuid:01a1c532-6a1e-74d4-b58f-e86543066884"
   ],
   "worker": [
     "urn:uuid:01a1c52d-0a1e-77b9-b8a2-c9dd5a0d8807",
-    "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33"
+    "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33",
+    "urn:uuid:01a1c532-6a65-7451-84e6-ff1d908eebdf"
   ]
 }

@@ -1419,5 +1419,194 @@
     "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "phase": "intent",
     "subject": "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda"
+  },
+  {
+    "ts": "2026-11-10T11:21:42Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "intent",
+    "subject": "gate:G1"
+  },
+  {
+    "ts": "2026-11-10T11:21:42Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "phase:discovery"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-63ff-7d5d-8557-c33eee2887a1"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6447-7cdd-a0ee-e2d9727dd265"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-648c-72f0-bc46-f23ed6f4fed4"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-64cf-7a28-b5be-61d4ee8b7299"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6517-79dc-8158-1aa2c78019ce"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-655d-7998-8565-5192796a9a4a"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-65a1-7bdf-9bba-bf88595b27e4"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-65e8-7fe7-9ebd-27a447df0dd8"
+  },
+  {
+    "ts": "2026-11-10T11:22:56Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-662d-7b25-b13c-601f2849645e"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6675-7c04-8ac6-c6bef4d68780"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-66b9-7be5-babd-e1221691bda4"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-66ff-7f6f-b30c-0e7ba179e04b"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6748-713e-abfc-455d9548d596"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-678c-7002-b598-0375446e54a7"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-67d5-737e-ad4c-bb1d19447d73"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6822-7b63-8ace-38b4818df483"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-686d-7496-8435-84218f774861"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-68b4-79e0-b842-b2ffa65452b1"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-68fb-7e3d-94fe-8ef750e91ba8"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6943-732e-9aad-e19f72368b17"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-698f-7d6d-82f2-31d73552820e"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-69d6-7904-9b5a-af17331624cd"
+  },
+  {
+    "ts": "2026-11-10T11:22:57Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6a1e-74d4-b58f-e86543066884"
+  },
+  {
+    "ts": "2026-11-10T11:22:58Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6a65-7451-84e6-ff1d908eebdf"
+  },
+  {
+    "ts": "2026-11-10T11:22:58Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "discovery",
+    "subject": "urn:uuid:01a1c532-6aab-74c5-a52f-8b9d93ae5026"
   }
 ]
