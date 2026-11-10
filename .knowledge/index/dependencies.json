@@ -42,13 +42,18 @@
     "writeScopes": [
       "apps/render-worker/package.json",
       "apps/render-worker/src/composition-root.ts",
+      "apps/render-worker/src/config.ts",
       "apps/render-worker/src/delivery/**",
+      "apps/render-worker/src/handler.ts",
       "apps/render-worker/src/rendering/template-pdf-renderer.ts",
       "apps/render-worker/test/composition-root.test.ts",
+      "apps/render-worker/test/config.test.ts",
       "apps/render-worker/test/delivery*",
+      "apps/render-worker/test/handler.test.ts",
       "packages/domain/src/application/process-print-job.ts",
       "packages/domain/test/process-print-job.test.ts",
-      "pnpm-lock.yaml"
+      "pnpm-lock.yaml",
+      "pnpm-workspace.yaml"
     ]
   },
   "P-205": {
