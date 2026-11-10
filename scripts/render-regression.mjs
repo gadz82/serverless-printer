@@ -279,6 +279,7 @@ export async function checkPdfaMarkers(pdfBytes) {
  * }} [options]
  * @returns {Promise<{ skipped: boolean, reason?: string, scenarios: Array<{ name: string, referencePath: string, matches: boolean, differences: string[], hashes?: Record<string, unknown> }> }>}
  */
+// ORCHID-MEM: 01a1c6e2-7513-71d9-ae96-e93bc181897d — Renders plain and PDF/A scenarios with Lambda Chromium and compares references.
 export async function runRenderRegression(options = {}) {
   const prerequisites = checkPrerequisites();
   if (!prerequisites.ok) {

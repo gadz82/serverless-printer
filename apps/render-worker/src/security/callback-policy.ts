@@ -41,6 +41,7 @@ export type CallbackDecision =
       readonly message: string;
     };
 
+// ORCHID-MEM: 01a1c6e2-73d3-750f-a5bd-47127cb77c34 — Enforces the callback allowlist plus DNS, loopback and metadata SSRF policy.
 export class CallbackPolicyConfigurationError extends Error {
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);

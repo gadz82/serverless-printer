@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-finalize-printer-rendering-callbacks-and-product",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T19:13:32Z",
+  "generatedAt": "2026-11-10T19:15:43Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -1225,6 +1225,270 @@
       ],
       "artifact": "assessment/adr/ADR-202-final-iteration-split.md",
       "hash": "sha256:943bbf8596ab460f4ee03f6f9b2ae20d9c561b9a73f9ae10dce7fabf3bfa65d5"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-7376-7a46-9c7f-aa22f4bdecae",
+      "@type": "orchid:CodeUnit",
+      "description": "Renders compiled HTML with the bundled Lambda Chromium, deadline and crash recovery.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "lambda",
+        "security"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-7376-7a46-9c7f-aa22f4bdecae.md",
+      "codeAnchor": "apps/render-worker/src/rendering/chromium-pdf-renderer.ts#ChromiumPdfRenderer",
+      "hash": "sha256:efc6a617892003e34365ff71c43a73dff9147121a22104fbc169669fc514286d"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-73a4-7f26-9d3e-6b36fad2f5d1",
+      "@type": "orchid:CodeUnit",
+      "description": "Applies PDF/A metadata, XMP, ICC and safety checks for all eight levels.",
+      "status": "accepted",
+      "topics": [
+        "pdfa",
+        "metadata",
+        "conformance",
+        "icc"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-73a4-7f26-9d3e-6b36fad2f5d1.md",
+      "codeAnchor": "apps/render-worker/src/pdfa/pdf-lib-pdf-archiver.ts#PdfLibPdfArchiver",
+      "hash": "sha256:18132df7799dac5aa701f8c297dfcb04a3d59c14dfa4696899e6e161feb144be"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-73d3-750f-a5bd-47127cb77c34",
+      "@type": "orchid:CodeUnit",
+      "description": "Enforces the callback allowlist plus DNS, loopback and metadata SSRF policy.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "callbacks",
+        "ssrf",
+        "allowlist"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-73d3-750f-a5bd-47127cb77c34.md",
+      "codeAnchor": "apps/render-worker/src/security/callback-policy.ts#CallbackPolicy",
+      "hash": "sha256:bfa40e92779c57639c52f4714e8d9dbeda13f2a3a3e0060a4d4d6b94c34c6257"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-7400-7d2c-9d53-5ee417119bae",
+      "@type": "orchid:CodeUnit",
+      "description": "Pins the validated callback address for HTTP requests without redirects.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "callbacks",
+        "http",
+        "dns"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-7400-7d2c-9d53-5ee417119bae.md",
+      "codeAnchor": "apps/render-worker/src/delivery/http-request.ts#pinnedHttpRequest",
+      "hash": "sha256:f7cb781d7329a41a441306917f1c3843e0dec2b2e9fbdd2cab2337de510d56eb"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-742e-7487-90c5-d6432db771cf",
+      "@type": "orchid:CodeUnit",
+      "description": "Routes the five result channels and optional callback ping through one adapter.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "delivery",
+        "channels",
+        "ping"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-742e-7487-90c5-d6432db771cf.md",
+      "codeAnchor": "apps/render-worker/src/delivery/result-delivery-router.ts#ResultDeliveryRouter",
+      "hash": "sha256:426a33a6f4badc94c25dc363efd8b26a881b159da973f083c7c1103d898fd69a"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-745c-7060-92ae-5484fc16ea61",
+      "@type": "orchid:CodeUnit",
+      "description": "Uploads the rendered PDF to a presigned S3 destination with SSRF checks.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "s3",
+        "security",
+        "delivery"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-745c-7060-92ae-5484fc16ea61.md",
+      "codeAnchor": "apps/render-worker/src/delivery/s3-pdf-destination.ts#S3PdfDestination",
+      "hash": "sha256:9794889ca56af59795d72ae1d4761d485a38d623773ad6ea2c96dd535c96c691"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-748b-7a7d-be61-8728b67b41e8",
+      "@type": "orchid:CodeUnit",
+      "description": "Resolves and compiles a template bundle, then renders it through Chromium.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "templates",
+        "chromium",
+        "composition"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-748b-7a7d-be61-8728b67b41e8.md",
+      "codeAnchor": "apps/render-worker/src/rendering/template-pdf-renderer.ts#TemplatePdfRenderer",
+      "hash": "sha256:d5686194e0431d295f19d000a7e045d940e59dfb279846905b7c1526a424591b"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-74b9-7f7c-b83b-72a18dc313da",
+      "@type": "orchid:CodeUnit",
+      "description": "Packages the worker, Chromium closure, templates, manifest and ICC into the release zip.",
+      "status": "accepted",
+      "topics": [
+        "packaging",
+        "chromium",
+        "release",
+        "lambda"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-74b9-7f7c-b83b-72a18dc313da.md",
+      "codeAnchor": "scripts/build-worker.mjs",
+      "hash": "sha256:26c28b1d17dc379ab8a40e8b8266546fa866f4d51dbbb30f3529aab47bfd18dd"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-74e6-7a60-b670-ffe141c7f55d",
+      "@type": "orchid:CodeUnit",
+      "description": "Sends plain and PDF/A smoke jobs and validates both callback results.",
+      "status": "accepted",
+      "topics": [
+        "smoke-test",
+        "release",
+        "pdfa",
+        "production"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-74e6-7a60-b670-ffe141c7f55d.md",
+      "codeAnchor": "scripts/smoke-test.mjs#run",
+      "hash": "sha256:e37e437eacf5f247222d719af1394ee17363aa038720165c7ba0a67a4f38b5c5"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-7513-71d9-ae96-e93bc181897d",
+      "@type": "orchid:CodeUnit",
+      "description": "Renders plain and PDF/A scenarios with Lambda Chromium and compares references.",
+      "status": "accepted",
+      "topics": [
+        "testing",
+        "rendering",
+        "regression",
+        "ci"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-7513-71d9-ae96-e93bc181897d.md",
+      "codeAnchor": "scripts/render-regression.mjs#runRenderRegression",
+      "hash": "sha256:54d2dfc82a2ced48edbedd4d708454949f415267419e2e9559509f069403fc11"
+    },
+    {
+      "@id": "urn:uuid:01a1c6e2-7540-7c8e-8bd5-cea84775b708",
+      "@type": "orchid:CodeUnit",
+      "description": "Sends mixed 1/20-page jobs and reports throughput, latency, errors and memory.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "load-test",
+        "capacity"
+      ],
+      "provenance": {
+        "phase": "build",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T19:15:24Z",
+      "updatedAt": "2026-11-10T19:15:24Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c6e2-7540-7c8e-8bd5-cea84775b708.md",
+      "codeAnchor": "scripts/load-test.mjs#run",
+      "hash": "sha256:a46527219f0b28625714c292f334778a979e3981f48afbf9c3e4f5e626c10590"
     }
   ]
 }

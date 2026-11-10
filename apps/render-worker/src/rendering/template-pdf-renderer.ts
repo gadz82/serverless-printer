@@ -33,6 +33,7 @@ const HTML_FILE_PATTERN = /\.(?:html|hbs)$/i;
  * directory is also the base directory, so relative stylesheets and assets
  * stay inside the allowed file roots.
  */
+// ORCHID-MEM: 01a1c6e2-748b-7a7d-be61-8728b67b41e8 — Resolves and compiles a template bundle, then renders it through Chromium.
 export class TemplatePdfRenderer implements PdfRenderer {
   private readonly mode: HandlebarsMode;
   private readonly bundleRoot: string;

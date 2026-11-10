@@ -13,6 +13,7 @@ export type ChannelDeliveries = Partial<Record<CallbackChannel, ResultDelivery>>
  * design: its PDF bytes travel through the PdfDestination capability, not the
  * JSON ResultDelivery port.
  */
+// ORCHID-MEM: 01a1c6e2-742e-7487-90c5-d6432db771cf — Routes the five result channels and optional callback ping through one adapter.
 export class ResultDeliveryRouter implements ResultDelivery {
   constructor(private readonly deliveries: ChannelDeliveries) {}
 

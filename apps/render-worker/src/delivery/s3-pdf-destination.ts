@@ -39,6 +39,7 @@ export type S3PdfDestinationOptions = {
  * and an SSRF address check still apply. Loopback, metadata and link-local
  * addresses are always rejected; private VPC endpoints need an explicit opt-in.
  */
+// ORCHID-MEM: 01a1c6e2-745c-7060-92ae-5484fc16ea61 — Uploads the rendered PDF to a presigned S3 destination with SSRF checks.
 export class S3PdfDestination implements PdfDestination {
   private readonly pings: CallbackPing;
   private readonly request: PinnedHttpRequest;

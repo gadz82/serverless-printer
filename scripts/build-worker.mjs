@@ -18,6 +18,8 @@ import { build } from "esbuild";
 
 import { buildManifest } from "./template-manifest.mjs";
 
+// ORCHID-MEM: 01a1c6e2-74b9-7f7c-b83b-72a18dc313da — Packages the worker, Chromium closure, templates, manifest and ICC into the release zip.
+
 const MANIFEST_FILE = "templates.manifest.json";
 const SPARTICUZ_PACKAGE = "@sparticuz/chromium";
 const MINIMUM_ARCHIVE_BYTES = 50 * 1024 * 1024;

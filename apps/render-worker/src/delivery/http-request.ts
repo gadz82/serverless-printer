@@ -37,6 +37,7 @@ export function isSuccessStatus(status: number): boolean {
  * validated address while keeping the original host for Host and TLS SNI.
  * Addresses are tried in order inside one overall timeout.
  */
+// ORCHID-MEM: 01a1c6e2-7400-7d2c-9d53-5ee417119bae — Pins the validated callback address for HTTP requests without redirects.
 export const pinnedHttpRequest: PinnedHttpRequest = async (input) => {
   if (input.addresses.length === 0) {
     throw new Error("callback has no validated address");

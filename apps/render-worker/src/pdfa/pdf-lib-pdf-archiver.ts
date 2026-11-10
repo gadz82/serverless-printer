@@ -22,6 +22,7 @@ import { SRGB2014_ICC } from "./srgb2014-icc.js";
  * features that make a document unsafe to label archival. Every other
  * conformance aspect remains best effort.
  */
+// ORCHID-MEM: 01a1c6e2-73a4-7f26-9d3e-6b36fad2f5d1 — Applies PDF/A metadata, XMP, ICC and safety checks for all eight levels.
 export class PdfLibPdfArchiver implements PdfArchiver {
   async archive(pdfBytes: Uint8Array, options: PdfArchiveOptions): Promise<Uint8Array> {
     try {

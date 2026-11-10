@@ -105,6 +105,7 @@ function parseLoadTestArguments(argv) {
   return { help: parsed.values.help === true, printEvent };
 }
 
+// ORCHID-MEM: 01a1c6e2-7540-7c8e-8bd5-cea84775b708 — Sends mixed 1/20-page jobs and reports throughput, latency, errors and memory.
 async function run(client, config) {
   const jobs = buildJobs(config);
   const startedAt = Date.now();

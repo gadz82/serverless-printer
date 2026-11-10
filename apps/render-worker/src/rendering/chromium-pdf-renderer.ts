@@ -51,6 +51,7 @@ class RenderTimeoutError extends Error {
  * page or protocol crash the browser is discarded and the job is retried once
  * with a fresh launch.
  */
+// ORCHID-MEM: 01a1c6e2-7376-7a46-9c7f-aa22f4bdecae — Renders compiled HTML with the bundled Lambda Chromium, deadline and crash recovery.
 export class ChromiumPdfRenderer {
   private readonly launchBrowser: () => Promise<RenderingBrowser>;
   private readonly timeoutMs: number;

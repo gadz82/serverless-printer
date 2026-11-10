@@ -41,6 +41,7 @@ try {
   sqs?.destroy();
 }
 
+// ORCHID-MEM: 01a1c6e2-74e6-7a60-b670-ffe141c7f55d — Sends plain and PDF/A smoke jobs and validates both callback results.
 async function run(client, config) {
   const jobs = SMOKE_SCENARIOS.map((scenario) => ({
     scenario,
