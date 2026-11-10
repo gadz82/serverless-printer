@@ -1,14 +1,21 @@
 {
   "@context": "context/orchid-v1.jsonld",
-  "@id": "urn:orchid:manifest:serverless-printer:none",
+  "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-finalize-printer-rendering-callbacks-and-product",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T11:06:16Z",
+  "generatedAt": "2026-11-10T11:07:15Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
   },
-  "iteration": null,
+  "iteration": {
+    "@id": "urn:orchid:iteration:2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "title": "Finalize Printer rendering, callbacks and production readiness",
+    "phase": "intent",
+    "status": "active",
+    "specVersion": "1.0.0",
+    "rigor": "L"
+  },
   "gates": {
     "G0": "passed",
     "G1": "passed",
@@ -17,8 +24,8 @@
     "G4": "passed",
     "G5": "passed",
     "G6": "passed",
-    "G7": "passed",
-    "G8": "passed"
+    "G7": "pending",
+    "G8": "pending"
   },
   "indexes": {
     "topics": "index/topics.json",
@@ -49,5 +56,292 @@
       "status": "closed"
     }
   ],
-  "nodes": []
+  "nodes": [
+    {
+      "@id": "urn:uuid:01a1c524-050d-73cd-b07f-7890bd9286ba",
+      "@type": "orchid:Requirement",
+      "description": "Chromium renders real templates on Lambda with JavaScript disabled, request blocking and browser reuse.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "lambda",
+        "security"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:14Z",
+      "updatedAt": "2026-11-10T11:07:14Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-201"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-0554-7d9b-a3a7-c31a80f6bfb1",
+      "@type": "orchid:Requirement",
+      "description": "pdf-lib post-processing produces all eight PDF/A levels with ICC, XMP and safety checks.",
+      "status": "accepted",
+      "topics": [
+        "pdfa",
+        "rendering",
+        "metadata",
+        "conformance"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:14Z",
+      "updatedAt": "2026-11-10T11:07:14Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-202"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-059b-78ca-96bb-7b7dc7661ccc",
+      "@type": "orchid:Requirement",
+      "description": "All five result channels and ping deliver end to end with the documented failure handling.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "delivery",
+        "ping",
+        "channels"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:14Z",
+      "updatedAt": "2026-11-10T11:07:14Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-203"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-05e3-75f7-8cc1-19d2b7ba4f58",
+      "@type": "orchid:Requirement",
+      "description": "HTTP callbacks enforce the allowlist plus DNS and link-local/metadata SSRF checks.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "callbacks",
+        "ssrf",
+        "allowlist"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:14Z",
+      "updatedAt": "2026-11-10T11:07:14Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-204"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-0629-7038-bdf5-3ce65bc967f2",
+      "@type": "orchid:Requirement",
+      "description": "CI render regression compares page count, text and appearance for plain and PDF/A PDFs.",
+      "status": "accepted",
+      "topics": [
+        "testing",
+        "rendering",
+        "regression",
+        "ci"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:14Z",
+      "updatedAt": "2026-11-10T11:07:14Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-205"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-066f-7ad6-853d-4d86083b9aad",
+      "@type": "orchid:Requirement",
+      "description": "A throughput target is confirmed and verified with Power Tuning and a load test.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "load-test",
+        "capacity"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:14Z",
+      "updatedAt": "2026-11-10T11:07:14Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-206"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-06b7-7bdc-95b4-ea2d24cd279f",
+      "@type": "orchid:Requirement",
+      "description": "Opt-in alarms and a runbook cover rollback, DLQ redrive, template removal and recovery.",
+      "status": "accepted",
+      "topics": [
+        "operations",
+        "alarms",
+        "runbook",
+        "recovery"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:14Z",
+      "updatedAt": "2026-11-10T11:07:14Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-207"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-06fe-7cea-bfdf-21b093c61c6c",
+      "@type": "orchid:Requirement",
+      "description": "Plain and PDF/A smoke jobs verify each release and the first real template is live.",
+      "status": "accepted",
+      "topics": [
+        "smoke-test",
+        "release",
+        "pdfa",
+        "production"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:15Z",
+      "updatedAt": "2026-11-10T11:07:15Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-208"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-0746-79f5-bfc4-4e43b7f83c6d",
+      "@type": "orchid:Requirement",
+      "description": "Bootstrap, OIDC deploy, branch protection and rollback are verified in the real AWS account.",
+      "status": "accepted",
+      "topics": [
+        "cloud",
+        "oidc",
+        "release",
+        "rollback"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:15Z",
+      "updatedAt": "2026-11-10T11:07:15Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-209"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-078d-70bb-8aeb-a4441811c867",
+      "@type": "orchid:Requirement",
+      "description": "The bootstrap deploy role gains the EC2 and VPC permissions required for network modes.",
+      "status": "accepted",
+      "topics": [
+        "bootstrap",
+        "iam",
+        "network",
+        "terraform"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:15Z",
+      "updatedAt": "2026-11-10T11:07:15Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-210"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330",
+      "@type": "orchid:Requirement",
+      "description": "Local Chrome preview restricts file requests to the template directory before Lambda reuse.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "chromium",
+        "preview",
+        "hardening"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:07:15Z",
+      "updatedAt": "2026-11-10T11:07:15Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-211"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    }
+  ]
 }
