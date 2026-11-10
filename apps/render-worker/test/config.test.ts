@@ -4,6 +4,17 @@ import { ConfigError, loadConfig } from "../src/config.js";
 
 const BUNDLED_MANIFEST = fileURLToPath(new URL("../src/templates.manifest.json", import.meta.url));
 
+const ALL_PDFA_LEVELS = [
+  "PDF/A-1b",
+  "PDF/A-1a",
+  "PDF/A-2b",
+  "PDF/A-2u",
+  "PDF/A-2a",
+  "PDF/A-3b",
+  "PDF/A-3u",
+  "PDF/A-3a",
+] as const;
+
 describe("loadConfig", () => {
   it("applies the documented defaults with only the bucket set", () => {
     const config = loadConfig({ PRINTS_BUCKET: "printer-prints" });
@@ -11,7 +22,9 @@ describe("loadConfig", () => {
     expect(config).toEqual({
       printsBucket: "printer-prints",
       handlebarsMode: "lenient",
-      pdfaAllowedLevels: [],
+      pdfaAllowedLevels: ALL_PDFA_LEVELS,
+      pdfRendererMode: "auto",
+      allowPrivateS3Endpoint: false,
       callbackAllowlist: [],
       eventSource: "printer",
       presignTtlSeconds: 900,
@@ -26,6 +39,8 @@ describe("loadConfig", () => {
       PRINTS_BUCKET: " printer-prints ",
       HANDLEBARS_MODE: "strict",
       PDFA_ALLOWED_LEVELS: "PDF/A-1b, PDF/A-2b,PDF/A-2b",
+      PDF_RENDERER: "local",
+      S3_ALLOW_PRIVATE_ENDPOINT: "true",
       CALLBACK_ALLOWLIST: '["https://callbacks.example.com","https://*.example.net"]',
       EVENT_SOURCE: "printer-test",
       PRESIGN_TTL_SECONDS: "120",
@@ -38,6 +53,8 @@ describe("loadConfig", () => {
       printsBucket: "printer-prints",
       handlebarsMode: "strict",
       pdfaAllowedLevels: ["PDF/A-1b", "PDF/A-2b"],
+      pdfRendererMode: "local",
+      allowPrivateS3Endpoint: true,
       callbackAllowlist: ["https://callbacks.example.com", "https://*.example.net"],
       eventSource: "printer-test",
       presignTtlSeconds: 120,
@@ -52,6 +69,8 @@ describe("loadConfig", () => {
       PRINTS_BUCKET: "printer-prints",
       HANDLEBARS_MODE: " ",
       PDFA_ALLOWED_LEVELS: "",
+      PDF_RENDERER: " ",
+      S3_ALLOW_PRIVATE_ENDPOINT: " ",
       CALLBACK_ALLOWLIST: " ",
       EVENT_SOURCE: "",
       TEMPLATE_MANIFEST_PATH: "",
@@ -59,7 +78,9 @@ describe("loadConfig", () => {
     });
 
     expect(config.handlebarsMode).toBe("lenient");
-    expect(config.pdfaAllowedLevels).toEqual([]);
+    expect(config.pdfaAllowedLevels).toEqual(ALL_PDFA_LEVELS);
+    expect(config.pdfRendererMode).toBe("auto");
+    expect(config.allowPrivateS3Endpoint).toBe(false);
     expect(config.callbackAllowlist).toEqual([]);
     expect(config.eventSource).toBe("printer");
     expect(config.templateManifestPath).toBe(BUNDLED_MANIFEST);
@@ -75,6 +96,18 @@ describe("loadConfig", () => {
     expect(() => loadConfig({ PRINTS_BUCKET: "printer-prints", HANDLEBARS_MODE: "loose" })).toThrow(
       ConfigError,
     );
+  });
+
+  it("fails on an unknown PDF_RENDERER mode", () => {
+    expect(() => loadConfig({ PRINTS_BUCKET: "printer-prints", PDF_RENDERER: "headless" })).toThrow(
+      /PDF_RENDERER must be one of/,
+    );
+  });
+
+  it("fails on an invalid S3_ALLOW_PRIVATE_ENDPOINT value", () => {
+    expect(() =>
+      loadConfig({ PRINTS_BUCKET: "printer-prints", S3_ALLOW_PRIVATE_ENDPOINT: "yes" }),
+    ).toThrow(/S3_ALLOW_PRIVATE_ENDPOINT must be true or false/);
   });
 
   it("fails on an unsupported PDF/A level", () => {

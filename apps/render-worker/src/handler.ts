@@ -15,6 +15,8 @@ import {
 import type { WorkerRuntime } from "./composition-root.js";
 import { composeWorker } from "./composition-root.js";
 import { isSqsQueueArn } from "./adapters/sqs-result-delivery.js";
+import { isEventBusArn } from "./delivery/eventbridge-result-delivery.js";
+import { isLambdaFunctionArn } from "./delivery/lambda-result-delivery.js";
 
 export type SqsHandler = (event: SQSEvent) => Promise<SQSBatchResponse>;
 
@@ -89,6 +91,10 @@ async function processRecord(record: SQSRecord, runtime: WorkerRuntime): Promise
     };
 
     try {
+      // The policy gate is deliberately explicit here too: an invalid message
+      // has not been through ProcessPrintJob, and a denied target must go to
+      // the DLQ without an outbound request.
+      await runtime.callbackValidator.assertTargetAllowed(failureTarget);
       await runtime.resultDelivery.deliver(failure, {
         target: failureTarget,
         refId,
@@ -184,8 +190,10 @@ function toCallbackTarget(target: {
 
 /**
  * Reads a failure webhook from a message that failed schema validation.
- * Phase 1 can only deliver through SQS, so other channels are treated as
- * undeliverable and the message is reported for the DLQ.
+ *
+ * The callback schema cannot be trusted, so each channel gets only the shape
+ * check its adapter needs. s3 and unknown channels are undeliverable for a
+ * failure; an unreadable target reports the record for the DLQ.
  */
 function readFailureTarget(raw: unknown): CallbackTarget | undefined {
   if (!isRecord(raw)) {
@@ -204,11 +212,33 @@ function readFailureTarget(raw: unknown): CallbackTarget | undefined {
 
   const channel = failure["channel"];
   const value = failure["value"];
-  if (channel !== "sqs" || typeof value !== "string" || !isSqsQueueArn(value)) {
+  if (typeof value !== "string") {
     return undefined;
   }
 
-  return { channel: "sqs", value };
+  const ping = readPingUrl(failure["pingUrl"]);
+  switch (channel) {
+    case "http":
+      return { channel, value, ...ping };
+    case "lambda":
+      return isLambdaFunctionArn(value) ? { channel, value, ...ping } : undefined;
+    case "sqs":
+      return isSqsQueueArn(value) ? { channel, value, ...ping } : undefined;
+    case "eventBridge":
+      return isEventBusArn(value) ? { channel, value, ...ping } : undefined;
+    default:
+      return undefined;
+  }
+}
+
+function readPingUrl(value: unknown): Pick<CallbackTarget, "pingUrl"> {
+  if (typeof value === "string") {
+    return { pingUrl: value };
+  }
+  if (value === null) {
+    return { pingUrl: null };
+  }
+  return {};
 }
 
 function readRefId(raw: unknown, fallback: string): RefId {

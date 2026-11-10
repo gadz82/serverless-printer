@@ -40,11 +40,11 @@ function buildPlaceholderPdf(): Uint8Array {
 export const PLACEHOLDER_PDF_BYTES = buildPlaceholderPdf();
 
 /**
- * Phase 1 placeholder behind the PdfRenderer port.
+ * Deterministic placeholder behind the PdfRenderer port.
  *
  * It deliberately ignores the template, payload and PDF/A level and returns a
- * fixed one-page PDF. It proves storage and delivery, not rendering fidelity;
- * Chromium and PDF/A replace this adapter in Phase 3.
+ * fixed one-page PDF for adapter tests. Production composition uses
+ * TemplatePdfRenderer with Chromium and PdfLibPdfArchiver for PDF/A.
  */
 // ORCHID-MEM: 01a1c1d8-f3cf-7510-8a55-e30c74b3499a — Phase 1 deterministic placeholder PDF producer behind the renderer port.
 export class PlaceholderPdfRenderer implements PdfRenderer {

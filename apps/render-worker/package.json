@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Lambda worker that turns SQS print jobs into stored PDFs and SQS results.",
+  "description": "Worker that turns SQS print jobs into rendered PDFs, PDF/A archives and callback results.",
   "main": "./src/handler.ts",
   "types": "./src/handler.ts",
   "exports": {
@@ -20,11 +20,14 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
+    "@aws-sdk/client-eventbridge": "catalog:",
+    "@aws-sdk/client-lambda": "catalog:",
     "@aws-sdk/client-s3": "catalog:",
     "@aws-sdk/client-sqs": "catalog:",
     "@aws-sdk/s3-request-presigner": "catalog:",
     "@printer/contracts": "workspace:*",
     "@printer/domain": "workspace:*",
+    "@printer/template-engine": "workspace:*",
     "@sparticuz/chromium": "catalog:",
     "pdf-lib": "catalog:",
     "puppeteer-core": "catalog:",

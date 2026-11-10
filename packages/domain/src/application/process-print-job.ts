@@ -16,7 +16,7 @@ import type {
   PrintSuccessResult,
 } from "../domain/print-result.js";
 import type { TemplateDescriptor, TemplateMetadata } from "../domain/template-descriptor.js";
-import type { CallbackChannel } from "../domain/webhooks.js";
+import type { CallbackChannel, CallbackTarget } from "../domain/webhooks.js";
 import type { Clock } from "../ports/clock.js";
 import type { IdGenerator } from "../ports/id-generator.js";
 import type { Logger } from "../ports/logger.js";
@@ -33,12 +33,40 @@ export type ProcessPrintJobInput = {
   readonly maxAttempts: number;
 };
 
+/**
+ * Uploads the rendered PDF to a caller-owned destination instead of storing it
+ * in the prints bucket. The capability is separate from ResultDelivery because
+ * the transport carries PDF bytes rather than the JSON result.
+ */
+export type DeliverPdfInput = {
+  readonly target: CallbackTarget;
+  readonly printId: string;
+  readonly messageId: string;
+  readonly pdfBytes: Uint8Array;
+};
+
+export type DeliveredPdf = {
+  readonly sha256: string;
+  readonly sizeBytes: number;
+};
+
+export interface PdfDestination {
+  deliverPdf(input: DeliverPdfInput): Promise<DeliveredPdf>;
+}
+
+/** Policy gate for the success and failure callback targets. */
+export type CallbackTargetValidator = {
+  assertTargetAllowed(target: CallbackTarget): Promise<void>;
+};
+
 export type ProcessPrintJobDependencies = {
   readonly templateCatalog: TemplateCatalog;
   readonly pdfRenderer: PdfRenderer;
   readonly pdfArchiver: PdfArchiver;
   readonly printRepository: PrintRepository;
+  readonly pdfDestination: PdfDestination;
   readonly resultDelivery: ResultDelivery;
+  readonly callbackValidator: CallbackTargetValidator;
   readonly clock: Clock;
   readonly idGenerator: IdGenerator;
   readonly logger: Logger;
@@ -65,6 +93,7 @@ export class ProcessPrintJob {
     try {
       const pdfA = this.allowedPdfaLevel(job);
       this.assertSupportedChannels(job);
+      await this.assertCallbacksAllowed(job);
       template = await this.dependencies.templateCatalog.resolve(job.templateId);
       if (template === null) {
         throw new TemplateNotFound(`template not found: ${job.templateId}`);
@@ -78,24 +107,40 @@ export class ProcessPrintJob {
       const renderedAt = this.dependencies.clock.now();
       const bytes =
         pdfA === null ? renderedBytes : await this.archive(renderedBytes, pdfA, renderedAt);
-      const stored = await this.dependencies.printRepository.store({
-        printId,
-        templateBytes: bytes,
-      });
+      const isS3Destination = job.webhooks.success.channel === "s3";
+      const metadata: {
+        readonly sha256: string;
+        readonly sizeBytes: number;
+        readonly printing?: string;
+        readonly printingExpiresAt?: string;
+      } = isS3Destination
+        ? await this.dependencies.pdfDestination.deliverPdf({
+            target: job.webhooks.success,
+            printId,
+            messageId,
+            pdfBytes: bytes,
+          })
+        : await this.dependencies.printRepository.store({
+            printId,
+            templateBytes: bytes,
+          });
       const result: PrintSuccessResult = {
         success: true,
         printId,
         refId: job.refId,
-        printing: stored.printing,
-        printingExpiresAt: stored.printingExpiresAt,
-        sha256: stored.sha256,
-        sizeBytes: stored.sizeBytes,
+        ...(metadata.printing === undefined
+          ? {}
+          : { printing: metadata.printing, printingExpiresAt: metadata.printingExpiresAt }),
+        sha256: metadata.sha256,
+        sizeBytes: metadata.sizeBytes,
         pdfA,
         template: templateMetadata(template),
         renderedAt: renderedAt.toISOString(),
       };
 
-      await this.deliverSuccess(result, job, messageId);
+      if (!isS3Destination) {
+        await this.deliverSuccess(result, job, messageId);
+      }
       this.dependencies.logger.info("print_job_succeeded", {
         messageId,
         printId,
@@ -171,16 +216,33 @@ export class ProcessPrintJob {
   }
 
   private assertSupportedChannels(job: PrintJob): void {
-    this.assertSupportedChannel(job.webhooks.success);
+    this.assertSupportedChannel(job.webhooks.success, true);
     if (job.webhooks.failure !== undefined) {
-      this.assertSupportedChannel(job.webhooks.failure);
+      this.assertSupportedChannel(job.webhooks.failure, false);
     }
   }
 
-  private assertSupportedChannel(target: { readonly channel: CallbackChannel }): void {
+  private assertSupportedChannel(
+    target: { readonly channel: CallbackChannel },
+    isSuccess: boolean,
+  ): void {
     // Reject an unusable callback before doing any rendering or storage work.
     if (!this.dependencies.supportedChannels.includes(target.channel)) {
       throw new CallbackNotAllowed(`unsupported callback channel: ${target.channel}`);
+    }
+    // The public job contract reserves s3 for the success PDF destination.
+    if (!isSuccess && target.channel === "s3") {
+      throw new CallbackNotAllowed("s3 callback channel is only supported for success");
+    }
+  }
+
+  private async assertCallbacksAllowed(job: PrintJob): Promise<void> {
+    // Check both targets before rendering or storage. If the failure target is
+    // itself denied, the denial escapes the failure path and the message goes
+    // to the DLQ instead of being retried against an unusable callback.
+    await this.dependencies.callbackValidator.assertTargetAllowed(job.webhooks.success);
+    if (job.webhooks.failure !== undefined) {
+      await this.dependencies.callbackValidator.assertTargetAllowed(job.webhooks.failure);
     }
   }
 
@@ -196,7 +258,9 @@ export class ProcessPrintJob {
         messageId,
       });
     } catch (error) {
-      if (error instanceof DeliveryFailed) {
+      // CALLBACK_NOT_ALLOWED is a policy decision, not a transient channel
+      // failure; retrying it would only repeat the same denial.
+      if (error instanceof DeliveryFailed || error instanceof CallbackNotAllowed) {
         throw error;
       }
       throw new DeliveryFailed(messageFrom(error), { cause: error });

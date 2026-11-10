@@ -2,11 +2,14 @@ import { fileURLToPath } from "node:url";
 import type { PdfaLevel } from "@printer/domain";
 
 export type HandlebarsMode = "lenient" | "strict" | "assume-objects";
+export type PdfRendererMode = "auto" | "lambda" | "local";
 
 export type WorkerConfig = {
   readonly printsBucket: string;
   readonly handlebarsMode: HandlebarsMode;
   readonly pdfaAllowedLevels: readonly PdfaLevel[];
+  readonly pdfRendererMode: PdfRendererMode;
+  readonly allowPrivateS3Endpoint: boolean;
   readonly callbackAllowlist: readonly string[];
   readonly eventSource: string;
   readonly presignTtlSeconds: number;
@@ -23,6 +26,7 @@ export class ConfigError extends Error {
 }
 
 const HANDLEBARS_MODES: readonly HandlebarsMode[] = ["lenient", "strict", "assume-objects"];
+const PDF_RENDERER_MODES: readonly PdfRendererMode[] = ["auto", "lambda", "local"];
 
 const PDFA_LEVELS: readonly PdfaLevel[] = [
   "PDF/A-1b",
@@ -62,6 +66,12 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): WorkerConfig {
     printsBucket: readRequired(env, "PRINTS_BUCKET"),
     handlebarsMode: readHandlebarsMode(env["HANDLEBARS_MODE"]),
     pdfaAllowedLevels: readPdfaLevels(env["PDFA_ALLOWED_LEVELS"]),
+    pdfRendererMode: readPdfRendererMode(env["PDF_RENDERER"]),
+    allowPrivateS3Endpoint: readBoolean(
+      env["S3_ALLOW_PRIVATE_ENDPOINT"],
+      false,
+      "S3_ALLOW_PRIVATE_ENDPOINT",
+    ),
     callbackAllowlist: readCallbackAllowlist(env["CALLBACK_ALLOWLIST"]),
     eventSource: readOptional(env["EVENT_SOURCE"]) ?? "printer",
     presignTtlSeconds: readPositiveInteger(
@@ -117,10 +127,35 @@ function isHandlebarsMode(value: string): value is HandlebarsMode {
   return (HANDLEBARS_MODES as readonly string[]).includes(value);
 }
 
+function readPdfRendererMode(raw: string | undefined): PdfRendererMode {
+  const value = readOptional(raw);
+  if (value === undefined) {
+    return "auto";
+  }
+  if (!(PDF_RENDERER_MODES as readonly string[]).includes(value)) {
+    throw new ConfigError(`PDF_RENDERER must be one of: ${PDF_RENDERER_MODES.join(", ")}`);
+  }
+  return value as PdfRendererMode;
+}
+
+function readBoolean(raw: string | undefined, fallback: boolean, name: string): boolean {
+  const value = readOptional(raw);
+  if (value === undefined) {
+    return fallback;
+  }
+
+  const normalized = value.toLowerCase();
+  if (normalized !== "true" && normalized !== "false") {
+    throw new ConfigError(`${name} must be true or false`);
+  }
+  return normalized === "true";
+}
+
 function readPdfaLevels(raw: string | undefined): readonly PdfaLevel[] {
   const value = readOptional(raw);
   if (value === undefined) {
-    return [];
+    // SPEC §4.8: every level is enabled unless the deployment narrows it.
+    return [...PDFA_LEVELS];
   }
 
   const levels = value

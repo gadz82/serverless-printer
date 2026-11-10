@@ -1,11 +1,16 @@
 import type {
+  CallbackTarget,
+  CallbackTargetValidator,
   Clock,
+  DeliverPdfInput,
+  DeliveredPdf,
   DeliveryContext,
   IdGenerator,
   LogFields,
   Logger,
   PdfArchiveOptions,
   PdfArchiver,
+  PdfDestination,
   PdfRenderer,
   PrintRepository,
   PrintResult,
@@ -36,6 +41,11 @@ export const storedPrint: StoredPrint = {
 export const PDF_BYTES = new Uint8Array([0x25, 0x50, 0x44, 0x46]);
 export const ARCHIVED_PDF_BYTES = new Uint8Array([0x25, 0x50, 0x44, 0x46, 0x2d, 0x31, 0x2e, 0x37]);
 
+export const deliveredPdf: DeliveredPdf = {
+  sha256: "d".repeat(64),
+  sizeBytes: PDF_BYTES.byteLength,
+};
+
 export type RenderHandler = (input: RenderPdfInput) => Promise<Uint8Array>;
 export type ArchiveHandler = (
   pdfBytes: Uint8Array,
@@ -49,6 +59,19 @@ export type DeliveryRecord = {
 };
 
 export type DeliveryHandler = (delivery: DeliveryRecord) => Promise<void>;
+export type DeliverPdfHandler = (input: DeliverPdfInput) => Promise<DeliveredPdf>;
+export type CallbackValidatorHandler = (target: CallbackTarget) => Promise<void>;
+
+export class FakeCallbackValidator implements CallbackTargetValidator {
+  readonly targets: CallbackTarget[] = [];
+
+  constructor(private readonly handler: CallbackValidatorHandler = async () => undefined) {}
+
+  async assertTargetAllowed(target: CallbackTarget): Promise<void> {
+    this.targets.push(target);
+    await this.handler(target);
+  }
+}
 
 export class InMemoryTemplateCatalog implements TemplateCatalog {
   readonly requested: string[] = [];
@@ -84,6 +107,17 @@ export class FakePdfArchiver implements PdfArchiver {
   async archive(pdfBytes: Uint8Array, options: PdfArchiveOptions): Promise<Uint8Array> {
     this.calls.push(options);
     return this.handler(pdfBytes, options);
+  }
+}
+
+export class FakePdfDestination implements PdfDestination {
+  readonly calls: DeliverPdfInput[] = [];
+
+  constructor(private readonly handler: DeliverPdfHandler = async () => deliveredPdf) {}
+
+  async deliverPdf(input: DeliverPdfInput): Promise<DeliveredPdf> {
+    this.calls.push(input);
+    return this.handler(input);
   }
 }
 

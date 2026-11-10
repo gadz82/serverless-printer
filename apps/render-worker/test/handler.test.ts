@@ -1,12 +1,14 @@
 import type { SQSEvent, SQSRecord } from "aws-lambda";
 import { validateResult } from "@printer/contracts";
 import { PdfRenderFailed, ProcessPrintJob } from "@printer/domain";
-import type { PrintResult } from "@printer/domain";
+import type { CallbackTargetValidator, PrintResult } from "@printer/domain";
 import { describe, expect, it } from "vitest";
 import type { WorkerRuntime } from "../src/composition-root.js";
 import { loadConfig } from "../src/config.js";
 import { createSqsHandler } from "../src/handler.js";
+import { CallbackPolicy } from "../src/security/index.js";
 import {
+  AllowAllCallbackValidator,
   CapturingLogger,
   FixedClock,
   FixedIdGenerator,
@@ -14,6 +16,7 @@ import {
   InMemoryTemplateCatalog,
   PassThroughPdfArchiver,
   PDF_BYTES,
+  RecordingPdfDestination,
   RecordingResultDelivery,
   ScriptedPdfRenderer,
 } from "./support/fakes.js";
@@ -25,6 +28,7 @@ type RuntimeOptions = {
   readonly renderer?: () => Promise<Uint8Array>;
   readonly deliveryFails?: (result: PrintResult) => boolean;
   readonly maxReceiveCount?: string;
+  readonly callbackValidator?: CallbackTargetValidator;
 };
 
 function buildRuntime(options: RuntimeOptions = {}): {
@@ -40,24 +44,32 @@ function buildRuntime(options: RuntimeOptions = {}): {
   const logger = new CapturingLogger();
   const clock = new FixedClock();
   const idGenerator = new FixedIdGenerator();
+  const pdfRenderer = new ScriptedPdfRenderer(options.renderer ?? (async () => PDF_BYTES));
+  const pdfDestination = new RecordingPdfDestination();
+  const callbackValidator = options.callbackValidator ?? new AllowAllCallbackValidator();
   const processPrintJob = new ProcessPrintJob({
     templateCatalog: new InMemoryTemplateCatalog(),
-    pdfRenderer: new ScriptedPdfRenderer(options.renderer ?? (async () => PDF_BYTES)),
+    pdfRenderer,
     pdfArchiver: new PassThroughPdfArchiver(),
     printRepository: new FixedPrintRepository(),
+    pdfDestination,
     resultDelivery: delivery,
+    callbackValidator,
     clock,
     idGenerator,
     logger,
     supportedChannels: ["sqs"],
-    pdfaAllowedLevels: [],
+    pdfaAllowedLevels: config.pdfaAllowedLevels,
   });
 
   return {
     runtime: {
       config,
       processPrintJob,
+      pdfRenderer,
+      pdfDestination,
       resultDelivery: delivery,
+      callbackValidator,
       idGenerator,
       clock,
       logger,
@@ -210,13 +222,93 @@ describe("SQS handler", () => {
     expect(result).toMatchObject({ success: false, refId: "message-1" });
   });
 
-  it("treats a non-SQS failure webhook as unreadable in Phase 1", async () => {
+  it("delivers INVALID_MESSAGE to an http failure webhook", async () => {
+    const { runtime, delivery } = buildRuntime();
+    const handler = createSqsHandler(() => runtime);
+    const target = {
+      channel: "http",
+      value: "https://callbacks.example.com/failure",
+      pingUrl: "https://callbacks.example.com/ping",
+    };
+    const invalid = { refId: "keep-me", webhooks: { failure: target } };
+
+    const response = await handler(event([record(invalid)]));
+
+    expect(response).toEqual({ batchItemFailures: [] });
+    expect(delivery.deliveries).toHaveLength(1);
+    expect(delivery.deliveries[0]).toMatchObject({
+      context: { target, refId: "keep-me" },
+      result: { success: false, error: { code: "INVALID_MESSAGE" } },
+    });
+  });
+
+  it("delivers INVALID_MESSAGE to a lambda failure webhook", async () => {
+    const { runtime, delivery } = buildRuntime();
+    const handler = createSqsHandler(() => runtime);
+    const target = {
+      channel: "lambda",
+      value: "arn:aws:lambda:eu-central-1:123456789012:function:printer-failure",
+    };
+    const invalid = { refId: "keep-me", webhooks: { failure: target } };
+
+    const response = await handler(event([record(invalid)]));
+
+    expect(response).toEqual({ batchItemFailures: [] });
+    expect(delivery.deliveries[0]?.context.target).toEqual(target);
+    expect(delivery.deliveries[0]?.result).toMatchObject({
+      success: false,
+      error: { code: "INVALID_MESSAGE" },
+    });
+  });
+
+  it("delivers INVALID_MESSAGE to an EventBridge failure webhook", async () => {
+    const { runtime, delivery } = buildRuntime();
+    const handler = createSqsHandler(() => runtime);
+    const target = {
+      channel: "eventBridge",
+      value: "arn:aws:events:eu-central-1:123456789012:event-bus/printer-failures",
+    };
+    const invalid = { refId: "keep-me", webhooks: { failure: target } };
+
+    const response = await handler(event([record(invalid)]));
+
+    expect(response).toEqual({ batchItemFailures: [] });
+    expect(delivery.deliveries[0]?.context.target).toEqual(target);
+    expect(delivery.deliveries[0]?.result).toMatchObject({
+      success: false,
+      error: { code: "INVALID_MESSAGE" },
+    });
+  });
+
+  it.each([
+    ["s3", "https://prints.example.com/upload?X-Amz-Signature=abc"],
+    ["unsupported", "https://callbacks.example.com/failure"],
+  ])("reports an unreadable %s failure webhook for the DLQ", async (channel, value) => {
     const { runtime, delivery } = buildRuntime();
     const handler = createSqsHandler(() => runtime);
     const invalid = {
       refId: "keep-me",
+      webhooks: { failure: { channel, value } },
+    };
+
+    const response = await handler(event([record(invalid)]));
+
+    expect(response).toEqual({ batchItemFailures: [{ itemIdentifier: "message-1" }] });
+    expect(delivery.deliveries).toHaveLength(0);
+  });
+
+  it("reports a disallowed http failure webhook for the DLQ without delivering", async () => {
+    const { runtime, delivery } = buildRuntime({
+      callbackValidator: new CallbackPolicy({
+        allowlist: [],
+        resolver: async () => ["203.0.113.10"],
+      }),
+    });
+    const handler = createSqsHandler(() => runtime);
+    const invalid = {
+      refId: "keep-me",
       webhooks: {
-        failure: { channel: "http", value: "https://callbacks.example.com/failure" },
+        failure: { channel: "http", value: "https://unlisted.example.com/failure" },
       },
     };
 

@@ -31,6 +31,10 @@ export type { PrintRepository, StoredPrint, StorePrintInput } from "./ports/prin
 export type { DeliveryContext, ResultDelivery } from "./ports/result-delivery.js";
 export type { TemplateCatalog } from "./ports/template-catalog.js";
 export type {
+  CallbackTargetValidator,
+  DeliverPdfInput,
+  DeliveredPdf,
+  PdfDestination,
   ProcessPrintJobDependencies,
   ProcessPrintJobInput,
 } from "./application/process-print-job.js";

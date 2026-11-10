@@ -1,8 +1,13 @@
 import type {
+  CallbackTarget,
+  CallbackTargetValidator,
   Clock,
+  DeliverPdfInput,
+  DeliveredPdf,
   DeliveryContext,
   IdGenerator,
   PdfArchiver,
+  PdfDestination,
   PdfRenderer,
   PrintRepository,
   PrintResult,
@@ -78,6 +83,30 @@ export class ScriptedPdfRenderer implements PdfRenderer {
 export class PassThroughPdfArchiver implements PdfArchiver {
   async archive(pdfBytes: Uint8Array): Promise<Uint8Array> {
     return pdfBytes;
+  }
+}
+
+export class AllowAllCallbackValidator implements CallbackTargetValidator {
+  readonly targets: CallbackTarget[] = [];
+
+  async assertTargetAllowed(target: CallbackTarget): Promise<void> {
+    this.targets.push(target);
+  }
+}
+
+export class RecordingPdfDestination implements PdfDestination {
+  readonly calls: DeliverPdfInput[] = [];
+
+  constructor(
+    private readonly delivered: DeliveredPdf = {
+      sha256: "d".repeat(64),
+      sizeBytes: PDF_BYTES.byteLength,
+    },
+  ) {}
+
+  async deliverPdf(input: DeliverPdfInput): Promise<DeliveredPdf> {
+    this.calls.push(input);
+    return this.delivered;
   }
 }
 

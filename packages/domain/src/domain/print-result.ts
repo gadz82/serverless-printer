@@ -14,8 +14,9 @@ export type PrintSuccessResult = {
   readonly success: true;
   readonly printId: string;
   readonly refId: RefId;
-  readonly printing: string;
-  readonly printingExpiresAt: string;
+  /** Presigned GET URL; omitted when the PDF is delivered to the caller's S3 URL. */
+  readonly printing?: string;
+  readonly printingExpiresAt?: string;
   readonly sha256: string;
   readonly sizeBytes: number;
   readonly pdfA: PdfaLevel | null;

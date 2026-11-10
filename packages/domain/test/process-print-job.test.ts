@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  CallbackNotAllowed,
   DeliveryFailed,
   PdfRenderFailed,
   ProcessPrintJob,
@@ -18,15 +19,18 @@ import type {
 } from "../src/index.js";
 import {
   ARCHIVED_PDF_BYTES,
+  FakeCallbackValidator,
   FakeIdGenerator,
   FakeLogger,
   FakePdfArchiver,
+  FakePdfDestination,
   FakePdfRenderer,
   FakePrintRepository,
   FakeResultDelivery,
   FixedClock,
   InMemoryTemplateCatalog,
   PDF_BYTES,
+  deliveredPdf,
   storedPrint,
   template,
 } from "./support/fakes.js";
@@ -60,7 +64,9 @@ function buildDependencies(
     pdfRenderer: new FakePdfRenderer(),
     pdfArchiver: new FakePdfArchiver(),
     printRepository: new FakePrintRepository(),
+    pdfDestination: new FakePdfDestination(),
     resultDelivery: new FakeResultDelivery(),
+    callbackValidator: new FakeCallbackValidator(),
     clock: new FixedClock(FIXED_NOW),
     idGenerator: new FakeIdGenerator(),
     logger: new FakeLogger(),
@@ -379,10 +385,178 @@ describe("ProcessPrintJob", () => {
     expect(renderer.calls).toHaveLength(0);
   });
 
-  it("rejects an unsupported failure channel before resolving or rendering", async () => {
-    const catalog = new InMemoryTemplateCatalog();
+  it("checks both callback targets with the policy before rendering", async () => {
+    const validator = new FakeCallbackValidator();
+    const renderer = new FakePdfRenderer();
+    const useCase = new ProcessPrintJob(
+      buildDependencies({ callbackValidator: validator, pdfRenderer: renderer }),
+    );
+
+    await useCase.execute({
+      messageId: MESSAGE_ID,
+      job: baseJob,
+      attempt: 1,
+      maxAttempts: 5,
+    });
+
+    expect(validator.targets).toEqual([SQS_SUCCESS, SQS_FAILURE]);
+    expect(renderer.calls).toHaveLength(1);
+  });
+
+  it("fails before rendering when the success target is denied by the policy", async () => {
     const renderer = new FakePdfRenderer();
     const delivery = new FakeResultDelivery();
+    const useCase = new ProcessPrintJob(
+      buildDependencies({
+        callbackValidator: new FakeCallbackValidator(async (target) => {
+          if (target.channel === "http") {
+            throw new CallbackNotAllowed("callback host is not allowlisted");
+          }
+        }),
+        pdfRenderer: renderer,
+        resultDelivery: delivery,
+        supportedChannels: ["http", "lambda", "sqs", "eventBridge", "s3"],
+      }),
+    );
+
+    const result = await useCase.execute({
+      messageId: MESSAGE_ID,
+      job: {
+        ...baseJob,
+        webhooks: {
+          success: { channel: "http", value: "https://unlisted.example.com/print" },
+          failure: SQS_FAILURE,
+        },
+      },
+      attempt: 1,
+      maxAttempts: 5,
+    });
+
+    expect(expectFailure(result).error).toEqual({
+      code: "CALLBACK_NOT_ALLOWED",
+      message: "callback host is not allowlisted",
+      retryable: false,
+      attempts: 1,
+    });
+    expect(renderer.calls).toHaveLength(0);
+    expect(delivery.deliveries).toHaveLength(1);
+    expect(delivery.deliveries[0]?.context.target).toEqual(SQS_FAILURE);
+  });
+
+  it("uploads the PDF to the s3 destination without storing or delivering the JSON result", async () => {
+    const repository = new FakePrintRepository();
+    const destination = new FakePdfDestination();
+    const delivery = new FakeResultDelivery();
+    const useCase = new ProcessPrintJob(
+      buildDependencies({
+        printRepository: repository,
+        pdfDestination: destination,
+        resultDelivery: delivery,
+        supportedChannels: ["http", "lambda", "sqs", "eventBridge", "s3"],
+      }),
+    );
+    const target: CallbackTarget = {
+      channel: "s3",
+      value: "https://prints.example.com/upload?X-Amz-Signature=abc",
+    };
+
+    const result = await useCase.execute({
+      messageId: MESSAGE_ID,
+      job: { ...baseJob, webhooks: { success: target, failure: SQS_FAILURE } },
+      attempt: 1,
+      maxAttempts: 5,
+    });
+    const success = expectSuccess(result);
+
+    expect(repository.calls).toHaveLength(0);
+    expect(destination.calls).toEqual([
+      {
+        target,
+        printId: `print-${MESSAGE_ID}`,
+        messageId: MESSAGE_ID,
+        pdfBytes: PDF_BYTES,
+      },
+    ]);
+    expect(delivery.deliveries).toHaveLength(0);
+    expect(success.sha256).toBe(deliveredPdf.sha256);
+    expect(success.sizeBytes).toBe(deliveredPdf.sizeBytes);
+    expect("printing" in success).toBe(false);
+    expect("printingExpiresAt" in success).toBe(false);
+  });
+
+  it("delivers CALLBACK_NOT_ALLOWED when the s3 destination rejects the ping", async () => {
+    const denial = new CallbackNotAllowed("callback host is not allowlisted");
+    const destination = new FakePdfDestination(async () => Promise.reject(denial));
+    const delivery = new FakeResultDelivery();
+    const useCase = new ProcessPrintJob(
+      buildDependencies({
+        pdfDestination: destination,
+        resultDelivery: delivery,
+        supportedChannels: ["http", "lambda", "sqs", "eventBridge", "s3"],
+      }),
+    );
+
+    const result = await useCase.execute({
+      messageId: MESSAGE_ID,
+      job: {
+        ...baseJob,
+        webhooks: {
+          success: { channel: "s3", value: "https://prints.example.com/upload" },
+          failure: SQS_FAILURE,
+        },
+      },
+      attempt: 1,
+      maxAttempts: 5,
+    });
+    const failure = expectFailure(result);
+
+    expect(failure.error).toMatchObject({
+      code: "CALLBACK_NOT_ALLOWED",
+      retryable: false,
+      attempts: 1,
+    });
+    expect(delivery.deliveries).toHaveLength(1);
+    expect(delivery.deliveries[0]?.context.target).toEqual(SQS_FAILURE);
+  });
+
+  it("rejects an s3 failure target and lets the callback denial escape", async () => {
+    const renderer = new FakePdfRenderer();
+    const delivery = new FakeResultDelivery(({ context }) =>
+      context.target.channel === "s3"
+        ? Promise.reject(new CallbackNotAllowed("s3 is not a failure channel"))
+        : Promise.resolve(),
+    );
+    const useCase = new ProcessPrintJob(
+      buildDependencies({
+        pdfRenderer: renderer,
+        resultDelivery: delivery,
+        supportedChannels: ["http", "lambda", "sqs", "eventBridge", "s3"],
+      }),
+    );
+
+    await expect(
+      useCase.execute({
+        messageId: MESSAGE_ID,
+        job: {
+          ...baseJob,
+          webhooks: {
+            success: SQS_SUCCESS,
+            failure: { channel: "s3", value: "https://prints.example.com/upload" },
+          },
+        },
+        attempt: 1,
+        maxAttempts: 5,
+      }),
+    ).rejects.toBeInstanceOf(CallbackNotAllowed);
+    expect(renderer.calls).toHaveLength(0);
+  });
+
+  it("rejects an unsupported failure channel and lets the denial escape", async () => {
+    const catalog = new InMemoryTemplateCatalog();
+    const renderer = new FakePdfRenderer();
+    const delivery = new FakeResultDelivery(async () =>
+      Promise.reject(new CallbackNotAllowed("unsupported callback channel: lambda")),
+    );
     const useCase = new ProcessPrintJob(
       buildDependencies({
         templateCatalog: catalog,
@@ -398,16 +572,14 @@ describe("ProcessPrintJob", () => {
       },
     };
 
-    const result = await useCase.execute({
-      messageId: MESSAGE_ID,
-      job,
-      attempt: 1,
-      maxAttempts: 5,
-    });
-    const failure = expectFailure(result);
-
-    expect(failure.error.code).toBe("CALLBACK_NOT_ALLOWED");
-    expect(failure.error.message).toContain("lambda");
+    await expect(
+      useCase.execute({
+        messageId: MESSAGE_ID,
+        job,
+        attempt: 1,
+        maxAttempts: 5,
+      }),
+    ).rejects.toBeInstanceOf(CallbackNotAllowed);
     expect(catalog.requested).toHaveLength(0);
     expect(renderer.calls).toHaveLength(0);
     expect(delivery.deliveries[0]?.context.target).toEqual(job.webhooks.failure);
@@ -585,6 +757,54 @@ describe("ProcessPrintJob", () => {
     ).rejects.toBe(deliveryError);
     expect(delivery.deliveries).toHaveLength(1);
     expect(delivery.deliveries[0]?.result.success).toBe(true);
+  });
+
+  it("preserves CALLBACK_NOT_ALLOWED from success delivery instead of retrying it", async () => {
+    const denial = new CallbackNotAllowed("callback host is not allowlisted");
+    const delivery = new FakeResultDelivery(({ result }) =>
+      result.success ? Promise.reject(denial) : Promise.resolve(),
+    );
+    const useCase = new ProcessPrintJob(buildDependencies({ resultDelivery: delivery }));
+
+    const result = await useCase.execute({
+      messageId: MESSAGE_ID,
+      job: baseJob,
+      attempt: 1,
+      maxAttempts: 5,
+    });
+    const failure = expectFailure(result);
+
+    expect(failure.error).toEqual({
+      code: "CALLBACK_NOT_ALLOWED",
+      message: "callback host is not allowlisted",
+      retryable: false,
+      attempts: 1,
+    });
+    expect(delivery.deliveries).toHaveLength(2);
+    expect(delivery.deliveries[1]?.context.target).toEqual(SQS_FAILURE);
+  });
+
+  it("lets CALLBACK_NOT_ALLOWED from failure delivery escape for the DLQ", async () => {
+    const denial = new CallbackNotAllowed("callback host is not allowlisted");
+    const renderer = new FakePdfRenderer(async () => {
+      throw new PdfRenderFailed("renderer crashed");
+    });
+    const delivery = new FakeResultDelivery(({ result }) =>
+      result.success ? Promise.resolve() : Promise.reject(denial),
+    );
+    const useCase = new ProcessPrintJob(
+      buildDependencies({ pdfRenderer: renderer, resultDelivery: delivery }),
+    );
+
+    await expect(
+      useCase.execute({
+        messageId: MESSAGE_ID,
+        job: baseJob,
+        attempt: 5,
+        maxAttempts: 5,
+      }),
+    ).rejects.toBe(denial);
+    expect(delivery.deliveries).toHaveLength(1);
   });
 
   it("maps a success-delivery failure to DELIVERY_FAILED on the last attempt", async () => {
