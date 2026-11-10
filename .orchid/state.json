@@ -283,6 +283,17 @@
       "updatedAt": "2026-11-10T18:21:59Z",
       "note": "Two independent reviews PASS after smoke headroom/failure callback/closure assertions/size guard fixes; Chromium zip and dual smoke verified; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-209/report.md"
+    },
+    "P-210": {
+      "id": "P-210",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c6b2-1efd-70c9-8c3c-e63c8e6ee301",
+      "startedAt": "2026-11-10T18:22:04Z",
+      "updatedAt": "2026-11-10T18:52:01Z",
+      "note": "Two independent reviews PASS after target-metric, TF_VARS, Power Tuning and batch-failure fixes; harness verified with fake SQS and memory query; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-210/report.md"
     }
   },
   "runs": {
@@ -1077,11 +1088,44 @@
       },
       "completedAt": "2026-11-10T18:21:59Z",
       "note": "Two independent reviews PASS after smoke headroom/failure callback/closure assertions/size guard fixes; Chromium zip and dual smoke verified; worktree and branch removed"
+    },
+    "01a1c6b2-1efd-70c9-8c3c-e63c8e6ee301": {
+      "id": "01a1c6b2-1efd-70c9-8c3c-e63c8e6ee301",
+      "prompt": "P-210",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T18:22:04Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-210",
+        "effort": "medium",
+        "requestedEffort": "medium",
+        "source": "P-210.effort",
+        "requestedSource": "P-210.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T18:52:01Z",
+      "note": "Two independent reviews PASS after target-metric, TF_VARS, Power Tuning and batch-failure fixes; harness verified with fake SQS and memory query; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c6b2-0a0d-7955-be18-e281121d4f67",
+  "lastEvent": "01a1c6cd-894e-73e4-882f-a4663176c83e",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }

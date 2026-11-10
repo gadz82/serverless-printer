@@ -130,8 +130,11 @@
     "wave": 4,
     "writeScopes": [
       "docs/load-test.md",
+      "infra/main.tf",
       "infra/modules/printer/lambda.tf",
       "infra/modules/printer/variables.tf",
+      "infra/README.md",
+      "infra/terraform.tfvars.example",
       "infra/variables.tf",
       "scripts/load-test.mjs"
     ]
