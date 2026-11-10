@@ -20,9 +20,13 @@ const { formatValidationErrors, validateJob, validateResult } = await import(
   pathToFileURL(contractsEntry).href
 );
 
-const TIMEOUT_MILLISECONDS = 60_000;
+const TIMEOUT_MILLISECONDS = 180_000;
 const MAX_POLL_WAIT_SECONDS = 20;
 const SHA256_PATTERN = /^[0-9a-f]{64}$/;
+const SMOKE_SCENARIOS = [
+  { name: "plain", pdfA: false, message: "Printer smoke" },
+  { name: "pdfa-2b", pdfA: "PDF/A-2b", message: "Printer smoke PDF/A-2b" },
+];
 
 let sqs;
 
@@ -38,63 +42,93 @@ try {
 }
 
 async function run(client, config) {
-  const refId = `smoke-${Date.now()}-${randomUUID().slice(0, 8)}`;
-  const job = {
-    templateId: "_smoke",
-    refId,
-    webhooks: {
-      success: { channel: "sqs", value: config.smokeQueueArn },
-    },
-    payload: { message: "Printer smoke" },
-  };
+  const jobs = SMOKE_SCENARIOS.map((scenario) => ({
+    scenario,
+    refId: `smoke-${scenario.name}-${Date.now()}-${randomUUID().slice(0, 8)}`,
+  }));
 
-  if (!validateJob(job)) {
-    throw new Error(
-      `Smoke job does not satisfy @printer/contracts: ${formatValidationErrors(validateJob.errors)}`,
-    );
-  }
+  for (const job of jobs) {
+    const body = {
+      templateId: "_smoke",
+      refId: job.refId,
+      webhooks: {
+        success: { channel: "sqs", value: config.smokeQueueArn },
+        failure: { channel: "sqs", value: config.smokeQueueArn },
+      },
+      options: { pdfA: job.scenario.pdfA },
+      payload: { message: job.scenario.message },
+    };
+    if (!validateJob(body)) {
+      throw new Error(
+        `Smoke ${job.scenario.name} job does not satisfy @printer/contracts: ${formatValidationErrors(validateJob.errors)}`,
+      );
+    }
 
-  console.log(`Sending _smoke job ${refId} to ${config.jobsQueueUrl}`);
-  await client.send(
-    new SendMessageCommand({
-      QueueUrl: config.jobsQueueUrl,
-      MessageBody: JSON.stringify(job),
-    }),
-  );
-
-  console.log(
-    `Waiting up to ${TIMEOUT_MILLISECONDS / 1_000}s for ${refId} on ${config.smokeQueueUrl}`,
-  );
-  const received = await waitForResult(client, config, refId);
-
-  if (received === undefined) {
-    throw new Error(
-      `Timed out after ${TIMEOUT_MILLISECONDS / 1_000}s waiting for ${refId}. ` +
-        "Check the worker logs and the smoke-results queue.",
-    );
-  }
-
-  try {
-    assertSmokeResult(received.result, config.release);
-  } finally {
+    console.log(`Sending _smoke ${job.scenario.name} job ${job.refId} to ${config.jobsQueueUrl}`);
     await client.send(
-      new DeleteMessageCommand({
-        QueueUrl: config.smokeQueueUrl,
-        ReceiptHandle: received.receiptHandle,
+      new SendMessageCommand({
+        QueueUrl: config.jobsQueueUrl,
+        MessageBody: JSON.stringify(body),
       }),
     );
   }
 
   console.log(
-    `Smoke result OK: template=${received.result.template.slug}@${received.result.template.release} ` +
-      `sizeBytes=${received.result.sizeBytes} sha256=${received.result.sha256}`,
+    `Waiting up to ${TIMEOUT_MILLISECONDS / 1_000}s for both smoke results on ${config.smokeQueueUrl}`,
   );
+  const { results, missing } = await waitForResults(client, config, jobs);
+
+  if (missing.length > 0) {
+    await deleteResults(client, config, results);
+    throw new Error(
+      `Timed out after ${TIMEOUT_MILLISECONDS / 1_000}s waiting for ${missing
+        .map((job) => `${job.scenario.name} (${job.refId})`)
+        .join(", ")}. Check the worker logs and the smoke-results queue.`,
+    );
+  }
+
+  try {
+    for (const job of jobs) {
+      const received = results.get(job.refId);
+      if (received === undefined) {
+        throw new Error(`No smoke result was recorded for ${job.refId}.`);
+      }
+
+      assertSmokeResult(received.result, config.release, job.scenario);
+      console.log(
+        `Smoke ${job.scenario.name} OK: template=${received.result.template.slug}@${received.result.template.release} ` +
+          `pdfA=${String(received.result.pdfA)} sizeBytes=${received.result.sizeBytes} sha256=${received.result.sha256}`,
+      );
+    }
+  } finally {
+    await deleteResults(client, config, results);
+  }
 }
 
-async function waitForResult(client, config, expectedRefId) {
+async function deleteResults(client, config, results) {
+  for (const [refId, received] of results) {
+    try {
+      await client.send(
+        new DeleteMessageCommand({
+          QueueUrl: config.smokeQueueUrl,
+          ReceiptHandle: received.receiptHandle,
+        }),
+      );
+    } catch (error) {
+      console.warn(
+        `Could not delete smoke result ${refId}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  }
+}
+
+async function waitForResults(client, config, jobs) {
+  const byRefId = new Map(jobs.map((job) => [job.refId, job]));
+  const pending = new Set(byRefId.keys());
+  const results = new Map();
   const deadline = Date.now() + TIMEOUT_MILLISECONDS;
 
-  while (Date.now() < deadline) {
+  while (Date.now() < deadline && pending.size > 0) {
     const remainingSeconds = Math.max(0, Math.floor((deadline - Date.now()) / 1_000));
     const waitTimeSeconds = Math.min(MAX_POLL_WAIT_SECONDS, remainingSeconds);
     const output = await client.send(
@@ -109,22 +143,24 @@ async function waitForResult(client, config, expectedRefId) {
 
     for (const message of output.Messages ?? []) {
       const result = parseResult(message.Body);
-      if (result !== undefined && result.refId === expectedRefId) {
-        if (message.ReceiptHandle === undefined) {
-          throw new Error(
-            `SQS returned message ${message.MessageId ?? "unknown"} without a receipt handle.`,
-          );
-        }
-
-        return { result, receiptHandle: message.ReceiptHandle };
+      if (result === undefined || !pending.has(result.refId)) {
+        continue;
       }
+      if (message.ReceiptHandle === undefined) {
+        throw new Error(
+          `SQS returned message ${message.MessageId ?? "unknown"} without a receipt handle.`,
+        );
+      }
+
+      results.set(result.refId, { result, receiptHandle: message.ReceiptHandle });
+      pending.delete(result.refId);
     }
   }
 
-  return undefined;
+  return { results, missing: [...pending].map((refId) => byRefId.get(refId)) };
 }
 
-function assertSmokeResult(result, expectedRelease) {
+function assertSmokeResult(result, expectedRelease, scenario) {
   if (!validateResult(result)) {
     throw new Error(
       `Smoke result does not satisfy @printer/contracts: ${formatValidationErrors(
@@ -134,7 +170,13 @@ function assertSmokeResult(result, expectedRelease) {
   }
 
   if (result.success !== true) {
-    throw new Error(`Smoke job failed (${result.error.code}): ${result.error.message}`);
+    const hint =
+      result.error.code === "PDFA_LEVEL_NOT_ALLOWED"
+        ? " Ensure infra pdfa_allowed_levels includes PDF/A-2b for the release smoke."
+        : "";
+    throw new Error(
+      `Smoke ${scenario.name} job failed (${result.error.code}): ${result.error.message}.${hint}`,
+    );
   }
 
   if (result.template.slug !== "_smoke") {
@@ -144,6 +186,13 @@ function assertSmokeResult(result, expectedRelease) {
   if (result.template.release !== expectedRelease) {
     throw new Error(
       `Smoke result reports template release "${result.template.release}", expected "${expectedRelease}".`,
+    );
+  }
+
+  const expectedPdfA = scenario.pdfA === false ? null : scenario.pdfA;
+  if (result.pdfA !== expectedPdfA) {
+    throw new Error(
+      `Smoke ${scenario.name} result reports pdfA ${JSON.stringify(result.pdfA)}, expected ${JSON.stringify(expectedPdfA)}.`,
     );
   }
 

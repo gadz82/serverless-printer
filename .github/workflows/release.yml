@@ -207,7 +207,9 @@ jobs:
             echo "smoke_queue_arn=$(terraform -chdir=infra output -raw smoke_queue_arn)"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Smoke test
+      # The PDF/A smoke requests PDF/A-2b; keep it in pdfa_allowed_levels
+      # (the Terraform defaults include all eight levels).
+      - name: Smoke test (plain and PDF/A-2b)
         env:
           JOBS_QUEUE_URL: ${{ steps.terraform.outputs.jobs_queue_url }}
           SMOKE_QUEUE_URL: ${{ steps.terraform.outputs.smoke_queue_url }}
