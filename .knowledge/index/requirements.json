@@ -97,5 +97,32 @@
     "prompts": [],
     "scenarios": [],
     "tests": []
+  },
+  "R-212": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Terraform supports creating the worker execution role or using a provided same-account role ARN; default create.",
+    "id": "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-213": {
+    "anchors": [],
+    "decisions": [],
+    "description": "The bootstrap deploy role can pass a provided worker role ARN to Lambda.",
+    "id": "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-214": {
+    "anchors": [],
+    "decisions": [],
+    "description": "The generated worker role consumes jobs and publishes to all delivery channels; a provided role must be equivalent.",
+    "id": "urn:uuid:01a1c52d-0a1e-77b9-b8a2-c9dd5a0d8807",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
   }
 }

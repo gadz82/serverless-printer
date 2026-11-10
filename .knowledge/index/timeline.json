@@ -1370,5 +1370,26 @@
     "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "phase": "intent",
     "subject": "urn:uuid:01a1c524-07d3-7566-9d3a-cc945f9c4330"
+  },
+  {
+    "ts": "2026-11-10T11:17:05Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "intent",
+    "subject": "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f"
+  },
+  {
+    "ts": "2026-11-10T11:17:05Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "intent",
+    "subject": "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5"
+  },
+  {
+    "ts": "2026-11-10T11:17:05Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "intent",
+    "subject": "urn:uuid:01a1c52d-0a1e-77b9-b8a2-c9dd5a0d8807"
   }
 ]

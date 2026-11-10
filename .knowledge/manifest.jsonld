@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-finalize-printer-rendering-callbacks-and-product",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T11:07:15Z",
+  "generatedAt": "2026-11-10T11:17:05Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -342,6 +342,84 @@
       ],
       "artifact": "intent/prd.md",
       "hash": "sha256:a929152b9d043929926af5c8356b10e0bc8d1a3f96824d46c1f70258a35aef9c"
+    },
+    {
+      "@id": "urn:uuid:01a1c52d-0993-76ab-bc57-17261692445f",
+      "@type": "orchid:Requirement",
+      "description": "Terraform supports creating the worker execution role or using a provided same-account role ARN; default create.",
+      "status": "accepted",
+      "topics": [
+        "terraform",
+        "iam",
+        "roles",
+        "deployment"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:17:05Z",
+      "updatedAt": "2026-11-10T11:17:05Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-212"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f70931ccea2f9ebcd5f1d1cc096d96a04d30f49e2a065df5bd19a49955cb373e"
+    },
+    {
+      "@id": "urn:uuid:01a1c52d-09d8-742e-9329-00c92e976fa5",
+      "@type": "orchid:Requirement",
+      "description": "The bootstrap deploy role can pass a provided worker role ARN to Lambda.",
+      "status": "accepted",
+      "topics": [
+        "bootstrap",
+        "iam",
+        "pass-role",
+        "lambda"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:17:05Z",
+      "updatedAt": "2026-11-10T11:17:05Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-213"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f70931ccea2f9ebcd5f1d1cc096d96a04d30f49e2a065df5bd19a49955cb373e"
+    },
+    {
+      "@id": "urn:uuid:01a1c52d-0a1e-77b9-b8a2-c9dd5a0d8807",
+      "@type": "orchid:Requirement",
+      "description": "The generated worker role consumes jobs and publishes to all delivery channels; a provided role must be equivalent.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "permissions",
+        "callbacks",
+        "worker"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:17:05Z",
+      "updatedAt": "2026-11-10T11:17:05Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-214"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f70931ccea2f9ebcd5f1d1cc096d96a04d30f49e2a065df5bd19a49955cb373e"
     }
   ]
 }

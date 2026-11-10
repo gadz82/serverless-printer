@@ -13,6 +13,9 @@
 - One deployment, no API/UI/database/environments; queue remains the only entry.
 - Terraform >= 1.11, AWS ~> 6.0; OIDC only; no static keys.
 - Callback security: allowlist + DNS/link-local/metadata checks, scoped IAM.
+- **Worker role ownership:** Terraform supports `worker_role_mode = "create"` (default) or
+  `"existing"` with a same-account `worker_role_arn`. In existing mode the stack creates/modifies
+  no IAM role or policy; the bootstrap deploy role must be allowed to pass the provided ARN.
 - Budget: Slices 2+3 estimated ~400k–450k build tokens; split Slice 3 if the plan exceeds the
   stop threshold.
 
@@ -34,7 +37,16 @@
 - `scripts/` — render regression fixtures/runner; load test/Power Tuning harness; smoke plain +
   PDF/A.
 - `infra/bootstrap` — expand the deploy role with EC2/VPC permissions for network modes.
-- `infra/modules/printer` — PDF/A env defaults restored; IAM for lambda/events/s3/http; alarms.
+- `infra/modules/printer` — PDF/A env defaults restored; IAM for lambda/events/s3/http; alarms;
+  **worker role mode**:
+  - `worker_role_mode = "create" | "existing"` default `create`;
+  - `worker_role_arn` required for `existing`, forbidden for `create`;
+  - existing ARN must be same-account and trust `lambda.amazonaws.com`;
+  - conditional role/policy resources; resolved ARN feeds Lambda, the KMS key policy, the smoke
+    queue policy and outputs;
+  - the provided role is not modified; its owner supplies the equivalent permissions.
+- `infra/bootstrap` — `additional_worker_role_arns` (or equivalent) added to the deploy role's
+  `iam:PassRole` resources, so a provided role can be attached to Lambda.
 - `.github/workflows/ci.yml` — render regression on Ubuntu x86_64; maybe load smoke.
 - `.github/workflows/release.yml` — plain + PDF/A smoke, manifest asset, rollback.
 
@@ -63,6 +75,7 @@
 - Plain + PDF/A smoke; first real template live.
 - Bootstrap deploy-role VPC permissions; cloud verification (OIDC/release/rollback/branch
   protection).
+- Worker role mode (generated/provided) and bootstrap `iam:PassRole` support.
 
 ## Infrastructure/API/data hypotheses
 
@@ -71,7 +84,9 @@
 - IAM: callback target ARNs for lambda/sqs/events; s3 PutObject for the presigned channel; HTTP
   egress via NAT/VPC when configured; worker ENI policy already conditional.
 - Bootstrap deploy role gains EC2/VPC actions scoped to the project where AWS permits; otherwise
-  documented.
+  documented. It also gains PassRole for provided worker role ARNs.
+- The worker role mode is Terraform-level only: `create` keeps today's least-privilege role;
+  `existing` resolves an ARN and skips all IAM creation/modification. Same-account only.
 - No database; prints remain transient; render fixtures are repo artifacts.
 
 ## Regression strategy
@@ -104,3 +119,45 @@
 5. Throughput target and load-test validity.
 6. Cloud/remote prerequisites.
 7. Scope/budget split between Slice 2 and Slice 3.
+8. Role ownership: provided roles are outside least-privilege control; same-account and
+   `lambda.amazonaws.com` trust are mandatory; bootstrap PassRole must include the ARN.
+
+## Role ownership evaluation
+
+### Interpretation
+
+This is implemented for the **worker execution role** (the role Lambda assumes to consume the jobs
+queue and publish results to delivery channels). The generated role is the current least-privilege
+policy plus the Slice 2 channel permissions. A provided role must be a same-account IAM role with
+an equivalent policy and a trust policy for `lambda.amazonaws.com`.
+
+If the intended requirement is a **caller role** (an external application that publishes jobs to
+the queue and reads delivery queues), that is a separate IAM artifact and should be stated
+explicitly; the current queue `allowed_sender_*` inputs already model caller authorization.
+
+### Options
+
+| Option | Cost | Risk | Reversibility | Business impact |
+|---|---|---|---|---|
+| `worker_role_mode = "create"` default (chosen) | Low | Low | High | Least privilege, self-contained stack |
+| `worker_role_mode = "existing"` + same-account ARN | Low | Medium (deployer-owned permissions/trust) | High | Reuses central roles, may be over-privileged |
+| Boolean `create_worker_role` | Low | Low | High | Simpler but less explicit than a mode |
+| Implicit nullable ARN (`null` = create) | Low | Low | High | Concise but easy to misread |
+
+### Decision
+
+Use `worker_role_mode` (`create` default, `existing`) plus `worker_role_arn`. Validate the ARN is
+same-account; reject it in `create` mode. Conditionalize the role/policy and feed the resolved ARN
+to Lambda, KMS and the smoke queue. Add `additional_worker_role_arns` to bootstrap's `iam:PassRole`
+so a provided role can be attached. The stack never modifies a provided role; the operator owns its
+trust policy and permissions.
+
+### Trade-offs
+
+- **Generated:** least privilege and reproducible; the stack owns rotation/drift.
+- **Provided:** central IAM governance and reuse; the stack cannot guarantee least privilege or
+  trust correctness, and bootstrap PassRole must be updated for the ARN.
+- **Cross-account:** not supported by Lambda execution roles; reject at validation.
+- **Existing-role policy drift:** a documented owner responsibility; optionally a future `check`
+  block can verify trust/permissions if `iam:GetRole` is available.
+
