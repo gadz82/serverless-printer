@@ -1762,5 +1762,19 @@
     "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "phase": "build",
     "subject": "prompt:P-208"
+  },
+  {
+    "ts": "2026-11-10T17:10:57Z",
+    "event": "prompt.started",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "build",
+    "subject": "prompt:P-205"
+  },
+  {
+    "ts": "2026-11-10T17:58:50Z",
+    "event": "prompt.completed",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "build",
+    "subject": "prompt:P-205"
   }
 ]

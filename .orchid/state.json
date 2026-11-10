@@ -261,6 +261,17 @@
       "updatedAt": "2026-11-10T17:09:02Z",
       "note": "Independent review PASS; alarms/runbook and docs pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-208/report.md"
+    },
+    "P-205": {
+      "id": "P-205",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c671-00fa-7bd9-86b5-8562d8ce87e8",
+      "startedAt": "2026-11-10T17:10:57Z",
+      "updatedAt": "2026-11-10T17:58:50Z",
+      "note": "Two independent reviews PASS after font fidelity, launcher cleanup, atomic update and PDF/A marker fixes; 10/10 in Ubuntu x64; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-205/report.md"
     }
   },
   "runs": {
@@ -989,11 +1000,44 @@
       },
       "completedAt": "2026-11-10T17:09:02Z",
       "note": "Independent review PASS; alarms/runbook and docs pass; worktree and branch removed"
+    },
+    "01a1c671-00fa-7bd9-86b5-8562d8ce87e8": {
+      "id": "01a1c671-00fa-7bd9-86b5-8562d8ce87e8",
+      "prompt": "P-205",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T17:10:57Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-205",
+        "effort": "medium",
+        "requestedEffort": "medium",
+        "source": "P-205.effort",
+        "requestedSource": "P-205.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T17:58:50Z",
+      "note": "Two independent reviews PASS after font fidelity, launcher cleanup, atomic update and PDF/A marker fixes; 10/10 in Ubuntu x64; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c66f-42d0-75b2-bdf8-cd5de6a09e37",
+  "lastEvent": "01a1c69c-d794-7730-834d-eec84e7ce873",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }

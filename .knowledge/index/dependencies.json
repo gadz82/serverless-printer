@@ -65,6 +65,7 @@
     "wave": 4,
     "writeScopes": [
       ".github/workflows/ci.yml",
+      "package.json",
       "scripts/render-regression.mjs",
       "tests/render/**"
     ]

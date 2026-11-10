@@ -98,8 +98,9 @@
       ],
       "estimate": "M",
       "effort": "medium",
-      "status": "pending",
-      "step": null
+      "status": "done",
+      "step": "implement",
+      "updatedAt": "2026-11-10T17:58:50Z"
     },
     {
       "id": "P-209",
