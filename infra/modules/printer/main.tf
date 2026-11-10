@@ -183,6 +183,29 @@ data "aws_iam_policy_document" "jobs_queue" {
       }
     }
   }
+  dynamic "statement" {
+    for_each = var.job_rule == null ? [] : [aws_cloudwatch_event_rule.jobs[0].arn]
+
+    content {
+      sid    = "AllowEventBridgeJobRule"
+      effect = "Allow"
+
+      actions = ["sqs:SendMessage"]
+
+      resources = [aws_sqs_queue.jobs.arn]
+
+      principals {
+        type        = "Service"
+        identifiers = ["events.amazonaws.com"]
+      }
+
+      condition {
+        test     = "ArnEquals"
+        variable = "aws:SourceArn"
+        values   = [statement.value]
+      }
+    }
+  }
 }
 
 resource "aws_sqs_queue_policy" "jobs" {
@@ -192,6 +215,29 @@ resource "aws_sqs_queue_policy" "jobs" {
   # The policy names the caller role; create the role first so the principal
   # exists when SQS stores the policy.
   depends_on = [aws_iam_role.caller]
+}
+
+resource "aws_cloudwatch_event_rule" "jobs" {
+  count = var.job_rule == null ? 0 : 1
+
+  name           = "${var.name_prefix}-jobs"
+  description    = "Forwards matching EventBridge events to the ${var.name_prefix}-jobs queue"
+  event_bus_name = var.job_rule.bus_name
+  event_pattern  = var.job_rule.event_pattern
+  tags           = var.tags
+}
+
+resource "aws_cloudwatch_event_target" "jobs" {
+  count = var.job_rule == null ? 0 : 1
+
+  rule           = aws_cloudwatch_event_rule.jobs[0].name
+  event_bus_name = var.job_rule.bus_name
+  target_id      = "printer-jobs"
+  arn            = aws_sqs_queue.jobs.arn
+  input_path     = "$.detail"
+
+  # The queue policy must exist before EventBridge can deliver the first event.
+  depends_on = [aws_sqs_queue_policy.jobs]
 }
 
 resource "aws_sqs_queue" "smoke_results" {

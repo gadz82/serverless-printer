@@ -139,6 +139,8 @@ The deploy role has no administrator policy. Its inline policy is limited to:
 - Lambda log groups under `/aws/lambda/<name_prefix>-` and project log groups named
   `<name_prefix>-`;
 - CloudWatch alarms named with the prefix `<name_prefix>-`;
+- EventBridge rules and targets named `<name_prefix>-jobs`, including rule/target reads and tags,
+  so the optional `job_rule` ingress can be managed through the release role;
 - EC2/VPC resources for `vpc_mode = create` or `lookup`: VPCs, subnets, route tables, internet and
   NAT gateways, VPC endpoints, security groups and Elastic IPs. Create calls use `Resource: "*"`
   with `aws:RequestTag/Project`; configure and delete calls use project resource ARNs with

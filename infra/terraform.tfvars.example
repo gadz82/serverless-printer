@@ -63,6 +63,16 @@ pdfa_allowed_levels = [
   "PDF/A-3a",
 ]
 
+# Optional EventBridge ingress. When set, matching events on the named bus are
+# delivered to the jobs queue; the target forwards $.detail, so the event
+# detail must be the print-job JSON. Keep the event pattern valid JSON (max
+# 2048 chars), use a specific pattern in production ({} matches everything),
+# and re-apply bootstrap for the deploy role's EventBridge permissions.
+# job_rule = {
+#   bus_name      = "default"
+#   event_pattern = "{\"source\":[\"my.app\"],\"detail-type\":[\"Print Job\"]}"
+# }
+
 event_source        = "printer"
 presign_ttl_seconds = 900
 max_receive_count   = 5

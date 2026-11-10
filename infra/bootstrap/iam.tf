@@ -896,6 +896,28 @@ data "aws_iam_policy_document" "deploy_permissions" {
 
     resources = local.alarm_arns
   }
+
+  statement {
+    sid    = "ManageProjectEventBridgeJobRule"
+    effect = "Allow"
+
+    actions = [
+      "events:DeleteRule",
+      "events:DescribeRule",
+      "events:ListTagsForResource",
+      "events:ListTargetsByRule",
+      "events:PutRule",
+      "events:PutTargets",
+      "events:RemoveTargets",
+      "events:TagResource",
+      "events:UntagResource",
+    ]
+
+    resources = [
+      "arn:${local.partition}:events:${var.region}:${local.account_id}:rule/${var.name_prefix}-jobs",
+      "arn:${local.partition}:events:${var.region}:${local.account_id}:rule/*/${var.name_prefix}-jobs",
+    ]
+  }
 }
 
 data "aws_iam_policy_document" "plan_state_access" {

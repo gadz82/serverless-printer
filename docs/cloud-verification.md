@@ -160,6 +160,23 @@ aws ec2 describe-route-tables --filters "Name=tag:Project,Values=<name_prefix>" 
 
 For `lookup`, the stack does not create endpoints; a missing route appears as a worker timeout.
 
+### EventBridge ingress (optional)
+
+If `job_rule` is set, verify the rule and target after apply:
+
+```sh
+aws events describe-rule --name "<name_prefix>-jobs" --event-bus-name "<bus_name>"
+aws events list-targets-by-rule --rule "<name_prefix>-jobs" --event-bus-name "<bus_name>" \
+  --query 'Targets[].{Id:Id,Arn:Arn,InputPath:InputPath}'
+```
+
+`InputPath` must be `$.detail`; the event detail must be a valid print-job body. Send one test event
+whose `detail` is a contract-valid job (using the documented template, refId and SQS/webhook
+callback), then confirm the normal result path. Confirm the queue policy names
+`events.amazonaws.com` with the rule ARN in `aws:SourceArn`, and record the rule ARN, bus, event
+pattern and test refId in the evidence record. If `job_rule` is null, record it as intentionally
+disabled.
+
 ## 6. Branch protection and required checks
 
 `main` must require these CI checks before merge:
@@ -333,6 +350,7 @@ target is confirmed.
 - [ ] Branch protection requires the checks listed in section 6 and the release bot can push `CHANGELOG.md`.
 - [ ] Caller/worker role modes and provided-role prerequisites are recorded.
 - [ ] VPC mode and endpoint/NAT reachability are verified (or `none` is intentional).
+- [ ] Optional EventBridge ingress is verified end to end, or recorded as intentionally disabled.
 - [ ] Worker artifact is present, under the Lambda limits and deployed to the `live` alias.
 - [ ] Plain and PDF/A-2b smoke jobs pass with the deployed release.
 - [ ] Rollback dispatch passes both smoke jobs.

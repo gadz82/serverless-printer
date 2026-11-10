@@ -535,3 +535,22 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "job_rule" {
+  description = "Optional EventBridge rule that forwards matching events to the jobs queue."
+  type = object({
+    bus_name      = string
+    event_pattern = string
+  })
+  default = null
+
+  validation {
+    condition = var.job_rule == null ? true : (
+      can(regex("^[A-Za-z0-9._-]{1,256}$", var.job_rule.bus_name)) &&
+      length(trimspace(var.job_rule.event_pattern)) > 0 &&
+      length(var.job_rule.event_pattern) <= 2048 &&
+      can(keys(jsondecode(var.job_rule.event_pattern)))
+    )
+    error_message = "job_rule.bus_name must be 1-256 letters, digits, dots, underscores or hyphens and job_rule.event_pattern must be a JSON object of at most 2048 characters."
+  }
+}

@@ -95,6 +95,7 @@ module "printer" {
   batch_size          = var.batch_size
   maximum_concurrency = var.maximum_concurrency
   worker_memory_size  = var.worker_memory_size
+  job_rule            = var.job_rule
 
   reserved_concurrency = var.reserved_concurrency
 

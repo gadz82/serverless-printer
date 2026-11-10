@@ -24,6 +24,7 @@ removal, KMS/state recovery, alarms, role modes and VPC operations.
 | Prints bucket         | `<name_prefix>-prints`                                                                  | SSE-KMS bucket for `prints/*.pdf`, one-day lifecycle expiry                      |
 | KMS key               | Alias `<name_prefix>-prints`                                                            | Project CMK, rotation enabled, `Project = <name_prefix>` tag                     |
 | Worker Lambda         | `<name_prefix>-render-worker`                                                           | `nodejs24.x`, x86_64, configurable memory (default 1,536 MB), 60 s, `live` alias |
+| EventBridge job rule  | `<name_prefix>-jobs`                                                                    | Optional; forwards matching events to the jobs queue when `job_rule` is set      |
 | Event source mapping  | Jobs queue to the `live` alias                                                          | Batch size 1–5, `ReportBatchItemFailures`, maximum concurrency                   |
 | Caller role           | `<name_prefix>-caller`                                                                  | Created by default or provided; `sqs:SendMessage` only on the jobs queue         |
 | Worker role           | `<name_prefix>-render-worker`                                                           | Consume jobs, read/write prints, KMS, logs, scoped channel result sends          |
@@ -238,6 +239,32 @@ Provided-role responsibilities:
 The generated caller role trusts the deployer account root by default. Set
 `caller_trusted_principal_arns` to the integrator account root, IAM role or IAM user ARNs to
 narrow or extend that trust. This list is ignored in `existing` mode.
+
+## Optional EventBridge ingress
+
+Set `job_rule` to route matching events from an EventBridge bus into the jobs queue:
+
+```hcl
+job_rule = {
+  bus_name = "default"
+  event_pattern = "{\"source\":[\"my.app\"],\"detail-type\":[\"Print Job\"]}"
+}
+```
+
+Terraform creates `<name_prefix>-jobs` on that bus and a target to the jobs queue, and adds a
+queue-policy statement allowing `events.amazonaws.com` to send only from that rule ARN. The target
+forwards **`$.detail`** as the SQS message body, so the event detail must be the print-job JSON
+(same schema as a direct SQS job); the worker applies the normal validation, DLQ, retry, callback
+and rendering rules. EventBridge caps an event at 256 KB, below the jobs queue's 1 MiB limit. The
+bus must already exist in the same account and region, and `{}` matches every event, so use a
+specific pattern in production. Leave `job_rule = null` (default) to keep EventBridge ingress
+disabled; no rule or policy statement is created. Cross-account buses and scheduling are out of
+scope.
+
+Re-apply `infra/bootstrap` before enabling this input: the deploy role needs the scoped
+EventBridge rule/target/tag permissions. No live AWS apply is performed by the repository; verify
+the rule, target, queue policy and an actual event delivery after the first deployment. See the
+[cloud verification checklist](../docs/cloud-verification.md#eventbridge-ingress-optional).
 
 ## Prints bucket and KMS
 
