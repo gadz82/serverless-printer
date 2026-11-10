@@ -272,6 +272,17 @@
       "updatedAt": "2026-11-10T17:58:50Z",
       "note": "Two independent reviews PASS after font fidelity, launcher cleanup, atomic update and PDF/A marker fixes; 10/10 in Ubuntu x64; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-205/report.md"
+    },
+    "P-209": {
+      "id": "P-209",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c69e-572e-71e7-b7a6-c546947ad2e2",
+      "startedAt": "2026-11-10T18:00:28Z",
+      "updatedAt": "2026-11-10T18:21:59Z",
+      "note": "Two independent reviews PASS after smoke headroom/failure callback/closure assertions/size guard fixes; Chromium zip and dual smoke verified; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-209/report.md"
     }
   },
   "runs": {
@@ -1033,11 +1044,44 @@
       },
       "completedAt": "2026-11-10T17:58:50Z",
       "note": "Two independent reviews PASS after font fidelity, launcher cleanup, atomic update and PDF/A marker fixes; 10/10 in Ubuntu x64; worktree and branch removed"
+    },
+    "01a1c69e-572e-71e7-b7a6-c546947ad2e2": {
+      "id": "01a1c69e-572e-71e7-b7a6-c546947ad2e2",
+      "prompt": "P-209",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T18:00:28Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-209",
+        "effort": "medium",
+        "requestedEffort": "medium",
+        "source": "P-209.effort",
+        "requestedSource": "P-209.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T18:21:59Z",
+      "note": "Two independent reviews PASS after smoke headroom/failure callback/closure assertions/size guard fixes; Chromium zip and dual smoke verified; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c69c-d794-7730-834d-eec84e7ce873",
+  "lastEvent": "01a1c6b2-0a0d-7955-be18-e281121d4f67",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }

@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-finalize-printer-rendering-callbacks-and-product",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T17:58:50Z",
+  "generatedAt": "2026-11-10T18:21:59Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
