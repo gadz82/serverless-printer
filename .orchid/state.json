@@ -195,6 +195,17 @@
       "updatedAt": "2026-11-10T12:21:23Z",
       "note": "Two independent reviews PASS after deadline/cleanup/crash/symlink/version fixes; 131 tests pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-201/report.md"
+    },
+    "P-207": {
+      "id": "P-207",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c568-2761-7040-bec3-52621ef5468a",
+      "startedAt": "2026-11-10T12:21:39Z",
+      "updatedAt": "2026-11-10T14:10:49Z",
+      "note": "Two independent reviews PASS after IAM/trust/callback fixes; plans and static checks green; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-207/report.md"
     }
   },
   "runs": {
@@ -725,11 +736,44 @@
       },
       "completedAt": "2026-11-10T12:21:23Z",
       "note": "Two independent reviews PASS after deadline/cleanup/crash/symlink/version fixes; 131 tests pass; worktree and branch removed"
+    },
+    "01a1c568-2761-7040-bec3-52621ef5468a": {
+      "id": "01a1c568-2761-7040-bec3-52621ef5468a",
+      "prompt": "P-207",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T12:21:39Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-207",
+        "effort": "high",
+        "requestedEffort": "high",
+        "source": "P-207.effort",
+        "requestedSource": "P-207.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"high\". Set models.efforts.high.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T14:10:49Z",
+      "note": "Two independent reviews PASS after IAM/trust/callback fixes; plans and static checks green; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c567-e939-7542-9495-5399317d7473",
+  "lastEvent": "01a1c5cc-1831-7a55-aa12-34ae72273708",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }
