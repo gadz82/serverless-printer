@@ -206,6 +206,17 @@
       "updatedAt": "2026-11-10T14:10:49Z",
       "note": "Two independent reviews PASS after IAM/trust/callback fixes; plans and static checks green; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-207/report.md"
+    },
+    "P-202": {
+      "id": "P-202",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c5cc-53c9-7408-9052-3c83a5590488",
+      "startedAt": "2026-11-10T14:11:04Z",
+      "updatedAt": "2026-11-10T15:10:09Z",
+      "note": "Two independent reviews PASS after XMP/Info/allowlist/safety fixes; 151 worker tests pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-202/report.md"
     }
   },
   "runs": {
@@ -769,11 +780,44 @@
       },
       "completedAt": "2026-11-10T14:10:49Z",
       "note": "Two independent reviews PASS after IAM/trust/callback fixes; plans and static checks green; worktree and branch removed"
+    },
+    "01a1c5cc-53c9-7408-9052-3c83a5590488": {
+      "id": "01a1c5cc-53c9-7408-9052-3c83a5590488",
+      "prompt": "P-202",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T14:11:04Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-202",
+        "effort": "high",
+        "requestedEffort": "high",
+        "source": "P-202.effort",
+        "requestedSource": "P-202.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"high\". Set models.efforts.high.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T15:10:09Z",
+      "note": "Two independent reviews PASS after XMP/Info/allowlist/safety fixes; 151 worker tests pass; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c5cc-1831-7a55-aa12-34ae72273708",
+  "lastEvent": "01a1c602-69d7-7250-ace6-1074e9d29b91",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }
