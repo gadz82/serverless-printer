@@ -462,6 +462,22 @@ variable "maximum_concurrency" {
   }
 }
 
+variable "worker_memory_size" {
+  description = "Memory (MB) allocated to the render worker Lambda. Tune it with AWS Lambda Power Tuning."
+  type        = number
+  default     = 1536
+
+  validation {
+    condition = try(
+      floor(var.worker_memory_size) == var.worker_memory_size &&
+      var.worker_memory_size >= 128 &&
+      var.worker_memory_size <= 10240,
+      false,
+    )
+    error_message = "worker_memory_size must be an integer between 128 and 10240."
+  }
+}
+
 variable "reserved_concurrency" {
   description = "Optional reserved concurrency for the worker function. Null leaves the function unreserved."
   type        = number

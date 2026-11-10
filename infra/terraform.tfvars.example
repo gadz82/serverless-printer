@@ -68,6 +68,7 @@ presign_ttl_seconds = 900
 max_receive_count   = 5
 batch_size          = 5
 maximum_concurrency = 10
+worker_memory_size  = 1536
 # reserved_concurrency = 5
 
 enable_alarms       = false

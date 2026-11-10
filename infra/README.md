@@ -14,23 +14,23 @@ DLQ redrive, template removal, KMS/state recovery, alarms, role modes and VPC op
 
 ## What it creates
 
-| Resource              | Name                                                                                    | Purpose                                                                    |
-| --------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Jobs queue            | `<name_prefix>-jobs`                                                                    | SSE-SQS queue for print jobs, 360 s visibility timeout, redrive to the DLQ |
-| Dead-letter queue     | `<name_prefix>-jobs-dlq`                                                                | SSE-SQS destination after `max_receive_count` receives                     |
-| Smoke-results queue   | `<name_prefix>-smoke-results`                                                           | Short-retention SSE-SQS queue for release smoke results                    |
-| Prints bucket         | `<name_prefix>-prints`                                                                  | SSE-KMS bucket for `prints/*.pdf`, one-day lifecycle expiry                |
-| KMS key               | Alias `<name_prefix>-prints`                                                            | Project CMK, rotation enabled, `Project = <name_prefix>` tag               |
-| Worker Lambda         | `<name_prefix>-render-worker`                                                           | `nodejs24.x`, x86_64, 1,536 MB, 60 s, published version with `live` alias  |
-| Event source mapping  | Jobs queue to the `live` alias                                                          | Batch size 1–5, `ReportBatchItemFailures`, maximum concurrency             |
-| Caller role           | `<name_prefix>-caller`                                                                  | Created by default or provided; `sqs:SendMessage` only on the jobs queue   |
-| Worker role           | `<name_prefix>-render-worker`                                                           | Consume jobs, read/write prints, KMS, logs, scoped channel result sends    |
-| Log group             | `/aws/lambda/<name_prefix>-render-worker`                                               | Worker logs with configurable retention                                    |
-| Alarms                | `<name_prefix>-jobs-dlq-depth`, `<name_prefix>-render-worker-errors`                    | Created only when `enable_alarms = true`                                   |
-| VPC and subnets       | `<name_prefix>-vpc`, `<name_prefix>-private-N`                                          | Created only in `vpc_mode = "create"`; private subnets across `az_count`   |
-| NAT gateway           | `<name_prefix>-nat`                                                                     | Created only with `vpc_mode = "create"` and `enable_nat_gateway = true`    |
-| VPC endpoints         | `<name_prefix>-s3`, `<name_prefix>-sqs`, `<name_prefix>-lambda`, `<name_prefix>-events` | Created only in `create` mode when the endpoint flag is enabled            |
-| Worker security group | `<name_prefix>-worker-*`                                                                | Created when the worker uses a VPC and no existing groups are supplied     |
+| Resource              | Name                                                                                    | Purpose                                                                          |
+| --------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Jobs queue            | `<name_prefix>-jobs`                                                                    | SSE-SQS queue for print jobs, 360 s visibility timeout, redrive to the DLQ       |
+| Dead-letter queue     | `<name_prefix>-jobs-dlq`                                                                | SSE-SQS destination after `max_receive_count` receives                           |
+| Smoke-results queue   | `<name_prefix>-smoke-results`                                                           | Short-retention SSE-SQS queue for release smoke results                          |
+| Prints bucket         | `<name_prefix>-prints`                                                                  | SSE-KMS bucket for `prints/*.pdf`, one-day lifecycle expiry                      |
+| KMS key               | Alias `<name_prefix>-prints`                                                            | Project CMK, rotation enabled, `Project = <name_prefix>` tag                     |
+| Worker Lambda         | `<name_prefix>-render-worker`                                                           | `nodejs24.x`, x86_64, configurable memory (default 1,536 MB), 60 s, `live` alias |
+| Event source mapping  | Jobs queue to the `live` alias                                                          | Batch size 1–5, `ReportBatchItemFailures`, maximum concurrency                   |
+| Caller role           | `<name_prefix>-caller`                                                                  | Created by default or provided; `sqs:SendMessage` only on the jobs queue         |
+| Worker role           | `<name_prefix>-render-worker`                                                           | Consume jobs, read/write prints, KMS, logs, scoped channel result sends          |
+| Log group             | `/aws/lambda/<name_prefix>-render-worker`                                               | Worker logs with configurable retention                                          |
+| Alarms                | `<name_prefix>-jobs-dlq-depth`, `<name_prefix>-render-worker-errors`                    | Created only when `enable_alarms = true`                                         |
+| VPC and subnets       | `<name_prefix>-vpc`, `<name_prefix>-private-N`                                          | Created only in `vpc_mode = "create"`; private subnets across `az_count`         |
+| NAT gateway           | `<name_prefix>-nat`                                                                     | Created only with `vpc_mode = "create"` and `enable_nat_gateway = true`          |
+| VPC endpoints         | `<name_prefix>-s3`, `<name_prefix>-sqs`, `<name_prefix>-lambda`, `<name_prefix>-events` | Created only in `create` mode when the endpoint flag is enabled                  |
+| Worker security group | `<name_prefix>-worker-*`                                                                | Created when the worker uses a VPC and no existing groups are supplied           |
 
 The worker code is deployed from
 `s3://<artifacts_bucket>/<release>/render-worker.zip`. `release` is the release workflow's
@@ -145,7 +145,7 @@ terraform -chdir=infra output
 | `jobs_queue_url` / `jobs_queue_arn`       | Sending jobs and callback configuration                      |
 | `jobs_dlq_url` / `jobs_dlq_arn`           | Inspecting or redriving failed jobs                          |
 | `prints_bucket`                           | Operational inspection of transient PDFs                     |
-| `smoke_queue_url` / `smoke_queue_arn`     | Release smoke polling and the `_smoke` job callback          |
+| `smoke_queue_url` / `smoke_queue_arn`     | Release smoke and short load-test polling                    |
 | `function_name` / `function_alias_arn`    | Lambda inspection and the invoked `live` alias               |
 | `caller_role_arn` / `caller_role_created` | Integrator role ARN and whether Terraform owns it            |
 | `worker_role_arn` / `worker_role_created` | Worker execution role ARN and whether Terraform owns it      |

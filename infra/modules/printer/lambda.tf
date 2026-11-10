@@ -11,7 +11,7 @@ resource "aws_lambda_function" "worker" {
   runtime       = "nodejs24.x"
   architectures = ["x86_64"]
   handler       = "handler.handler"
-  memory_size   = 1536
+  memory_size   = var.worker_memory_size
   timeout       = local.worker_timeout_seconds
 
   s3_bucket = var.artifacts_bucket

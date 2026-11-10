@@ -94,6 +94,7 @@ module "printer" {
   max_receive_count   = var.max_receive_count
   batch_size          = var.batch_size
   maximum_concurrency = var.maximum_concurrency
+  worker_memory_size  = var.worker_memory_size
 
   reserved_concurrency = var.reserved_concurrency
 
