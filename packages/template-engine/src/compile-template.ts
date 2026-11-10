@@ -39,6 +39,7 @@ const KNOWN_HELPERS = {
  * Compiles a Handlebars source with one of the three supported missing-field
  * modes. The returned renderer keeps escaping and prototype access off.
  */
+// ORCHID-MEM: 01a1c51f-3f91-786a-b869-f8fc6cc335f4 — Compiles Handlebars with the three missing-field modes and the fixed helper contract.
 export function compileTemplate(source: string, options: CompileTemplateOptions): CompiledTemplate {
   const mode = options.mode;
   const modeSettings = readModeSettings(mode);

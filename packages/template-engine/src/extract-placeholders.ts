@@ -20,6 +20,7 @@ export type PlaceholderTree = {
 /**
  * Builds the JSON-safe data shape a template expects from its Handlebars AST.
  */
+// ORCHID-MEM: 01a1c51f-4010-7adb-9a80-cc229f720c94 — Extracts the JSON placeholder tree from a Handlebars AST without prototype pollution.
 export function extractPlaceholders(source: string): PlaceholderTree {
   return extractPlaceholdersFromProgram(parseTemplate(source), source);
 }

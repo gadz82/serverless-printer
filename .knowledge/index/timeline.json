@@ -1195,5 +1195,68 @@
     "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
     "phase": "build",
     "subject": "prompt:P-105"
+  },
+  {
+    "ts": "2026-11-10T11:01:24Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "build",
+    "subject": "gate:G5"
+  },
+  {
+    "ts": "2026-11-10T11:01:24Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "logic_review",
+    "subject": "phase:logic_review"
+  },
+  {
+    "ts": "2026-11-10T11:02:01Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "logic_review",
+    "subject": "urn:uuid:01a1c51f-3f91-786a-b869-f8fc6cc335f4"
+  },
+  {
+    "ts": "2026-11-10T11:02:02Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "logic_review",
+    "subject": "urn:uuid:01a1c51f-4010-7adb-9a80-cc229f720c94"
+  },
+  {
+    "ts": "2026-11-10T11:02:02Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "logic_review",
+    "subject": "urn:uuid:01a1c51f-4088-78ce-b103-197da857f991"
+  },
+  {
+    "ts": "2026-11-10T11:02:02Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "logic_review",
+    "subject": "urn:uuid:01a1c51f-4103-7564-a29a-ff3468f66402"
+  },
+  {
+    "ts": "2026-11-10T11:02:02Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "logic_review",
+    "subject": "urn:uuid:01a1c51f-4183-76ad-b5fd-a13d1ce22f96"
+  },
+  {
+    "ts": "2026-11-10T11:02:02Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "logic_review",
+    "subject": "urn:uuid:01a1c51f-4207-7ab3-ac69-281c356e1ffe"
+  },
+  {
+    "ts": "2026-11-10T11:02:02Z",
+    "event": "node.recorded",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "logic_review",
+    "subject": "urn:uuid:01a1c51f-4289-7e73-8075-584669d85127"
   }
 ]

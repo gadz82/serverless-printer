@@ -203,6 +203,7 @@ export function resolveChromeExecutable(
  * Handlebars compilation; this adapter only owns browser isolation and PDF
  * page settings.
  */
+// ORCHID-MEM: 01a1c51f-4103-7564-a29a-ff3468f66402 — Renders one compiled HTML document to PDF with an installed local Chrome.
 export class LocalChromeRenderer {
   constructor(private readonly options: LocalChromeRendererOptions = {}) {}
 

@@ -27,6 +27,7 @@ const USAGE = [
  * @param {string} [base] Git ref to compare against.
  * @returns {Promise<CheckReport>}
  */
+// ORCHID-MEM: 01a1c51f-4207-7ab3-ac69-281c356e1ffe — Guards template ids and slugs against a Git base commit.
 export async function checkTemplates(root, base = "HEAD") {
   const repositoryRoot = path.resolve(root);
   const baseCommit = await resolveCommit(repositoryRoot, base);

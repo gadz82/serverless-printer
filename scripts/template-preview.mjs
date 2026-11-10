@@ -49,6 +49,7 @@ export class TemplatePreviewError extends Error {
  * @param {{ slug: string, dataPath?: string, strict?: boolean, outputDirectory?: string }} options
  * @returns {Promise<{ descriptor: { id: string, slug: string, name: string, description: string }, outputPath: string, pdf: Uint8Array }>}
  */
+// ORCHID-MEM: 01a1c51f-4289-7e73-8075-584669d85127 — Renders a template locally to a PDF using the shared engine and Chrome.
 export async function previewTemplate(root, options) {
   const repositoryRoot = path.resolve(root);
   const slug = readSlug(options.slug);

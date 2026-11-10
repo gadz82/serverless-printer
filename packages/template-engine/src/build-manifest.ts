@@ -40,6 +40,7 @@ const HTML_FILE_PATTERN = /\.(?:html|hbs)$/i;
  * Builds the deterministic, release-aware manifest for every template folder
  * under `<root>/templates`.
  */
+// ORCHID-MEM: 01a1c51f-4088-78ce-b103-197da857f991 — Builds the release-aware manifest with deterministic hashes and compiled templates.
 export async function buildManifest(root: string, release = "local"): Promise<TemplateManifest> {
   const releaseValue = readRelease(release);
   const repositoryRoot = path.resolve(root);

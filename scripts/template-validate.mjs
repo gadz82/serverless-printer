@@ -94,6 +94,7 @@ const DEFAULT_FONT_FAMILIES = new Set([
  * @param {string} root Repository root that contains the `templates` directory.
  * @returns {Promise<ValidationReport>}
  */
+// ORCHID-MEM: 01a1c51f-4183-76ad-b5fd-a13d1ce22f96 — Validates every template descriptor, compilation, sample data and font warnings.
 export async function validateTemplates(root) {
   const repositoryRoot = path.resolve(root);
   const templatesDirectory = path.join(repositoryRoot, TEMPLATES_DIRECTORY);

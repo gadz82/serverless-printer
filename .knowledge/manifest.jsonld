@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-complete-the-printer-service-with-templates-rend",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T11:00:53Z",
+  "generatedAt": "2026-11-10T11:02:03Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -11,7 +11,7 @@
   "iteration": {
     "@id": "urn:orchid:iteration:2026-11-10-complete-the-printer-service-with-templates-rend",
     "title": "Complete the Printer service with templates, rendering, callbacks and production readiness",
-    "phase": "build",
+    "phase": "logic_review",
     "status": "active",
     "specVersion": "1.0.0",
     "rigor": "L"
@@ -1644,6 +1644,174 @@
       ],
       "artifact": "discovery/questions/Q-101-completion-inputs.md",
       "hash": "sha256:d996e76dc3868662c56c0f43154059b539077c5db036cfdfd427d0db643e2537"
+    },
+    {
+      "@id": "urn:uuid:01a1c51f-3f91-786a-b869-f8fc6cc335f4",
+      "@type": "orchid:CodeUnit",
+      "description": "Compiles Handlebars with the three missing-field modes and the fixed helper contract.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "handlebars",
+        "modes",
+        "helpers"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:02:01Z",
+      "updatedAt": "2026-11-10T11:02:01Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c51f-3f91-786a-b869-f8fc6cc335f4.md",
+      "codeAnchor": "packages/template-engine/src/compile-template.ts#compileTemplate",
+      "hash": "sha256:1219effc865479aa529bf97a91d102027f7e3483d485fa9ad675da12ff45f2c1"
+    },
+    {
+      "@id": "urn:uuid:01a1c51f-4010-7adb-9a80-cc229f720c94",
+      "@type": "orchid:CodeUnit",
+      "description": "Extracts the JSON placeholder tree from a Handlebars AST without prototype pollution.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "manifest",
+        "placeholders",
+        "security"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:02:02Z",
+      "updatedAt": "2026-11-10T11:02:02Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c51f-4010-7adb-9a80-cc229f720c94.md",
+      "codeAnchor": "packages/template-engine/src/extract-placeholders.ts#extractPlaceholders",
+      "hash": "sha256:b87d2e6523da88e51990484d786efedf067b298c1abfd708fcd0725f1f51ddc6"
+    },
+    {
+      "@id": "urn:uuid:01a1c51f-4088-78ce-b103-197da857f991",
+      "@type": "orchid:CodeUnit",
+      "description": "Builds the release-aware manifest with deterministic hashes and compiled templates.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "manifest",
+        "hashing",
+        "build"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:02:02Z",
+      "updatedAt": "2026-11-10T11:02:02Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c51f-4088-78ce-b103-197da857f991.md",
+      "codeAnchor": "packages/template-engine/src/build-manifest.ts#buildManifest",
+      "hash": "sha256:c89a1415ecb4524476e603998ce31a043536370dca0c0ba71db04411263890f8"
+    },
+    {
+      "@id": "urn:uuid:01a1c51f-4103-7564-a29a-ff3468f66402",
+      "@type": "orchid:CodeUnit",
+      "description": "Renders one compiled HTML document to PDF with an installed local Chrome.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "preview",
+        "security"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:02:02Z",
+      "updatedAt": "2026-11-10T11:02:02Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c51f-4103-7564-a29a-ff3468f66402.md",
+      "codeAnchor": "apps/render-worker/src/rendering/local-chrome-renderer.ts#LocalChromeRenderer",
+      "hash": "sha256:bb6c66089b6033360a154f502649f6771d7bce399281eeadbe7cfe8f09184c15"
+    },
+    {
+      "@id": "urn:uuid:01a1c51f-4183-76ad-b5fd-a13d1ce22f96",
+      "@type": "orchid:CodeUnit",
+      "description": "Validates every template descriptor, compilation, sample data and font warnings.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "validation",
+        "cli",
+        "sample-data"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:02:02Z",
+      "updatedAt": "2026-11-10T11:02:02Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c51f-4183-76ad-b5fd-a13d1ce22f96.md",
+      "codeAnchor": "scripts/template-validate.mjs#validateTemplates",
+      "hash": "sha256:e54980ae73d39fd7f57d6c176e478b3877e47e0a383005c7e93d4f42507851d0"
+    },
+    {
+      "@id": "urn:uuid:01a1c51f-4207-7ab3-ac69-281c356e1ffe",
+      "@type": "orchid:CodeUnit",
+      "description": "Guards template ids and slugs against a Git base commit.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "git",
+        "governance",
+        "cli"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:02:02Z",
+      "updatedAt": "2026-11-10T11:02:02Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c51f-4207-7ab3-ac69-281c356e1ffe.md",
+      "codeAnchor": "scripts/template-check.mjs#checkTemplates",
+      "hash": "sha256:7f7cb88445a51fc78dcece7332d544e39ce33c456ecaa4e0af72c1f3d02a9f93"
+    },
+    {
+      "@id": "urn:uuid:01a1c51f-4289-7e73-8075-584669d85127",
+      "@type": "orchid:CodeUnit",
+      "description": "Renders a template locally to a PDF using the shared engine and Chrome.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "preview",
+        "chromium",
+        "cli"
+      ],
+      "provenance": {
+        "phase": "logic_review",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:02:02Z",
+      "updatedAt": "2026-11-10T11:02:02Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "artifact": "docs/knowledge/docblocks/01a1c51f-4289-7e73-8075-584669d85127.md",
+      "codeAnchor": "scripts/template-preview.mjs#previewTemplate",
+      "hash": "sha256:29cd68cb4408f4c9d06c8ad53dd35bb86f40f9ef6a0816a7885ae27bb733ff38"
     }
   ]
 }
