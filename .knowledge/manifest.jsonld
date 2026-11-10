@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-complete-the-printer-service-with-templates-rend",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T10:39:08Z",
+  "generatedAt": "2026-11-10T11:00:53Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"

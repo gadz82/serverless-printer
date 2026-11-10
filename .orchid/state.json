@@ -173,6 +173,17 @@
       "updatedAt": "2026-11-10T10:39:08Z",
       "note": "Independent review APPROVE; generic-report, local Chrome preview and manifest drift pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-103/report.md"
+    },
+    "P-105": {
+      "id": "P-105",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c50a-69df-7d8c-b94b-d87090f6c2a5",
+      "startedAt": "2026-11-10T10:39:16Z",
+      "updatedAt": "2026-11-10T11:00:53Z",
+      "note": "Independent review APPROVE; template CI job and docs pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-105/report.md"
     }
   },
   "runs": {
@@ -637,11 +648,44 @@
       },
       "completedAt": "2026-11-10T10:39:08Z",
       "note": "Independent review APPROVE; generic-report, local Chrome preview and manifest drift pass; worktree and branch removed"
+    },
+    "01a1c50a-69df-7d8c-b94b-d87090f6c2a5": {
+      "id": "01a1c50a-69df-7d8c-b94b-d87090f6c2a5",
+      "prompt": "P-105",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T10:39:16Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-105",
+        "effort": "low",
+        "requestedEffort": "low",
+        "source": "P-105.effort",
+        "requestedSource": "P-105.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"low\". Set models.efforts.low.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T11:00:53Z",
+      "note": "Independent review APPROVE; template CI job and docs pass; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c50a-4bcd-7fe9-b1d9-3e420e9d3e21",
+  "lastEvent": "01a1c51e-32ec-7d83-a168-495f86a919b4",
   "memoryEvent": "01a1c448-4c7e-74e0-a9d7-75c4ff8ce524"
 }
