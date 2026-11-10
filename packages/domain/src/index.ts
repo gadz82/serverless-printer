@@ -25,6 +25,7 @@ export type {
 export type { Clock } from "./ports/clock.js";
 export type { IdGenerator } from "./ports/id-generator.js";
 export type { LogFields, Logger } from "./ports/logger.js";
+export type { PdfArchiveOptions, PdfArchiver } from "./ports/pdf-archiver.js";
 export type { PdfRenderer, RenderPdfInput } from "./ports/pdf-renderer.js";
 export type { PrintRepository, StoredPrint, StorePrintInput } from "./ports/print-repository.js";
 export type { DeliveryContext, ResultDelivery } from "./ports/result-delivery.js";

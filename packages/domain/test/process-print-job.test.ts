@@ -17,8 +17,10 @@ import type {
   RefId,
 } from "../src/index.js";
 import {
+  ARCHIVED_PDF_BYTES,
   FakeIdGenerator,
   FakeLogger,
+  FakePdfArchiver,
   FakePdfRenderer,
   FakePrintRepository,
   FakeResultDelivery,
@@ -56,6 +58,7 @@ function buildDependencies(
   return {
     templateCatalog: new InMemoryTemplateCatalog(),
     pdfRenderer: new FakePdfRenderer(),
+    pdfArchiver: new FakePdfArchiver(),
     printRepository: new FakePrintRepository(),
     resultDelivery: new FakeResultDelivery(),
     clock: new FixedClock(FIXED_NOW),
@@ -266,6 +269,83 @@ describe("ProcessPrintJob", () => {
 
     expect(expectSuccess(result).pdfA).toBe("PDF/A-2b");
     expect(renderer.calls[0]?.pdfA).toBe("PDF/A-2b");
+  });
+
+  it("does not archive a standard PDF", async () => {
+    const archiver = new FakePdfArchiver();
+    const repository = new FakePrintRepository();
+    const useCase = new ProcessPrintJob(
+      buildDependencies({ pdfArchiver: archiver, printRepository: repository }),
+    );
+
+    const result = await useCase.execute({
+      messageId: MESSAGE_ID,
+      job: baseJob,
+      attempt: 1,
+      maxAttempts: 5,
+    });
+
+    expect(expectSuccess(result).pdfA).toBeNull();
+    expect(archiver.calls).toHaveLength(0);
+    expect(repository.calls[0]?.templateBytes).toBe(PDF_BYTES);
+  });
+
+  it("archives a PDF/A request before storage and stores the archival bytes", async () => {
+    const archiver = new FakePdfArchiver();
+    const repository = new FakePrintRepository();
+    const useCase = new ProcessPrintJob(
+      buildDependencies({
+        pdfArchiver: archiver,
+        printRepository: repository,
+        pdfaAllowedLevels: ["PDF/A-2b"],
+      }),
+    );
+
+    const result = await useCase.execute({
+      messageId: MESSAGE_ID,
+      job: { ...baseJob, options: { pdfA: "PDF/A-2b" } },
+      attempt: 1,
+      maxAttempts: 5,
+    });
+
+    expect(expectSuccess(result).pdfA).toBe("PDF/A-2b");
+    expect(archiver.calls).toEqual([{ level: "PDF/A-2b", createdAt: FIXED_NOW }]);
+    expect(repository.calls[0]?.templateBytes).toBe(ARCHIVED_PDF_BYTES);
+  });
+
+  it("maps an archiver failure to PDFA_CONVERSION_FAILED without storing", async () => {
+    const archiver = new FakePdfArchiver(async () => {
+      throw new Error("font is not embedded: Helvetica");
+    });
+    const repository = new FakePrintRepository();
+    const delivery = new FakeResultDelivery();
+    const useCase = new ProcessPrintJob(
+      buildDependencies({
+        pdfArchiver: archiver,
+        printRepository: repository,
+        resultDelivery: delivery,
+        pdfaAllowedLevels: ["PDF/A-2b"],
+      }),
+    );
+
+    const result = await useCase.execute({
+      messageId: MESSAGE_ID,
+      job: { ...baseJob, options: { pdfA: "PDF/A-2b" } },
+      attempt: 1,
+      maxAttempts: 5,
+    });
+    const failure = expectFailure(result);
+
+    expect(failure.error).toEqual({
+      code: "PDFA_CONVERSION_FAILED",
+      message: "PDF/A conversion failed: font is not embedded: Helvetica",
+      retryable: false,
+      attempts: 1,
+    });
+    expect(failure.template).not.toBeNull();
+    expect(repository.calls).toHaveLength(0);
+    expect(delivery.deliveries).toHaveLength(1);
+    expect(delivery.deliveries[0]?.context.target).toEqual(SQS_FAILURE);
   });
 
   it("rejects an unsupported success channel before resolving or rendering", async () => {

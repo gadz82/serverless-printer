@@ -4,6 +4,8 @@ import type {
   IdGenerator,
   LogFields,
   Logger,
+  PdfArchiveOptions,
+  PdfArchiver,
   PdfRenderer,
   PrintRepository,
   PrintResult,
@@ -32,8 +34,13 @@ export const storedPrint: StoredPrint = {
 };
 
 export const PDF_BYTES = new Uint8Array([0x25, 0x50, 0x44, 0x46]);
+export const ARCHIVED_PDF_BYTES = new Uint8Array([0x25, 0x50, 0x44, 0x46, 0x2d, 0x31, 0x2e, 0x37]);
 
 export type RenderHandler = (input: RenderPdfInput) => Promise<Uint8Array>;
+export type ArchiveHandler = (
+  pdfBytes: Uint8Array,
+  options: PdfArchiveOptions,
+) => Promise<Uint8Array>;
 export type StoreHandler = (input: StorePrintInput) => Promise<StoredPrint>;
 
 export type DeliveryRecord = {
@@ -66,6 +73,17 @@ export class FakePdfRenderer implements PdfRenderer {
   async render(input: RenderPdfInput): Promise<Uint8Array> {
     this.calls.push(input);
     return this.handler(input);
+  }
+}
+
+export class FakePdfArchiver implements PdfArchiver {
+  readonly calls: PdfArchiveOptions[] = [];
+
+  constructor(private readonly handler: ArchiveHandler = async () => ARCHIVED_PDF_BYTES) {}
+
+  async archive(pdfBytes: Uint8Array, options: PdfArchiveOptions): Promise<Uint8Array> {
+    this.calls.push(options);
+    return this.handler(pdfBytes, options);
   }
 }
 

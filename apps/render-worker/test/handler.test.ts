@@ -12,6 +12,7 @@ import {
   FixedIdGenerator,
   FixedPrintRepository,
   InMemoryTemplateCatalog,
+  PassThroughPdfArchiver,
   PDF_BYTES,
   RecordingResultDelivery,
   ScriptedPdfRenderer,
@@ -42,6 +43,7 @@ function buildRuntime(options: RuntimeOptions = {}): {
   const processPrintJob = new ProcessPrintJob({
     templateCatalog: new InMemoryTemplateCatalog(),
     pdfRenderer: new ScriptedPdfRenderer(options.renderer ?? (async () => PDF_BYTES)),
+    pdfArchiver: new PassThroughPdfArchiver(),
     printRepository: new FixedPrintRepository(),
     resultDelivery: delivery,
     clock,

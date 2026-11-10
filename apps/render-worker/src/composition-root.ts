@@ -20,12 +20,13 @@ import type { SqsSendClient } from "./adapters/sqs-result-delivery.js";
 import { UuidPrintIdGenerator } from "./adapters/uuid-print-id-generator.js";
 import { loadConfig, type WorkerConfig } from "./config.js";
 import { JsonLogger, type WorkerLogger } from "./logger.js";
+import { PdfLibPdfArchiver } from "./pdfa/pdf-lib-pdf-archiver.js";
 
 const SUPPORTED_CHANNELS: readonly CallbackChannel[] = ["sqs"];
 
 /**
- * Phase 1 never accepts a PDF/A request, even when the environment lists
- * levels: the placeholder cannot produce an archival document.
+ * P-202 wires the archiver but leaves the Phase 1 allowlist empty until P-204
+ * replaces the placeholder renderer and passes the configured levels.
  */
 const PHASE_ONE_PDFA_LEVELS: readonly PdfaLevel[] = [];
 
@@ -92,6 +93,7 @@ export function composeWorker(
   const processPrintJob = new ProcessPrintJob({
     templateCatalog,
     pdfRenderer: overrides.pdfRenderer ?? new PlaceholderPdfRenderer(),
+    pdfArchiver: new PdfLibPdfArchiver(),
     printRepository,
     resultDelivery,
     clock,

@@ -3,13 +3,13 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { SendMessageCommand } from "@aws-sdk/client-sqs";
-import { PdfaLevelNotAllowed } from "@printer/domain";
 import type { PrintResult } from "@printer/domain";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SqsSendClient } from "../src/adapters/sqs-result-delivery.js";
 import { composeWorker } from "../src/composition-root.js";
 
 const SUCCESS_ARN = "arn:aws:sqs:eu-central-1:123456789012:printer-results";
+const FAILURE_ARN = "arn:aws:sqs:eu-central-1:123456789012:printer-failures";
 
 class RecordingSqsClient implements SqsSendClient {
   readonly commands: SendMessageCommand[] = [];
@@ -39,37 +39,48 @@ describe("composeWorker", () => {
     vi.restoreAllMocks();
   });
 
-  it("passes an empty PDF/A allowlist even when the environment lists levels", async () => {
+  it("keeps PDF/A rejected until P-204 wires the configured allowlist", async () => {
     const lines: string[] = [];
     vi.spyOn(console, "log").mockImplementation((...args: unknown[]) => {
       lines.push(args.map((argument) => String(argument)).join(" "));
     });
-
-    const runtime = composeWorker({
-      PRINTS_BUCKET: "printer-prints",
-      PDFA_ALLOWED_LEVELS: "PDF/A-2b",
-    });
+    const sqsClient = new RecordingSqsClient();
+    const runtime = composeWorker(
+      {
+        PRINTS_BUCKET: "printer-prints",
+        PDFA_ALLOWED_LEVELS: "PDF/A-2b",
+      },
+      { sqsClient },
+    );
 
     expect(runtime.config.pdfaAllowedLevels).toEqual(["PDF/A-2b"]);
 
-    await expect(
-      runtime.processPrintJob.execute({
-        messageId: "message-1",
-        job: {
-          templateId: "_smoke",
-          refId: "invoice-1",
-          options: { pdfA: "PDF/A-2b" },
-          webhooks: {
-            success: { channel: "sqs", value: SUCCESS_ARN },
-          },
+    const result = await runtime.processPrintJob.execute({
+      messageId: "message-1",
+      job: {
+        templateId: "_smoke",
+        refId: "invoice-1",
+        options: { pdfA: "PDF/A-2b" },
+        webhooks: {
+          success: { channel: "sqs", value: SUCCESS_ARN },
+          failure: { channel: "sqs", value: FAILURE_ARN },
         },
-        attempt: 1,
-        maxAttempts: 5,
-      }),
-    ).rejects.toMatchObject({
-      name: "DeliveryFailed",
-      cause: expect.any(PdfaLevelNotAllowed),
+      },
+      attempt: 1,
+      maxAttempts: 5,
     });
+
+    expect(result).toMatchObject({
+      success: false,
+      error: {
+        code: "PDFA_LEVEL_NOT_ALLOWED",
+        message: "PDF/A level not allowed: PDF/A-2b",
+        retryable: false,
+        attempts: 1,
+      },
+    });
+    expect(sqsClient.commands).toHaveLength(1);
+    expect(sqsClient.commands[0]?.input.QueueUrl).toContain("printer-failures");
 
     const warning = lines
       .map((line) => JSON.parse(line) as Record<string, unknown>)

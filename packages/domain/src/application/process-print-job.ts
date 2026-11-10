@@ -1,6 +1,7 @@
 import {
   CallbackNotAllowed,
   DeliveryFailed,
+  PdfaConversionFailed,
   PdfaLevelNotAllowed,
   PdfRenderFailed,
   TemplateNotFound,
@@ -19,6 +20,7 @@ import type { CallbackChannel } from "../domain/webhooks.js";
 import type { Clock } from "../ports/clock.js";
 import type { IdGenerator } from "../ports/id-generator.js";
 import type { Logger } from "../ports/logger.js";
+import type { PdfArchiver } from "../ports/pdf-archiver.js";
 import type { PdfRenderer } from "../ports/pdf-renderer.js";
 import type { PrintRepository } from "../ports/print-repository.js";
 import type { ResultDelivery } from "../ports/result-delivery.js";
@@ -34,6 +36,7 @@ export type ProcessPrintJobInput = {
 export type ProcessPrintJobDependencies = {
   readonly templateCatalog: TemplateCatalog;
   readonly pdfRenderer: PdfRenderer;
+  readonly pdfArchiver: PdfArchiver;
   readonly printRepository: PrintRepository;
   readonly resultDelivery: ResultDelivery;
   readonly clock: Clock;
@@ -67,12 +70,14 @@ export class ProcessPrintJob {
         throw new TemplateNotFound(`template not found: ${job.templateId}`);
       }
 
-      const bytes = await this.dependencies.pdfRenderer.render({
+      const renderedBytes = await this.dependencies.pdfRenderer.render({
         template,
         payload: job.payload ?? {},
         pdfA,
       });
-      const renderedAt = this.dependencies.clock.now().toISOString();
+      const renderedAt = this.dependencies.clock.now();
+      const bytes =
+        pdfA === null ? renderedBytes : await this.archive(renderedBytes, pdfA, renderedAt);
       const stored = await this.dependencies.printRepository.store({
         printId,
         templateBytes: bytes,
@@ -87,7 +92,7 @@ export class ProcessPrintJob {
         sizeBytes: stored.sizeBytes,
         pdfA,
         template: templateMetadata(template),
-        renderedAt,
+        renderedAt: renderedAt.toISOString(),
       };
 
       await this.deliverSuccess(result, job, messageId);
@@ -129,6 +134,26 @@ export class ProcessPrintJob {
       });
       this.dependencies.logger.error("print_job_failed", fields);
       return failure;
+    }
+  }
+
+  private async archive(
+    pdfBytes: Uint8Array,
+    pdfA: PdfaLevel,
+    createdAt: Date,
+  ): Promise<Uint8Array> {
+    try {
+      return await this.dependencies.pdfArchiver.archive(pdfBytes, {
+        level: pdfA,
+        createdAt,
+      });
+    } catch (error) {
+      if (error instanceof PdfaConversionFailed) {
+        throw error;
+      }
+      throw new PdfaConversionFailed(`PDF/A conversion failed: ${messageFrom(error)}`, {
+        cause: error,
+      });
     }
   }
 

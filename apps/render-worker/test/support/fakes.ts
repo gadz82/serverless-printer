@@ -2,6 +2,7 @@ import type {
   Clock,
   DeliveryContext,
   IdGenerator,
+  PdfArchiver,
   PdfRenderer,
   PrintRepository,
   PrintResult,
@@ -71,6 +72,12 @@ export class ScriptedPdfRenderer implements PdfRenderer {
 
   async render(): Promise<Uint8Array> {
     return this.renderer();
+  }
+}
+
+export class PassThroughPdfArchiver implements PdfArchiver {
+  async archive(pdfBytes: Uint8Array): Promise<Uint8Array> {
+    return pdfBytes;
   }
 }
 
