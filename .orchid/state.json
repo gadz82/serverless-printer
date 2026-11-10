@@ -162,6 +162,17 @@
       "updatedAt": "2026-11-10T10:09:22Z",
       "note": "Independent review PASS; sample validation, folder-move guard and help notes fixed; 23 CLI tests and main checks pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-102/report.md"
+    },
+    "P-103": {
+      "id": "P-103",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c4ef-596a-71bd-a65b-43d2b01d904f",
+      "startedAt": "2026-11-10T10:09:42Z",
+      "updatedAt": "2026-11-10T10:39:08Z",
+      "note": "Independent review APPROVE; generic-report, local Chrome preview and manifest drift pass; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-103/report.md"
     }
   },
   "runs": {
@@ -593,11 +604,44 @@
       },
       "completedAt": "2026-11-10T10:09:22Z",
       "note": "Independent review PASS; sample validation, folder-move guard and help notes fixed; 23 CLI tests and main checks pass; worktree and branch removed"
+    },
+    "01a1c4ef-596a-71bd-a65b-43d2b01d904f": {
+      "id": "01a1c4ef-596a-71bd-a65b-43d2b01d904f",
+      "prompt": "P-103",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T10:09:42Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-103",
+        "effort": "medium",
+        "requestedEffort": "medium",
+        "source": "P-103.effort",
+        "requestedSource": "P-103.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T10:39:08Z",
+      "note": "Independent review APPROVE; generic-report, local Chrome preview and manifest drift pass; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c4ef-0b1b-73d2-87d5-c107acc62f24",
+  "lastEvent": "01a1c50a-4bcd-7fe9-b1d9-3e420e9d3e21",
   "memoryEvent": "01a1c448-4c7e-74e0-a9d7-75c4ff8ce524"
 }
