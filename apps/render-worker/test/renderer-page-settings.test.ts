@@ -88,9 +88,13 @@ describe("request policy", () => {
   it("blocks file URLs outside the template directory", () => {
     const outside = pathToFileURL(path.join(tmpdir(), "outside.css")).href;
     const lookalike = pathToFileURL(`${templateDirectory}-other${path.sep}styles.css`).href;
+    const absoluteOutside = pathToFileURL(
+      path.join(path.parse(templateDirectory).root, "etc", "passwd"),
+    ).href;
 
     expect(isAllowedRequestUrl(outside, { fileRoots: [templateDirectory] })).toBe(false);
     expect(isAllowedRequestUrl(lookalike, { fileRoots: [templateDirectory] })).toBe(false);
+    expect(isAllowedRequestUrl(absoluteOutside, { fileRoots: [templateDirectory] })).toBe(false);
   });
 
   it("rejects symlinks that escape the template directory", async () => {
@@ -103,6 +107,14 @@ describe("request policy", () => {
 
       expect(
         isAllowedRequestUrl(pathToFileURL(escapingLink).href, { fileRoots: [templateDirectory] }),
+      ).toBe(false);
+
+      const escapingDirectory = path.join(templateDirectory, "linked-directory");
+      await symlink(outsideDirectory, escapingDirectory, "dir");
+      expect(
+        isAllowedRequestUrl(pathToFileURL(path.join(escapingDirectory, "secret.css")).href, {
+          fileRoots: [templateDirectory],
+        }),
       ).toBe(false);
 
       const insideFile = path.join(templateDirectory, "inside.css");

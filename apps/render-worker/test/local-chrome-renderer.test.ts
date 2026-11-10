@@ -3,16 +3,19 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import {
+  ChromePathError,
   LocalChromeRenderer,
+  LocalChromeRenderError,
   buildHtmlDocument,
   createPdfOptions,
   isAllowedRequestUrl,
   resolveChromeExecutable,
   type BlockedRequest,
 } from "../src/rendering/local-chrome-renderer.js";
+import { FAKE_PDF_BYTES, FakeBrowser, FakePage, FakeRequest } from "./renderer-fakes.js";
 
 const REPOSITORY_ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const GENERIC_REPORT_DIRECTORY = path.join(REPOSITORY_ROOT, "templates", "generic-report");
@@ -117,6 +120,23 @@ describe("local Chrome renderer", () => {
       ).toBe("/custom/chrome");
     });
 
+    it("fails instead of falling back when CHROME_PATH is missing", () => {
+      let failure: unknown;
+      try {
+        resolveChromeExecutable({
+          env: { CHROME_PATH: "/missing/chrome" },
+          platform: "darwin",
+          exists: (candidate) => candidate === MACOS_CHROME_PATH,
+        });
+      } catch (error) {
+        failure = error;
+      }
+
+      expect(failure).toBeInstanceOf(ChromePathError);
+      expect((failure as ChromePathError).message).toContain("CHROME_PATH");
+      expect((failure as ChromePathError).message).toContain("/missing/chrome");
+    });
+
     it("falls back to the macOS Chrome install", () => {
       expect(
         resolveChromeExecutable({
@@ -135,6 +155,113 @@ describe("local Chrome renderer", () => {
           exists: () => false,
         }),
       ).toBeUndefined();
+    });
+  });
+
+  describe("browser lifecycle", () => {
+    it("preserves the render error when closing the browser also fails", async () => {
+      const renderError = new Error("page.pdf failed");
+      const closeError = new Error("browser.close failed");
+      const page = new FakePage({ pdf: () => Promise.reject(renderError) });
+      const browser = new FakeBrowser(() => page, {
+        close: () => Promise.reject(closeError),
+      });
+      const closeErrors: unknown[] = [];
+      const renderer = new LocalChromeRenderer({
+        chromePath: "/fake/chrome",
+        launchBrowser: () => Promise.resolve(browser),
+        onBrowserCloseError: (error) => closeErrors.push(error),
+      });
+
+      let failure: unknown;
+      try {
+        await renderer.render({
+          html: "<p>Content</p>",
+          baseDirectory: GENERIC_REPORT_DIRECTORY,
+        });
+      } catch (error) {
+        failure = error;
+      }
+
+      expect(failure).toBeInstanceOf(LocalChromeRenderError);
+      expect((failure as LocalChromeRenderError).cause).toBe(renderError);
+      expect(browser.closeCount).toBe(1);
+      expect(closeErrors).toEqual([closeError]);
+    });
+
+    it("keeps the rendered PDF when closing the browser fails", async () => {
+      const closeError = new Error("browser.close failed");
+      const page = new FakePage();
+      const browser = new FakeBrowser(() => page, {
+        close: () => Promise.reject(closeError),
+      });
+      const closeErrors: unknown[] = [];
+      const renderer = new LocalChromeRenderer({
+        chromePath: "/fake/chrome",
+        launchBrowser: () => Promise.resolve(browser),
+        onBrowserCloseError: (error) => closeErrors.push(error),
+      });
+
+      const pdf = await renderer.render({
+        html: "<p>Content</p>",
+        baseDirectory: GENERIC_REPORT_DIRECTORY,
+      });
+
+      expect(Buffer.from(pdf)).toEqual(Buffer.from(FAKE_PDF_BYTES));
+      expect(closeErrors).toEqual([closeError]);
+    });
+
+    it("surfaces request interception failures through the callback", async () => {
+      const requestError = new Error("request already handled");
+      const page = new FakePage();
+      const browser = new FakeBrowser(() => page);
+      const errors: unknown[] = [];
+      const renderer = new LocalChromeRenderer({
+        chromePath: "/fake/chrome",
+        launchBrowser: () => Promise.resolve(browser),
+        onRequestError: (error) => errors.push(error),
+      });
+
+      await renderer.render({
+        html: "<p>Content</p>",
+        baseDirectory: GENERIC_REPORT_DIRECTORY,
+      });
+      page.emitRequest(new FakeRequest("data:text/plain,ok", "other", requestError));
+      await Promise.resolve();
+
+      expect(errors).toEqual([requestError]);
+    });
+
+    it("logs request interception failures without the full request URL", async () => {
+      const page = new FakePage();
+      const browser = new FakeBrowser(() => page);
+      const warning = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+      const renderer = new LocalChromeRenderer({
+        chromePath: "/fake/chrome",
+        launchBrowser: () => Promise.resolve(browser),
+      });
+
+      try {
+        await renderer.render({
+          html: "<p>Content</p>",
+          baseDirectory: GENERIC_REPORT_DIRECTORY,
+        });
+        page.emitRequest(
+          new FakeRequest(
+            "data:text/plain,ok",
+            "other",
+            new Error("failed to continue https://example.invalid/secret?token=abc"),
+          ),
+        );
+        await Promise.resolve();
+
+        const logged = warning.mock.calls.map((call) => call.map(String).join(" ")).join("\n");
+        expect(logged).toContain("request interception failed");
+        expect(logged).not.toContain("example.invalid");
+        expect(logged).not.toContain("token=abc");
+      } finally {
+        warning.mockRestore();
+      }
     });
   });
 
