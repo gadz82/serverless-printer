@@ -13,7 +13,7 @@ pnpm-lock.yaml
 .orchid/
 .opencode/
 AGENTS.md
-SPEC.md
+docs/specification.md
 orchid-sdd.yml
 
 .serena/

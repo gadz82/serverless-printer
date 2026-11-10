@@ -191,7 +191,7 @@ disabled.
 `Terraform plan` is conditional on `AWS_PLAN_ROLE_ARN`, `AWS_REGION` and a same-repository pull
 request; forks get a skipped notice. Add it as a required check only if it runs for every change,
 otherwise fork PRs can block. Also require pull requests, squash merges and linear history on
-`main` (SPEC §7.2). The render-regression job installs poppler-utils and uses the real Lambda
+`main` ([specification](specification.md) §7.2). The render-regression job installs poppler-utils and uses the real Lambda
 Chromium, so it must not be skipped by a path filter. If the optional `orchid-sdd` workflow is
 enabled, require its `validate` check too.
 

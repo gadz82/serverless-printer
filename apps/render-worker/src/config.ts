@@ -154,7 +154,7 @@ function readBoolean(raw: string | undefined, fallback: boolean, name: string): 
 function readPdfaLevels(raw: string | undefined): readonly PdfaLevel[] {
   const value = readOptional(raw);
   if (value === undefined) {
-    // SPEC §4.8: every level is enabled unless the deployment narrows it.
+    // Specification §4.8: every level is enabled unless the deployment narrows it.
     return [...PDFA_LEVELS];
   }
 

@@ -1,5 +1,10 @@
 # Printer — Specification
 
+> This is the complete technical specification kept for reference. Start with the
+> [README](../README.md) for the product overview, then use the focused guides for architecture,
+> usage, templates, deployment and operations.
+
+
 Version 0.4 (2026-11-09). This is a standalone project, independent of any company environment. It runs on AWS, lives in one GitHub repository, deploys with GitHub Actions and is provisioned entirely with Terraform.
 
 **What the project doesn't have:**
