@@ -1,1 +1,156 @@
-{}
+{
+  "alarms": [
+    "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa"
+  ],
+  "allowlist": [
+    "urn:uuid:01a1c42a-2d99-7113-a3ca-0f1ca6976f7f"
+  ],
+  "ast": [
+    "urn:uuid:01a1c42a-2b6d-75ac-93c1-f0ef045bfe2c"
+  ],
+  "callbacks": [
+    "urn:uuid:01a1c42a-2d55-7d8d-beb2-7a557e76ce9b",
+    "urn:uuid:01a1c42a-2d99-7113-a3ca-0f1ca6976f7f"
+  ],
+  "capacity": [
+    "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002"
+  ],
+  "channels": [
+    "urn:uuid:01a1c42a-2d55-7d8d-beb2-7a557e76ce9b"
+  ],
+  "chromium": [
+    "urn:uuid:01a1c42a-2cce-780a-a3aa-96f79a256b73"
+  ],
+  "ci": [
+    "urn:uuid:01a1c42a-2ddd-7630-95e5-521058cb9882"
+  ],
+  "cli": [
+    "urn:uuid:01a1c42a-2bb2-737a-953e-1bfa09679e04"
+  ],
+  "cloud": [
+    "urn:uuid:01a1c42a-2eea-7b22-a33f-cd53e0ef36a7"
+  ],
+  "conformance": [
+    "urn:uuid:01a1c42a-2d12-71d4-91cb-ead3efcb5d02"
+  ],
+  "delivery": [
+    "urn:uuid:01a1c42a-2d55-7d8d-beb2-7a557e76ce9b"
+  ],
+  "deployment": [
+    "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577"
+  ],
+  "endpoints": [
+    "urn:uuid:01a1c42a-2c8a-724b-8627-e331e3e80794"
+  ],
+  "git": [
+    "urn:uuid:01a1c42a-2c45-7384-a7d6-0332de8f7f28"
+  ],
+  "governance": [
+    "urn:uuid:01a1c42a-2c45-7384-a7d6-0332de8f7f28"
+  ],
+  "handlebars": [
+    "urn:uuid:01a1c42a-2b30-716c-9421-8a457f2ba0ec"
+  ],
+  "helpers": [
+    "urn:uuid:01a1c42a-2b30-716c-9421-8a457f2ba0ec"
+  ],
+  "lambda": [
+    "urn:uuid:01a1c42a-2cce-780a-a3aa-96f79a256b73"
+  ],
+  "load-test": [
+    "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002"
+  ],
+  "manifest": [
+    "urn:uuid:01a1c42a-2b6d-75ac-93c1-f0ef045bfe2c"
+  ],
+  "metadata": [
+    "urn:uuid:01a1c42a-2d12-71d4-91cb-ead3efcb5d02"
+  ],
+  "modes": [
+    "urn:uuid:01a1c42a-2b30-716c-9421-8a457f2ba0ec"
+  ],
+  "network": [
+    "urn:uuid:01a1c42a-2c8a-724b-8627-e331e3e80794"
+  ],
+  "oidc": [
+    "urn:uuid:01a1c42a-2eea-7b22-a33f-cd53e0ef36a7"
+  ],
+  "operations": [
+    "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa"
+  ],
+  "pdfa": [
+    "urn:uuid:01a1c42a-2d12-71d4-91cb-ead3efcb5d02",
+    "urn:uuid:01a1c42a-2ea8-766e-a5fe-68c402de295e"
+  ],
+  "performance": [
+    "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002"
+  ],
+  "ping": [
+    "urn:uuid:01a1c42a-2d55-7d8d-beb2-7a557e76ce9b"
+  ],
+  "placeholders": [
+    "urn:uuid:01a1c42a-2b6d-75ac-93c1-f0ef045bfe2c"
+  ],
+  "preview": [
+    "urn:uuid:01a1c42a-2bb2-737a-953e-1bfa09679e04"
+  ],
+  "production": [
+    "urn:uuid:01a1c42a-2ea8-766e-a5fe-68c402de295e"
+  ],
+  "regression": [
+    "urn:uuid:01a1c42a-2ddd-7630-95e5-521058cb9882"
+  ],
+  "release": [
+    "urn:uuid:01a1c42a-2ea8-766e-a5fe-68c402de295e",
+    "urn:uuid:01a1c42a-2eea-7b22-a33f-cd53e0ef36a7"
+  ],
+  "rendering": [
+    "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577",
+    "urn:uuid:01a1c42a-2cce-780a-a3aa-96f79a256b73",
+    "urn:uuid:01a1c42a-2d12-71d4-91cb-ead3efcb5d02",
+    "urn:uuid:01a1c42a-2ddd-7630-95e5-521058cb9882"
+  ],
+  "rollback": [
+    "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa",
+    "urn:uuid:01a1c42a-2eea-7b22-a33f-cd53e0ef36a7"
+  ],
+  "runbook": [
+    "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa"
+  ],
+  "security": [
+    "urn:uuid:01a1c42a-2cce-780a-a3aa-96f79a256b73",
+    "urn:uuid:01a1c42a-2d99-7113-a3ca-0f1ca6976f7f"
+  ],
+  "smoke": [
+    "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577"
+  ],
+  "smoke-test": [
+    "urn:uuid:01a1c42a-2ea8-766e-a5fe-68c402de295e"
+  ],
+  "ssrf": [
+    "urn:uuid:01a1c42a-2d99-7113-a3ca-0f1ca6976f7f"
+  ],
+  "templates": [
+    "urn:uuid:01a1c42a-2b30-716c-9421-8a457f2ba0ec",
+    "urn:uuid:01a1c42a-2b6d-75ac-93c1-f0ef045bfe2c",
+    "urn:uuid:01a1c42a-2bb2-737a-953e-1bfa09679e04",
+    "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577",
+    "urn:uuid:01a1c42a-2c45-7384-a7d6-0332de8f7f28"
+  ],
+  "terraform": [
+    "urn:uuid:01a1c42a-2c8a-724b-8627-e331e3e80794"
+  ],
+  "testing": [
+    "urn:uuid:01a1c42a-2ddd-7630-95e5-521058cb9882"
+  ],
+  "throughput": [
+    "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002"
+  ],
+  "validation": [
+    "urn:uuid:01a1c42a-2bb2-737a-953e-1bfa09679e04",
+    "urn:uuid:01a1c42a-2c45-7384-a7d6-0332de8f7f28"
+  ],
+  "vpc": [
+    "urn:uuid:01a1c42a-2c8a-724b-8627-e331e3e80794"
+  ]
+}

@@ -1,14 +1,21 @@
 {
   "@context": "context/orchid-v1.jsonld",
-  "@id": "urn:orchid:manifest:serverless-printer:none",
+  "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-complete-the-printer-service-with-templates-rend",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T06:33:11Z",
+  "generatedAt": "2026-11-10T06:34:21Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
   },
-  "iteration": null,
+  "iteration": {
+    "@id": "urn:orchid:iteration:2026-11-10-complete-the-printer-service-with-templates-rend",
+    "title": "Complete the Printer service with templates, rendering, callbacks and production readiness",
+    "phase": "intent",
+    "status": "active",
+    "specVersion": "1.0.0",
+    "rigor": "L"
+  },
   "gates": {
     "G0": "passed",
     "G1": "passed",
@@ -17,8 +24,8 @@
     "G4": "passed",
     "G5": "passed",
     "G6": "passed",
-    "G7": "passed",
-    "G8": "passed"
+    "G7": "pending",
+    "G8": "pending"
   },
   "indexes": {
     "topics": "index/topics.json",
@@ -43,5 +50,396 @@
       "status": "closed"
     }
   ],
-  "nodes": []
+  "nodes": [
+    {
+      "@id": "urn:uuid:01a1c42a-2b30-716c-9421-8a457f2ba0ec",
+      "@type": "orchid:Requirement",
+      "description": "Handlebars template engine supports lenient, strict and assume-objects modes with a fixed helper set.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "handlebars",
+        "modes",
+        "helpers"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-101"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2b6d-75ac-93c1-f0ef045bfe2c",
+      "@type": "orchid:Requirement",
+      "description": "The manifest records placeholders extracted from the Handlebars AST for every template.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "manifest",
+        "placeholders",
+        "ast"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-102"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2bb2-737a-953e-1bfa09679e04",
+      "@type": "orchid:Requirement",
+      "description": "Template CLI commands create, validate, check and preview templates and build the manifest.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "cli",
+        "validation",
+        "preview"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-103"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577",
+      "@type": "orchid:Requirement",
+      "description": "A real annual-statement template renders by id and slug after deploy, plain and PDF/A.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "rendering",
+        "deployment",
+        "smoke"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-104"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2c45-7384-a7d6-0332de8f7f28",
+      "@type": "orchid:Requirement",
+      "description": "Template validation rejects invalid identity, compilation and sample data; check blocks id/slug changes.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "validation",
+        "git",
+        "governance"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-105"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2c8a-724b-8627-e331e3e80794",
+      "@type": "orchid:Requirement",
+      "description": "The optional network module supports VPC create and lookup with endpoints and optional NAT.",
+      "status": "accepted",
+      "topics": [
+        "network",
+        "vpc",
+        "terraform",
+        "endpoints"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-106"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2cce-780a-a3aa-96f79a256b73",
+      "@type": "orchid:Requirement",
+      "description": "Chromium renders templates with JavaScript disabled, request interception and the specified page settings.",
+      "status": "accepted",
+      "topics": [
+        "rendering",
+        "chromium",
+        "lambda",
+        "security"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-107"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2d12-71d4-91cb-ead3efcb5d02",
+      "@type": "orchid:Requirement",
+      "description": "PDF/A post-processing produces all eight levels with sRGB ICC, XMP and required safety checks.",
+      "status": "accepted",
+      "topics": [
+        "pdfa",
+        "rendering",
+        "metadata",
+        "conformance"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-108"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2d55-7d8d-beb2-7a557e76ce9b",
+      "@type": "orchid:Requirement",
+      "description": "All five result channels and ping deliver end to end with the documented failure handling.",
+      "status": "accepted",
+      "topics": [
+        "callbacks",
+        "delivery",
+        "ping",
+        "channels"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-109"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2d99-7113-a3ca-0f1ca6976f7f",
+      "@type": "orchid:Requirement",
+      "description": "HTTP callbacks enforce the allowlist plus DNS and link-local/metadata SSRF checks.",
+      "status": "accepted",
+      "topics": [
+        "security",
+        "callbacks",
+        "ssrf",
+        "allowlist"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:20Z",
+      "updatedAt": "2026-11-10T06:34:20Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-110"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2ddd-7630-95e5-521058cb9882",
+      "@type": "orchid:Requirement",
+      "description": "CI render regression compares page count, text and appearance for plain and PDF/A PDFs.",
+      "status": "accepted",
+      "topics": [
+        "testing",
+        "rendering",
+        "regression",
+        "ci"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:21Z",
+      "updatedAt": "2026-11-10T06:34:21Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-111"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002",
+      "@type": "orchid:Requirement",
+      "description": "A throughput target is agreed and verified with Power Tuning and a load test.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "load-test",
+        "capacity"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:21Z",
+      "updatedAt": "2026-11-10T06:34:21Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-112"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa",
+      "@type": "orchid:Requirement",
+      "description": "Opt-in alarms and a runbook cover rollback, DLQ redrive, template removal and recovery.",
+      "status": "accepted",
+      "topics": [
+        "operations",
+        "alarms",
+        "runbook",
+        "rollback"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:21Z",
+      "updatedAt": "2026-11-10T06:34:21Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-113"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2ea8-766e-a5fe-68c402de295e",
+      "@type": "orchid:Requirement",
+      "description": "Plain and PDF/A smoke jobs verify each release and the first real template is live.",
+      "status": "accepted",
+      "topics": [
+        "smoke-test",
+        "release",
+        "pdfa",
+        "production"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:21Z",
+      "updatedAt": "2026-11-10T06:34:21Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-114"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    },
+    {
+      "@id": "urn:uuid:01a1c42a-2eea-7b22-a33f-cd53e0ef36a7",
+      "@type": "orchid:Requirement",
+      "description": "Bootstrap, OIDC deploy, branch protection and rollback are verified in the real AWS account.",
+      "status": "accepted",
+      "topics": [
+        "cloud",
+        "oidc",
+        "release",
+        "rollback"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T06:34:21Z",
+      "updatedAt": "2026-11-10T06:34:21Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-115"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:f10973e20048a451d8452271410444343f4f7427a6338dfd07ece8bc62394023"
+    }
+  ]
 }

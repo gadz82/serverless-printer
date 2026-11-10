@@ -1,1 +1,137 @@
-{}
+{
+  "R-101": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Handlebars template engine supports lenient, strict and assume-objects modes with a fixed helper set.",
+    "id": "urn:uuid:01a1c42a-2b30-716c-9421-8a457f2ba0ec",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-102": {
+    "anchors": [],
+    "decisions": [],
+    "description": "The manifest records placeholders extracted from the Handlebars AST for every template.",
+    "id": "urn:uuid:01a1c42a-2b6d-75ac-93c1-f0ef045bfe2c",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-103": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Template CLI commands create, validate, check and preview templates and build the manifest.",
+    "id": "urn:uuid:01a1c42a-2bb2-737a-953e-1bfa09679e04",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-104": {
+    "anchors": [],
+    "decisions": [],
+    "description": "A real annual-statement template renders by id and slug after deploy, plain and PDF/A.",
+    "id": "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-105": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Template validation rejects invalid identity, compilation and sample data; check blocks id/slug changes.",
+    "id": "urn:uuid:01a1c42a-2c45-7384-a7d6-0332de8f7f28",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-106": {
+    "anchors": [],
+    "decisions": [],
+    "description": "The optional network module supports VPC create and lookup with endpoints and optional NAT.",
+    "id": "urn:uuid:01a1c42a-2c8a-724b-8627-e331e3e80794",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-107": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Chromium renders templates with JavaScript disabled, request interception and the specified page settings.",
+    "id": "urn:uuid:01a1c42a-2cce-780a-a3aa-96f79a256b73",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-108": {
+    "anchors": [],
+    "decisions": [],
+    "description": "PDF/A post-processing produces all eight levels with sRGB ICC, XMP and required safety checks.",
+    "id": "urn:uuid:01a1c42a-2d12-71d4-91cb-ead3efcb5d02",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-109": {
+    "anchors": [],
+    "decisions": [],
+    "description": "All five result channels and ping deliver end to end with the documented failure handling.",
+    "id": "urn:uuid:01a1c42a-2d55-7d8d-beb2-7a557e76ce9b",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-110": {
+    "anchors": [],
+    "decisions": [],
+    "description": "HTTP callbacks enforce the allowlist plus DNS and link-local/metadata SSRF checks.",
+    "id": "urn:uuid:01a1c42a-2d99-7113-a3ca-0f1ca6976f7f",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-111": {
+    "anchors": [],
+    "decisions": [],
+    "description": "CI render regression compares page count, text and appearance for plain and PDF/A PDFs.",
+    "id": "urn:uuid:01a1c42a-2ddd-7630-95e5-521058cb9882",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-112": {
+    "anchors": [],
+    "decisions": [],
+    "description": "A throughput target is agreed and verified with Power Tuning and a load test.",
+    "id": "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-113": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Opt-in alarms and a runbook cover rollback, DLQ redrive, template removal and recovery.",
+    "id": "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-114": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Plain and PDF/A smoke jobs verify each release and the first real template is live.",
+    "id": "urn:uuid:01a1c42a-2ea8-766e-a5fe-68c402de295e",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-115": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Bootstrap, OIDC deploy, branch protection and rollback are verified in the real AWS account.",
+    "id": "urn:uuid:01a1c42a-2eea-7b22-a33f-cd53e0ef36a7",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  }
+}
