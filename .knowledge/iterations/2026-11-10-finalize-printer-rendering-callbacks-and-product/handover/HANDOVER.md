@@ -173,6 +173,4 @@ The render regression needs Linux x86_64, `@sparticuz/chromium` and poppler-util
   frequent.
 - **Shared smoke queue retention** is five minutes; use a dedicated results queue for long load
   tests.
-- **Local preview message:** `scripts/template-preview.mjs` still says "Slice 2" for `--pdfa`;
-  local PDF/A preview is intentionally unavailable.
 - **Branch protection state** is external to the repository; verify it with a real `main` push.

@@ -25,13 +25,25 @@ const { LocalChromeRenderer, resolveChromeExecutable } = await import(
   pathToFileURL(rendererEntry).href
 );
 
+const archiverEntry = fileURLToPath(
+  new URL("../apps/render-worker/src/pdfa/pdf-lib-pdf-archiver.ts", import.meta.url),
+);
+const levelsEntry = fileURLToPath(
+  new URL("../apps/render-worker/src/pdfa/pdfa-levels.ts", import.meta.url),
+);
+const [{ PdfLibPdfArchiver }, { PDFA_LEVEL_PROFILES }] = await Promise.all([
+  import(pathToFileURL(archiverEntry).href),
+  import(pathToFileURL(levelsEntry).href),
+]);
+const PDFA_LEVELS = Object.freeze(Object.keys(PDFA_LEVEL_PROFILES));
+
 const TEMPLATES_DIRECTORY = "templates";
 const LOCAL_DIRECTORY = ".local";
 const SLUG_PATTERN = /^(?:_smoke|[a-z][a-z0-9-]{2,63})$/;
 const USAGE = [
   "Usage: pnpm template:preview <slug> [--data <file>] [--strict] [--pdfa <level>]",
   "Renders the template with a locally installed Chrome and writes .local/<slug>.pdf.",
-  "PDF/A output is available in Slice 2.",
+  `PDF/A levels: ${PDFA_LEVELS.join(", ")}.`,
 ].join("\n");
 
 export class TemplatePreviewError extends Error {
@@ -46,7 +58,7 @@ export class TemplatePreviewError extends Error {
  * renderer. The browser is created per call by LocalChromeRenderer.
  *
  * @param {string} root Repository root that contains `templates`.
- * @param {{ slug: string, dataPath?: string, strict?: boolean, outputDirectory?: string }} options
+ * @param {{ slug: string, dataPath?: string, strict?: boolean, pdfa?: string, outputDirectory?: string }} options
  * @returns {Promise<{ descriptor: { id: string, slug: string, name: string, description: string }, outputPath: string, pdf: Uint8Array }>}
  */
 // ORCHID-MEM: 01a1c51f-4289-7e73-8075-584669d85127 — Renders a template locally to a PDF using the shared engine and Chrome.
@@ -60,13 +72,22 @@ export async function previewTemplate(root, options) {
   })(data);
 
   const renderer = new LocalChromeRenderer();
-  const pdf = await renderer.render({
+  const rendered = await renderer.render({
     html,
     baseDirectory: template.directory,
   });
+  const pdf =
+    options.pdfa === undefined
+      ? rendered
+      : await new PdfLibPdfArchiver().archive(rendered, {
+          level: options.pdfa,
+          title: typeof data.title === "string" ? data.title : template.descriptor.name,
+          createdAt: new Date(),
+        });
 
   const outputDirectory = options.outputDirectory ?? path.join(repositoryRoot, LOCAL_DIRECTORY);
-  const outputPath = path.join(outputDirectory, `${template.descriptor.slug}.pdf`);
+  const suffix = options.pdfa === undefined ? "" : "-pdfa";
+  const outputPath = path.join(outputDirectory, `${template.descriptor.slug}${suffix}.pdf`);
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, pdf);
 
@@ -84,15 +105,9 @@ export function findChromeExecutable() {
 
 /**
  * @param {readonly string[]} argv
- * @returns {{ slug: string, dataPath?: string, strict: boolean, help: boolean }}
+ * @returns {{ slug: string, dataPath?: string, strict: boolean, pdfa?: string, help: boolean }}
  */
 export function parsePreviewArguments(argv) {
-  if (argv.some((argument) => argument === "--pdfa" || argument.startsWith("--pdfa="))) {
-    throw new TemplatePreviewError(
-      "--pdfa is not available yet; PDF/A output is available in Slice 2.",
-    );
-  }
-
   let parsed;
   try {
     parsed = parseArgs({
@@ -100,6 +115,7 @@ export function parsePreviewArguments(argv) {
       options: {
         data: { type: "string" },
         strict: { type: "boolean", default: false },
+        pdfa: { type: "string" },
         help: { type: "boolean", short: "h", default: false },
       },
       allowPositionals: true,
@@ -117,11 +133,18 @@ export function parsePreviewArguments(argv) {
   }
 
   const slug = readSlug(parsed.positionals[0]);
+  const pdfa = parsed.values.pdfa;
+  if (pdfa !== undefined && !PDFA_LEVELS.includes(pdfa)) {
+    throw new TemplatePreviewError(
+      `Invalid PDF/A level "${pdfa}"; expected one of: ${PDFA_LEVELS.join(", ")}.`,
+    );
+  }
 
   return {
     slug,
     dataPath: parsed.values.data,
     strict: parsed.values.strict,
+    ...(pdfa === undefined ? {} : { pdfa }),
     help: false,
   };
 }

@@ -48,9 +48,19 @@ describe("template:preview", () => {
     expect(report.ok).toBe(true);
   });
 
-  it("rejects --pdfa with the Slice 2 message", () => {
-    expect(() => parsePreviewArguments(["generic-report", "--pdfa", "PDF/A-2b"])).toThrow(
-      /available in Slice 2/,
+  it("accepts a PDF/A level", () => {
+    expect(parsePreviewArguments(["generic-report", "--pdfa", "PDF/A-2b"])).toEqual({
+      slug: "generic-report",
+      dataPath: undefined,
+      strict: false,
+      pdfa: "PDF/A-2b",
+      help: false,
+    });
+  });
+
+  it("rejects an unknown PDF/A level", () => {
+    expect(() => parsePreviewArguments(["generic-report", "--pdfa", "PDF/A-9z"])).toThrow(
+      /Invalid PDF\/A level/,
     );
   });
 
@@ -77,6 +87,25 @@ describe("template:preview", () => {
 
       expect(result.outputPath).toBe(path.join(outputDirectory, "generic-report.pdf"));
       expect(written.subarray(0, 5).toString("latin1")).toBe("%PDF-");
+      expect(written.byteLength).toBe(result.pdf.byteLength);
+    },
+  );
+
+  it.skipIf(CHROME_EXECUTABLE === undefined)(
+    "renders generic-report as PDF/A with the requested level",
+    { timeout: 30_000 },
+    async () => {
+      const outputDirectory = await createTemporaryDirectory();
+      const result = await previewTemplate(REPOSITORY_ROOT, {
+        slug: "generic-report",
+        pdfa: "PDF/A-2b",
+        outputDirectory,
+      });
+      const written = await readFile(result.outputPath);
+
+      expect(result.outputPath).toBe(path.join(outputDirectory, "generic-report-pdfa.pdf"));
+      expect(written.subarray(0, 8).toString("latin1")).toBe("%PDF-1.7");
+      expect(written.includes(Buffer.from("GTS_PDFA1", "latin1"))).toBe(true);
       expect(written.byteLength).toBe(result.pdf.byteLength);
     },
   );

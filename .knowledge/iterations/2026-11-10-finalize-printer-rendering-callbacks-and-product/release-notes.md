@@ -65,6 +65,4 @@
   best-effort.
 - **Packaging is release-time validated:** `ci.yml` does not run `build:worker`; the release job
   catches packaging regressions.
-- **Local preview wording:** `scripts/template-preview.mjs` still emits a legacy "Slice 2" message
-  for `--pdfa`; local PDF/A preview is intentionally unavailable.
 - No production data migration is required; prints remain transient in S3.

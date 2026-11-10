@@ -102,8 +102,8 @@ pnpm template:manifest
 - `template:preview <slug>` requires a locally installed Google Chrome or Chromium; set
   `CHROME_PATH` when it is not in a default location. It renders `sample.json` or `--data <file>`
   with the same A4 page settings the Lambda renderer uses and writes `.local/<slug>.pdf`.
-  `--strict` requires every referenced value to be present. `--pdfa` is not available in the local
-  preview; PDF/A is requested per job (`options.pdfA`) and applied by the worker's archiver.
+  `--strict` requires every referenced value to be present. `--pdfa <level>` applies the same
+  pdf-lib archiver as the worker and writes `.local/<slug>-pdfa.pdf`.
 - `template:manifest` writes `templates.manifest.json` for `RELEASE` (or `local`) with sorted
   entries and SHA-256 content hashes; `pnpm build:worker` bundles that manifest into `dist/`.
 
