@@ -705,8 +705,8 @@ smoke refIds and any exceptions in the release/change record.
 ### Before the first apply
 
 - [ ] Bootstrap has been applied with the current repository; its outputs match
-      `TF_STATE_BUCKET`, `ARTIFACTS_BUCKET`, `DEPLOY_ROLE_ARN` and the AWS region.
-- [ ] Bootstrap state is encrypted and stored outside the repository.
+      `TF_STATE_BUCKET`, `ARTIFACTS_BUCKET`, `AWS_DEPLOY_ROLE_ARN` and the AWS region.
+- [ ] Bootstrap state is stored in the team secret store or an encrypted location outside the repository.
 - [ ] GitHub repository variables exist: `TF_VARS`, `AWS_DEPLOY_ROLE_ARN`, `AWS_PLAN_ROLE_ARN`,
       `AWS_REGION`, `TF_STATE_BUCKET`, `ARTIFACTS_BUCKET` and optionally `TF_STATE_KEY`.
 - [ ] `TF_VARS` contains the non-secret operator values, including `name_prefix`, sender/callback
@@ -749,8 +749,6 @@ smoke refIds and any exceptions in the release/change record.
 
 - [ ] The plain `_smoke` job succeeded and reported the deployed `template.release`.
 - [ ] The PDF/A `_smoke` job succeeded with the requested level and reported the deployed release.
-      (Before the PDF/A smoke workflow is available, record this item as not yet covered rather
-      than marking it passed.)
 - [ ] The manifest is attached to the SemVer GitHub Release and lists the intended templates.
 - [ ] A real template (`generic-report` or the first customer template) renders end to end through
       the caller role and the chosen callback channel.
@@ -760,8 +758,8 @@ smoke refIds and any exceptions in the release/change record.
       notification path was tested with `set-alarm-state`.
 - [ ] The DLQ can be inspected and redriven with an operator identity, and the redrive allow policy
       names only the jobs queue.
-- [ ] A rollback dispatch to the previous release is green and the plain smoke job passes; the
-      PDF/A smoke job is included once P-209 lands.
+- [ ] A rollback dispatch to the previous release is green and both the plain and PDF/A smoke jobs
+      pass.
 - [ ] The caller and worker modes in `terraform output` match the intended ownership model; a
       provided worker role has the bootstrap `additional_worker_role_arns` grant.
 - [ ] If a VPC mode is enabled, the worker reaches SQS/S3 and its callback path from every selected

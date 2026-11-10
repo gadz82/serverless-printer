@@ -46,7 +46,7 @@ terraform -chdir=infra/bootstrap apply bootstrap.tfplan
 and shared chat.
 
 > [!IMPORTANT]
-> Re-apply bootstrap before the first P-207 main apply. This version adds management of the
+> Re-apply bootstrap before the first main apply. This version adds management of the
 > generated `<name_prefix>-caller` role, the EC2/VPC permissions required by the network module,
 > and — for provided worker roles — `iam:PassRole` plus `iam:GetRole` through
 > `additional_worker_role_arns`. The previous deploy role cannot create the caller role or

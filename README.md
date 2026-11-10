@@ -25,7 +25,9 @@ database: the jobs queue is the only entry point.
 ├── templates/             # static HTML/Handlebars templates
 ├── scripts/               # template, build, local and smoke tooling
 ├── tests/
-│   └── integration/       # LocalStack SQS/S3 integration tests
+│   ├── integration/       # LocalStack SQS/S3 integration tests
+│   └── render/            # Chromium plain/PDF-A regression and references
+├── docs/                  # runbook, cloud verification and load test guides
 ├── infra/                 # Terraform bootstrap, module and root deployment
 ├── .github/workflows/     # CI and release workflows
 ├── .husky/commit-msg      # local Conventional Commits check
@@ -41,25 +43,26 @@ Install once from the repository root:
 pnpm install --frozen-lockfile
 ```
 
-| Command                        | Purpose                                                       |
-| ------------------------------ | ------------------------------------------------------------- |
-| `pnpm lint`                    | ESLint over the workspace, including the domain boundary rule |
-| `pnpm format:check`            | Prettier check (use `pnpm exec prettier --write .` to fix)    |
-| `pnpm typecheck`               | Type-check every workspace package that defines `typecheck`   |
-| `pnpm test`                    | Unit tests in `packages/**`, `apps/**` and `scripts/**`       |
-| `pnpm test:contract`           | Contract package tests                                        |
-| `pnpm test:integration`        | LocalStack integration tests under `tests/integration`        |
-| `pnpm template:new <slug>`     | Create a template folder from the starter files               |
-| `pnpm template:validate`       | Validate descriptors, HTML, samples and font usage            |
-| `pnpm template:check`          | Compare template identities with a Git base ref               |
-| `pnpm template:preview <slug>` | Render a template to PDF with a locally installed Chrome      |
-| `pnpm template:manifest`       | Generate `templates.manifest.json` for the current `RELEASE`  |
-| `pnpm build:worker`            | Bundle the worker, templates and manifest into `dist/`        |
-| `pnpm local:setup`             | Create LocalStack queues and the local prints bucket          |
-| `pnpm worker:local`            | Run the worker as plain Node against LocalStack               |
-| `pnpm sink:local`              | Record callback results from the local SQS results queue      |
-| `pnpm smoke:local`             | Send a local `_smoke` job and wait for its result             |
-| `pnpm smoke:test`              | Send the deployed `_smoke` job used by the release workflow   |
+| Command                        | Purpose                                                                      |
+| ------------------------------ | ---------------------------------------------------------------------------- |
+| `pnpm lint`                    | ESLint over the workspace, including the domain boundary rule                |
+| `pnpm format:check`            | Prettier check (use `pnpm exec prettier --write .` to fix)                   |
+| `pnpm typecheck`               | Type-check every workspace package that defines `typecheck`                  |
+| `pnpm test`                    | Unit tests in `packages/**`, `apps/**` and `scripts/**`                      |
+| `pnpm test:contract`           | Contract package tests                                                       |
+| `pnpm test:integration`        | LocalStack integration tests under `tests/integration`                       |
+| `pnpm test:render`             | Chromium plain/PDF-A render regression (Linux x86_64 + poppler)              |
+| `pnpm template:new <slug>`     | Create a template folder from the starter files                              |
+| `pnpm template:validate`       | Validate descriptors, HTML, samples and font usage                           |
+| `pnpm template:check`          | Compare template identities with a Git base ref                              |
+| `pnpm template:preview <slug>` | Render a template to PDF with a locally installed Chrome                     |
+| `pnpm template:manifest`       | Generate `templates.manifest.json` for the current `RELEASE`                 |
+| `pnpm build:worker`            | Bundle the worker, Chromium closure, templates and manifest into `dist/`     |
+| `pnpm local:setup`             | Create LocalStack queues and the local prints bucket                         |
+| `pnpm worker:local`            | Run the worker as plain Node against LocalStack                              |
+| `pnpm sink:local`              | Record callback results from the local SQS results queue                     |
+| `pnpm smoke:local`             | Send a local `_smoke` job and wait for its result                            |
+| `pnpm smoke:test`              | Send the deployed plain and PDF/A `_smoke` jobs used by the release workflow |
 
 ## Templates
 
@@ -98,9 +101,9 @@ pnpm template:manifest
   removed templates. CI compares against `origin/main`.
 - `template:preview <slug>` requires a locally installed Google Chrome or Chromium; set
   `CHROME_PATH` when it is not in a default location. It renders `sample.json` or `--data <file>`
-  with the same A4 page settings the Slice 2 Lambda renderer will use and writes
-  `.local/<slug>.pdf`. `--strict` requires every referenced value to be present. `--pdfa` is
-  rejected until Slice 2.
+  with the same A4 page settings the Lambda renderer uses and writes `.local/<slug>.pdf`.
+  `--strict` requires every referenced value to be present. `--pdfa` is not available in the local
+  preview; PDF/A is requested per job (`options.pdfA`) and applied by the worker's archiver.
 - `template:manifest` writes `templates.manifest.json` for `RELEASE` (or `local`) with sorted
   entries and SHA-256 content hashes; `pnpm build:worker` bundles that manifest into `dist/`.
 
@@ -163,40 +166,35 @@ packages/contracts   (no project-package imports)
   other way around.
 - `infra/` and `.github/workflows/` do not import application code.
 
-The renderer, storage and delivery implementations sit behind ports, so the Slice 2
-Chromium/PDF-A engine can replace the Slice 1 placeholder without changing the use case or the
-public contract.
+The renderer, storage, PDF/A and delivery implementations sit behind ports. The Lambda renderer
+uses `puppeteer-core` with the pinned `@sparticuz/chromium`, and the same shared page settings and
+request policy drive the local Chrome preview. The use case and public contract do not depend on
+the adapter choice.
 
-## Slice 1 scope
+## Current scope
 
-Slice 1 proves the real queue -> worker -> storage -> callback path and adds the template tooling,
-not production rendering:
+The repository now implements the full product contract:
 
-- The PDF renderer is a deterministic, dependency-free **placeholder** behind the `PdfRenderer`
-  port. It returns a minimal valid PDF and ignores the template and payload. It is not evidence
-  of rendering fidelity, font embedding or PDF/A conformance.
-- Only the **`sqs`** result channel is implemented. Jobs that request `http`, `lambda`,
-  `eventBridge` or `s3` fail non-retryably with `CALLBACK_NOT_ALLOWED`; the contract still models
-  all five channels.
-- **PDF/A is rejected.** `PDFA_ALLOWED_LEVELS` defaults to an empty list, so any `options.pdfA`
-  request fails non-retryably with `PDFA_LEVEL_NOT_ALLOWED`. A PDF is never labelled as PDF/A
-  when no conversion ran.
-- The bundled `_smoke` and `generic-report` template identities are resolved through the manifest
-  so their paths match the future renderer.
-- `template:validate` and `template:check` run in CI, and `template:preview` renders through a
-  locally installed Chrome. The Lambda package still has no Chromium.
+- Chromium rendering of HTML/Handlebars templates in Lambda, with one launch per instance, a page
+  per job, JavaScript disabled and request interception limited to bundled files/data URIs.
+- PDF/A post-processing for all eight levels (`PDF/A-1b` through `PDF/A-3a`) with pdf-lib, an sRGB
+  ICC output intent and best-effort conformance. No PDF/A validator is run.
+- All five callback channels (`http`, `lambda`, `sqs`, `eventBridge`, `s3`), callback ping, and
+  the callback allowlist/SSRF policy. S3 deliveries upload the PDF bytes rather than the JSON
+  result.
+- Separate generated-or-provided caller and worker roles, opt-in alarms, the operations runbook,
+  the render regression, the load/Power Tuning harness and the cloud verification checklist.
+- `template:validate`, `template:check` and the CI render regression protect template identities
+  and rendering output.
 
-## Slice roadmap
-
-- **Slice 2:** Chromium Lambda rendering, PDF/A output and all callback channels (`http`, `lambda`,
-  `eventBridge`, `s3`).
-- **Slice 3:** capacity and load testing, operational alarms and runbook, and cloud verification.
+The remaining work is operator verification of the first cloud deployment; see
+[`docs/cloud-verification.md`](docs/cloud-verification.md).
 
 ## Local verification
 
 Local development runs the same worker code as plain Node against LocalStack. Docker Compose
-starts LocalStack (SQS and S3) and a callback sink; the worker still uses the placeholder renderer
-until Chromium Lambda rendering arrives in Slice 2.
+starts LocalStack (SQS and S3) and a callback sink; outside Lambda the composition root selects the
+installed Chrome renderer, while the Lambda package uses `@sparticuz/chromium`.
 
 ```bash
 pnpm install
@@ -214,18 +212,23 @@ development-only; they never replace the deployed smoke test.
 
 The release path is authoritative:
 
-1. CI validates lint, formatting, types, unit, contract, templates, LocalStack integration and
-   Terraform.
+1. CI validates lint, formatting, types, unit, contract, templates, LocalStack integration, the
+   plain/PDF-A render regression, commit conventions and Terraform.
 2. A push to `main` lets semantic-release compute a SemVer tag (or a `sha-<short>` release),
    builds the worker zip, uploads it to the artifacts bucket and applies Terraform through
    GitHub OIDC. There are no static AWS keys. The workflow requires the repository variables
    documented in [`infra/README.md`](infra/README.md#release-workflow-configuration), including
    `TF_VARS` for the non-secret operator configuration.
-3. The release workflow sends a `_smoke` job to the deployed queue and waits for the SQS
-   callback. A successful smoke proves the deployed queue, worker, S3 storage and callback path.
+3. The release workflow sends a plain and a `PDF/A-2b` `_smoke` job to the deployed queue and
+   waits for both SQS callbacks. Successful smokes prove the deployed queue, Chromium worker,
+   PDF/A archiver, S3 storage and callback path.
 
-A manual `workflow_dispatch` with an earlier release applies that release and re-runs the smoke
-test, which is the rollback path.
+A manual `workflow_dispatch` with an earlier release applies that release and re-runs both smoke
+jobs, which is the rollback path. The full first-deployment checklist, role-mode prerequisites,
+branch-protection bypass, VPC checks, alarm test and throughput evidence are in
+[`docs/cloud-verification.md`](docs/cloud-verification.md); use
+[`docs/runbook.md`](docs/runbook.md) for incidents and [`docs/load-test.md`](docs/load-test.md)
+for capacity measurements.
 
 ## Commit conventions
 

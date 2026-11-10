@@ -9,8 +9,10 @@ is the only deployment.
 The one-time foundation (state bucket, artifacts bucket, GitHub OIDC roles) is
 `infra/bootstrap`; apply that first. See its [README](bootstrap/README.md).
 
-For incidents and operator procedures, use the [operations runbook](../docs/runbook.md): rollback,
-DLQ redrive, template removal, KMS/state recovery, alarms, role modes and VPC operations.
+For the first deployment and rollback evidence, use the
+[cloud verification checklist](../docs/cloud-verification.md). For incidents and operator
+procedures, use the [operations runbook](../docs/runbook.md): rollback, DLQ redrive, template
+removal, KMS/state recovery, alarms, role modes and VPC operations.
 
 ## What it creates
 
@@ -45,7 +47,7 @@ SemVer tag or `sha-<short>`; a rollback applies an earlier release value.
 - A worker zip already uploaded to the artifacts bucket for the release being deployed.
 
 > [!IMPORTANT]
-> Re-apply `infra/bootstrap` before the first P-207 main apply. The deploy role now needs to manage
+> Re-apply `infra/bootstrap` before the first main apply. The deploy role now needs to manage
 > the generated `<name_prefix>-caller` role, grant the EC2/VPC permissions used by the network
 > module, and — when `worker_role_mode = "existing"` — `iam:PassRole` plus `iam:GetRole` on every
 > ARN in `additional_worker_role_arns`. The previous bootstrap cannot create the caller role,
@@ -277,8 +279,16 @@ five minutes, threshold `>= 1`). Both treat missing data as not breaching. Respo
 ## PDF/A defaults
 
 `pdfa_allowed_levels` defaults to all eight levels (`PDF/A-1b/1a`, `2b/2u/2a`, `3b/3u/3a`). The
-setting only takes effect once the P-202/P-204/P-209 renderer, archiver and channel work is
-deployed; before that the worker does not honour PDF/A requests.
+worker renders Chromium PDFs and applies the PDF/A metadata layer for any allowed level; no PDF/A
+validator is run, so conformance is best effort. The release smoke requests `PDF/A-2b`, so keep it
+in the allowlist (the default includes it).
+
+## Worker memory
+
+`worker_memory_size` defaults to 1,536 MB and accepts 128–10,240 MB. Tune it with the
+[load and Power Tuning guide](../docs/load-test.md), then set it in `TF_VARS` (or the manual
+`terraform.tfvars`) and redeploy. `batch_size`, `maximum_concurrency` and `reserved_concurrency`
+remain the queue-consumer controls.
 
 ## Network
 

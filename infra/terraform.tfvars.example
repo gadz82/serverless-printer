@@ -51,7 +51,7 @@ callback_allowlist = [
 
 handlebars_mode = "lenient"
 # Defaults to all eight levels; set a subset to restrict PDF/A requests. The
-# setting only takes effect once the P-202/P-204/P-209 PDF/A work is deployed.
+# release smoke requests PDF/A-2b, so keep it in the allowlist.
 pdfa_allowed_levels = [
   "PDF/A-1b",
   "PDF/A-1a",
