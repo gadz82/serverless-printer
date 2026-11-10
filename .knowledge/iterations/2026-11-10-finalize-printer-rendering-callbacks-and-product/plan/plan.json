@@ -1,0 +1,27 @@
+{
+  "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+  "generatedAt": "2026-11-10T12:00:00Z",
+  "rigor": "L",
+  "waves": [
+    { "wave": 1, "prompts": ["P-201", "P-207"] },
+    { "wave": 2, "prompts": ["P-202", "P-203", "P-206"] },
+    { "wave": 3, "prompts": ["P-204", "P-208"] },
+    { "wave": 4, "prompts": ["P-205", "P-209", "P-210"] },
+    { "wave": 5, "prompts": ["P-211"] }
+  ],
+  "prompts": [
+    { "id": "P-201", "title": "Add the Lambda Chromium renderer and shared page settings", "type": "build", "wave": 1, "depends_on": [], "personas": ["ARCHITECT", "DEV", "QE"], "estimate": "L", "effort": "high", "scope": { "write": ["apps/render-worker/src/rendering/**", "apps/render-worker/test/renderer*", "apps/render-worker/package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml"] } },
+    { "id": "P-202", "title": "Implement the PDF/A archiver for all levels", "type": "build", "wave": 2, "depends_on": ["P-201"], "personas": ["ARCHITECT", "DEV", "QE"], "estimate": "L", "effort": "high", "scope": { "write": ["apps/render-worker/src/pdfa/**", "apps/render-worker/test/pdfa*", "packages/domain/src/ports/pdf-archiver.ts", "packages/domain/src/index.ts"] } },
+    { "id": "P-203", "title": "Add the callback allowlist, DNS and SSRF policy", "type": "build", "wave": 2, "depends_on": [], "personas": ["SECURITY", "DEV", "QE"], "estimate": "M", "effort": "medium", "scope": { "write": ["apps/render-worker/src/security/**", "apps/render-worker/test/callback-policy*"] } },
+    { "id": "P-204", "title": "Implement all five delivery channels and ping", "type": "build", "wave": 3, "depends_on": ["P-203"], "personas": ["DEV", "QE", "SECURITY"], "estimate": "L", "effort": "high", "scope": { "write": ["apps/render-worker/src/delivery/**", "apps/render-worker/test/delivery*", "apps/render-worker/src/composition-root.ts"] } },
+    { "id": "P-205", "title": "Add render regression and cross-channel integration tests", "type": "build", "wave": 4, "depends_on": ["P-201", "P-202", "P-204"], "personas": ["QE", "DEV", "DEVOPS"], "estimate": "M", "effort": "medium", "scope": { "write": ["tests/render/**", "scripts/render-regression.mjs", ".github/workflows/ci.yml"] } },
+    { "id": "P-206", "title": "Harden local Chrome file access and error handling", "type": "build", "wave": 2, "depends_on": ["P-201"], "personas": ["SECURITY", "DEV", "QE"], "estimate": "S", "effort": "low", "scope": { "write": ["apps/render-worker/src/rendering/local-chrome-renderer.ts", "apps/render-worker/test/local-chrome-renderer.test.ts"] } },
+    { "id": "P-207", "title": "Add generated or provided caller and worker roles", "type": "build", "wave": 1, "depends_on": [], "personas": ["DEVOPS", "SECURITY", "ARCHITECT"], "estimate": "L", "effort": "high", "scope": { "write": ["infra/bootstrap/**", "infra/main.tf", "infra/variables.tf", "infra/modules/printer/variables.tf", "infra/modules/printer/main.tf", "infra/modules/printer/iam.tf", "infra/modules/printer/lambda.tf", "infra/modules/printer/outputs.tf", "infra/terraform.tfvars.example", "infra/README.md"] } },
+    { "id": "P-208", "title": "Add opt-in alarms and the operations runbook", "type": "build", "wave": 3, "depends_on": ["P-207"], "personas": ["DEVOPS", "QE"], "estimate": "S", "effort": "low", "scope": { "write": ["infra/modules/printer/alarms.tf", "infra/modules/printer/variables.tf", "docs/runbook.md", "infra/README.md"] } },
+    { "id": "P-209", "title": "Add plain and PDF/A release smoke and Chromium packaging", "type": "build", "wave": 4, "depends_on": ["P-201", "P-202", "P-204"], "personas": ["DEVOPS", "QE", "DEV"], "estimate": "M", "effort": "medium", "scope": { "write": [".github/workflows/release.yml", "scripts/smoke-test.mjs", "scripts/build-worker.mjs"] } },
+    { "id": "P-210", "title": "Add the load test and Power Tuning harness", "type": "build", "wave": 4, "depends_on": ["P-201", "P-202", "P-207"], "personas": ["DEVOPS", "QE", "TECH_LEAD"], "estimate": "M", "effort": "medium", "scope": { "write": ["scripts/load-test.mjs", "docs/load-test.md", "infra/modules/printer/lambda.tf", "infra/modules/printer/variables.tf", "infra/variables.tf"] } },
+    { "id": "P-211", "title": "Document cloud verification, rollback and branch protection", "type": "build", "wave": 5, "depends_on": ["P-207", "P-209", "P-210"], "personas": ["DEVOPS", "PM", "TECH_LEAD"], "estimate": "S", "effort": "low", "scope": { "write": ["docs/cloud-verification.md", "README.md", "infra/README.md"] } }
+  ],
+  "critical_path": ["P-201", "P-202", "P-204", "P-209", "P-211"],
+  "budget": { "per_iteration_warn": 250000, "per_iteration_stop": 600000, "estimated_total_tokens": 380000 }
+}
