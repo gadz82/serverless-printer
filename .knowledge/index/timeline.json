@@ -1272,5 +1272,19 @@
     "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
     "phase": "closed",
     "subject": "urn:orchid:iteration:2026-11-10-complete-the-printer-service-with-templates-rend"
+  },
+  {
+    "ts": "2026-11-10T11:04:54Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "handover",
+    "subject": "phase:handover"
+  },
+  {
+    "ts": "2026-11-10T11:06:15Z",
+    "event": "handover.accepted",
+    "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+    "phase": "complete",
+    "subject": "urn:orchid:iteration:2026-11-10-complete-the-printer-service-with-templates-rend"
   }
 ]
