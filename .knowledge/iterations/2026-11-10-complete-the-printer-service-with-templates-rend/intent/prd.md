@@ -137,7 +137,7 @@ exceeds the configured budget; the slices above are the delivery order.
 - **Throughput:** the specification's open item is still unresolved; the target must be agreed
   before load testing.
 - **Template content:** a real template must be authored or supplied; the spec's
-  `annual-statement` layout is the candidate.
+  generic business report (`generic-report`) is the candidate.
 
 ## Open questions
 

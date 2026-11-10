@@ -36,9 +36,9 @@ The manifest keeps `release` and adds the full placeholder tree per template:
   "templates": [
     {
       "id": "…",
-      "slug": "annual-statement",
-      "name": "Annual statement",
-      "path": "templates/annual-statement",
+      "slug": "generic-report",
+      "name": "Generic report",
+      "path": "templates/generic-report",
       "contentHash": "…",
       "placeholders": { "customer": { "name": "string" } }
     }

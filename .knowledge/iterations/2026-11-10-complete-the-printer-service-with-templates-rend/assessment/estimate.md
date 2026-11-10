@@ -24,7 +24,7 @@ and keeps each plan reviewable.
 |---|---|
 | 1 | `packages/template-engine` with modes, helpers, AST, hashing and manifest |
 | 2 | `template:new`, `validate`, `check`, `preview` CLI |
-| 3 | `annual-statement` template and preview/integration tests |
+| 3 | `generic-report` template and preview/integration tests |
 | 4 | `modules/network` and printer VPC wiring |
 | 5 | CI template validation/check integration and docs |
 

@@ -18,14 +18,14 @@ Feature: Template tooling and real template
 
   @req:R-103
   Scenario: Preview renders sample or supplied data
-    Given the annual-statement template
+    Given the generic-report template
     When template:preview runs with sample.json or --data
     Then a PDF is produced with the same use case as production
     And --pdfa and --strict are honoured
 
   @req:R-104
   Scenario: A real template renders by id and slug after deploy
-    Given the annual-statement template is deployed
+    Given the generic-report template is deployed
     When one job uses its UUID and another uses its slug
     Then both produce the same content and template metadata
     And a PDF/A request produces the requested level

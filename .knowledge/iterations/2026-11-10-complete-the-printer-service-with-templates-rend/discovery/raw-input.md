@@ -1,3 +1,5 @@
+> Iteration note: this is the verbatim `SPEC.md` source. The example template names in it are illustrative; this iteration implements the generic `generic-report` template instead.
+
 # Printer — Specification
 
 Version 0.4 (2026-11-09). This is a standalone project, independent of any company environment. It runs on AWS, lives in one GitHub repository, deploys with GitHub Actions and is provisioned entirely with Terraform.

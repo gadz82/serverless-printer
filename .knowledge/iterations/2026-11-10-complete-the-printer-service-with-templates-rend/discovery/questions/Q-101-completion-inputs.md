@@ -30,7 +30,7 @@ test `create`/`lookup` separately.
 
 **Why:** Phase 2 exits when a template renders by id and slug after deploy.
 
-**Candidate:** `annual-statement` with the sample data from the spec layout.
+**Candidate:** `generic-report` with the sample data from the spec layout.
 
 **Risk if deferred:** the release smoke still uses `_smoke`; the real-template exit criterion is
 not met.

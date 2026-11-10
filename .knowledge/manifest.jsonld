@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-complete-the-printer-service-with-templates-rend",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T06:38:05Z",
+  "generatedAt": "2026-11-10T07:07:15Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -1453,6 +1453,197 @@
       ],
       "artifact": "assessment/adr/ADR-107-staged-slices.md",
       "hash": "sha256:406abe22c18fa263e6ff1f56331b8cecde648ae61123717236eb9036d445c5de"
+    },
+    {
+      "@id": "urn:uuid:01a1c448-4b0c-7945-85f2-90d1cc82556c",
+      "@type": "orchid:Requirement",
+      "description": "A real generic-report template renders by id and slug after deploy, plain and PDF/A.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "rendering",
+        "deployment",
+        "smoke"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T07:07:14Z",
+      "updatedAt": "2026-11-10T07:07:14Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "R-104"
+      ],
+      "relations": [
+        {
+          "predicate": "supersedes",
+          "target": "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577"
+        }
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:8959eee8aeabd951efdd85ecd2fb824b18f72a4c9e902ce269819aebc6419552"
+    },
+    {
+      "@id": "urn:uuid:01a1c448-4b55-70cf-b485-87980ee1c488",
+      "@type": "orchid:Assumption",
+      "description": "The candidate throughput target is 10 jobs/min peak, 20-page documents and p95 under 30 seconds.",
+      "status": "accepted",
+      "topics": [
+        "performance",
+        "throughput",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T07:07:14Z",
+      "updatedAt": "2026-11-10T07:07:14Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-101"
+      ],
+      "relations": [
+        {
+          "predicate": "supersedes",
+          "target": "urn:uuid:01a1c42c-24f5-70a7-8af3-7b70e43c0608"
+        }
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:d996e76dc3868662c56c0f43154059b539077c5db036cfdfd427d0db643e2537"
+    },
+    {
+      "@id": "urn:uuid:01a1c448-4b9b-7ffa-be59-dd74d8aa154c",
+      "@type": "orchid:Assumption",
+      "description": "The first cloud run uses the operator AWS account, eu-central-1 and vpc_mode none.",
+      "status": "accepted",
+      "topics": [
+        "aws",
+        "cloud",
+        "region",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T07:07:14Z",
+      "updatedAt": "2026-11-10T07:07:14Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-102"
+      ],
+      "relations": [
+        {
+          "predicate": "supersedes",
+          "target": "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a"
+        }
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:d996e76dc3868662c56c0f43154059b539077c5db036cfdfd427d0db643e2537"
+    },
+    {
+      "@id": "urn:uuid:01a1c448-4be1-7279-b251-c0e2ee1eb3eb",
+      "@type": "orchid:Assumption",
+      "description": "The first real template is generic-report with generic business report sample data.",
+      "status": "accepted",
+      "topics": [
+        "templates",
+        "content",
+        "generic-report",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T07:07:14Z",
+      "updatedAt": "2026-11-10T07:07:14Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-103"
+      ],
+      "relations": [
+        {
+          "predicate": "supersedes",
+          "target": "urn:uuid:01a1c42c-259f-7e6c-99e0-f8492fa84425"
+        }
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:d996e76dc3868662c56c0f43154059b539077c5db036cfdfd427d0db643e2537"
+    },
+    {
+      "@id": "urn:uuid:01a1c448-4c24-7c0d-960d-bda6ab9a3b6b",
+      "@type": "orchid:Assumption",
+      "description": "The operator supplies the alarm SNS topic and callback allowlist/targets; alarms stay off until configured.",
+      "status": "accepted",
+      "topics": [
+        "operations",
+        "alarms",
+        "callbacks",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T07:07:14Z",
+      "updatedAt": "2026-11-10T07:07:14Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-104"
+      ],
+      "relations": [
+        {
+          "predicate": "supersedes",
+          "target": "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394"
+        }
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:d996e76dc3868662c56c0f43154059b539077c5db036cfdfd427d0db643e2537"
+    },
+    {
+      "@id": "urn:uuid:01a1c448-4c7c-7387-a67e-3fdee3843bb8",
+      "@type": "orchid:Assumption",
+      "description": "The remaining scope is staged and may split into follow-up iterations at G4.",
+      "status": "accepted",
+      "topics": [
+        "process",
+        "staging",
+        "budget",
+        "assumption"
+      ],
+      "provenance": {
+        "phase": "assessment",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T07:07:14Z",
+      "updatedAt": "2026-11-10T07:07:14Z",
+      "iteration": "2026-11-10-complete-the-printer-service-with-templates-rend",
+      "scope": "iteration",
+      "aliases": [
+        "A-105"
+      ],
+      "relations": [
+        {
+          "predicate": "supersedes",
+          "target": "urn:uuid:01a1c42c-2632-702e-a679-095b2e18970a"
+        }
+      ],
+      "artifact": "discovery/questions/Q-101-completion-inputs.md",
+      "hash": "sha256:d996e76dc3868662c56c0f43154059b539077c5db036cfdfd427d0db643e2537"
     }
   ]
 }

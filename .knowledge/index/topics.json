@@ -5,7 +5,8 @@
   "alarms": [
     "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa",
     "urn:uuid:01a1c42c-2429-7aca-982d-4856e45766c9",
-    "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394"
+    "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394",
+    "urn:uuid:01a1c448-4c24-7c0d-960d-bda6ab9a3b6b"
   ],
   "allowlist": [
     "urn:uuid:01a1c42a-2d99-7113-a3ca-0f1ca6976f7f",
@@ -26,18 +27,25 @@
     "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a",
     "urn:uuid:01a1c42c-259f-7e6c-99e0-f8492fa84425",
     "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394",
-    "urn:uuid:01a1c42c-2632-702e-a679-095b2e18970a"
+    "urn:uuid:01a1c42c-2632-702e-a679-095b2e18970a",
+    "urn:uuid:01a1c448-4b55-70cf-b485-87980ee1c488",
+    "urn:uuid:01a1c448-4b9b-7ffa-be59-dd74d8aa154c",
+    "urn:uuid:01a1c448-4be1-7279-b251-c0e2ee1eb3eb",
+    "urn:uuid:01a1c448-4c24-7c0d-960d-bda6ab9a3b6b",
+    "urn:uuid:01a1c448-4c7c-7387-a67e-3fdee3843bb8"
   ],
   "ast": [
     "urn:uuid:01a1c42a-2b6d-75ac-93c1-f0ef045bfe2c",
     "urn:uuid:01a1c42c-1ed1-7e8e-81a4-781b4b399d59"
   ],
   "aws": [
-    "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a"
+    "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a",
+    "urn:uuid:01a1c448-4b9b-7ffa-be59-dd74d8aa154c"
   ],
   "budget": [
     "urn:uuid:01a1c42c-2632-702e-a679-095b2e18970a",
-    "urn:uuid:01a1c42d-99fa-7f74-92be-641ca77a6f8c"
+    "urn:uuid:01a1c42d-99fa-7f74-92be-641ca77a6f8c",
+    "urn:uuid:01a1c448-4c7c-7387-a67e-3fdee3843bb8"
   ],
   "callbacks": [
     "urn:uuid:01a1c42a-2d55-7d8d-beb2-7a557e76ce9b",
@@ -47,7 +55,8 @@
     "urn:uuid:01a1c42c-235c-765b-81f8-717936af1d5f",
     "urn:uuid:01a1c42c-23a1-7071-a267-b364380457c6",
     "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394",
-    "urn:uuid:01a1c42d-992c-7b8c-b9a3-5a6dfe756487"
+    "urn:uuid:01a1c42d-992c-7b8c-b9a3-5a6dfe756487",
+    "urn:uuid:01a1c448-4c24-7c0d-960d-bda6ab9a3b6b"
   ],
   "capacity": [
     "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002",
@@ -75,7 +84,8 @@
   "cloud": [
     "urn:uuid:01a1c42a-2eea-7b22-a33f-cd53e0ef36a7",
     "urn:uuid:01a1c42c-24b0-70d2-9346-e8e06ffae4f7",
-    "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a"
+    "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a",
+    "urn:uuid:01a1c448-4b9b-7ffa-be59-dd74d8aa154c"
   ],
   "conformance": [
     "urn:uuid:01a1c42a-2d12-71d4-91cb-ead3efcb5d02",
@@ -83,7 +93,8 @@
     "urn:uuid:01a1c42d-98e7-790c-9576-b861065a184e"
   ],
   "content": [
-    "urn:uuid:01a1c42c-259f-7e6c-99e0-f8492fa84425"
+    "urn:uuid:01a1c42c-259f-7e6c-99e0-f8492fa84425",
+    "urn:uuid:01a1c448-4be1-7279-b251-c0e2ee1eb3eb"
   ],
   "create": [
     "urn:uuid:01a1c42c-20f6-7d82-a858-e3a45d73f7ac"
@@ -98,7 +109,8 @@
   ],
   "deployment": [
     "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577",
-    "urn:uuid:01a1c42c-206d-7ba5-bb6d-12dba861e959"
+    "urn:uuid:01a1c42c-206d-7ba5-bb6d-12dba861e959",
+    "urn:uuid:01a1c448-4b0c-7945-85f2-90d1cc82556c"
   ],
   "encryption": [
     "urn:uuid:01a1c42c-2290-71b5-b873-75e99380d8f5"
@@ -120,6 +132,9 @@
   "fonts": [
     "urn:uuid:01a1c42c-1fe3-7995-8384-a15c6bbcaef9",
     "urn:uuid:01a1c42c-2290-71b5-b873-75e99380d8f5"
+  ],
+  "generic-report": [
+    "urn:uuid:01a1c448-4be1-7279-b251-c0e2ee1eb3eb"
   ],
   "git": [
     "urn:uuid:01a1c42a-2c45-7384-a7d6-0332de8f7f28",
@@ -194,7 +209,8 @@
   "operations": [
     "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa",
     "urn:uuid:01a1c42c-2429-7aca-982d-4856e45766c9",
-    "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394"
+    "urn:uuid:01a1c42c-25eb-7565-b155-2ca0f5f52394",
+    "urn:uuid:01a1c448-4c24-7c0d-960d-bda6ab9a3b6b"
   ],
   "packaging": [
     "urn:uuid:01a1c42d-98a2-7707-bad7-471c06a6c708"
@@ -215,7 +231,8 @@
     "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002",
     "urn:uuid:01a1c42c-23e6-7e74-aa76-ee8a44c0751b",
     "urn:uuid:01a1c42c-24f5-70a7-8af3-7b70e43c0608",
-    "urn:uuid:01a1c42d-99b8-737b-abbc-d9e386f4f1b1"
+    "urn:uuid:01a1c42d-99b8-737b-abbc-d9e386f4f1b1",
+    "urn:uuid:01a1c448-4b55-70cf-b485-87980ee1c488"
   ],
   "ping": [
     "urn:uuid:01a1c42a-2d55-7d8d-beb2-7a557e76ce9b",
@@ -235,7 +252,8 @@
   ],
   "process": [
     "urn:uuid:01a1c42c-2632-702e-a679-095b2e18970a",
-    "urn:uuid:01a1c42d-99fa-7f74-92be-641ca77a6f8c"
+    "urn:uuid:01a1c42d-99fa-7f74-92be-641ca77a6f8c",
+    "urn:uuid:01a1c448-4c7c-7387-a67e-3fdee3843bb8"
   ],
   "production": [
     "urn:uuid:01a1c42a-2ea8-766e-a5fe-68c402de295e",
@@ -245,7 +263,8 @@
     "urn:uuid:01a1c42c-2429-7aca-982d-4856e45766c9"
   ],
   "region": [
-    "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a"
+    "urn:uuid:01a1c42c-254b-70cf-b768-c89be8482d3a",
+    "urn:uuid:01a1c448-4b9b-7ffa-be59-dd74d8aa154c"
   ],
   "regression": [
     "urn:uuid:01a1c42a-2ddd-7630-95e5-521058cb9882",
@@ -270,7 +289,8 @@
     "urn:uuid:01a1c42c-2208-7c34-a238-f408660f0b5d",
     "urn:uuid:01a1c42c-224b-74b9-90bf-aa389278ceea",
     "urn:uuid:01a1c42d-98a2-7707-bad7-471c06a6c708",
-    "urn:uuid:01a1c42d-98e7-790c-9576-b861065a184e"
+    "urn:uuid:01a1c42d-98e7-790c-9576-b861065a184e",
+    "urn:uuid:01a1c448-4b0c-7945-85f2-90d1cc82556c"
   ],
   "rollback": [
     "urn:uuid:01a1c42a-2e65-76c5-ae86-f729cdf3b2fa",
@@ -302,7 +322,8 @@
     "urn:uuid:01a1c42c-206d-7ba5-bb6d-12dba861e959"
   ],
   "smoke": [
-    "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577"
+    "urn:uuid:01a1c42a-2bf6-7a3f-b36b-796434b69577",
+    "urn:uuid:01a1c448-4b0c-7945-85f2-90d1cc82556c"
   ],
   "smoke-test": [
     "urn:uuid:01a1c42a-2ea8-766e-a5fe-68c402de295e",
@@ -317,7 +338,8 @@
   ],
   "staging": [
     "urn:uuid:01a1c42c-2632-702e-a679-095b2e18970a",
-    "urn:uuid:01a1c42d-99fa-7f74-92be-641ca77a6f8c"
+    "urn:uuid:01a1c42d-99fa-7f74-92be-641ca77a6f8c",
+    "urn:uuid:01a1c448-4c7c-7387-a67e-3fdee3843bb8"
   ],
   "strict": [
     "urn:uuid:01a1c42c-1e01-7b44-a410-be97626bc8ed"
@@ -343,7 +365,9 @@
     "urn:uuid:01a1c42c-2027-75b8-a360-9acd1ed7786f",
     "urn:uuid:01a1c42c-206d-7ba5-bb6d-12dba861e959",
     "urn:uuid:01a1c42c-259f-7e6c-99e0-f8492fa84425",
-    "urn:uuid:01a1c42d-985d-7b7c-9bbd-4054d7544895"
+    "urn:uuid:01a1c42d-985d-7b7c-9bbd-4054d7544895",
+    "urn:uuid:01a1c448-4b0c-7945-85f2-90d1cc82556c",
+    "urn:uuid:01a1c448-4be1-7279-b251-c0e2ee1eb3eb"
   ],
   "terraform": [
     "urn:uuid:01a1c42a-2c8a-724b-8627-e331e3e80794",
@@ -357,7 +381,8 @@
     "urn:uuid:01a1c42a-2e22-7b7c-ba46-b3e7be58d002",
     "urn:uuid:01a1c42c-23e6-7e74-aa76-ee8a44c0751b",
     "urn:uuid:01a1c42c-24f5-70a7-8af3-7b70e43c0608",
-    "urn:uuid:01a1c42d-99b8-737b-abbc-d9e386f4f1b1"
+    "urn:uuid:01a1c42d-99b8-737b-abbc-d9e386f4f1b1",
+    "urn:uuid:01a1c448-4b55-70cf-b485-87980ee1c488"
   ],
   "uuid": [
     "urn:uuid:01a1c42c-1f9d-7704-810f-5e81a0d36915"

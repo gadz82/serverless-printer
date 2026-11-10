@@ -6,7 +6,7 @@
 |---|---|---|
 | `packages/template-engine` | Handlebars compile modes, fixed helpers, placeholder AST, hashing, manifest | R-101, R-102 |
 | `scripts/template-*` | `new`, `validate`, `check`, `preview`, `manifest` using the engine | R-103, R-105 |
-| `templates/annual-statement` | Real template with fonts, assets and sample data | R-104 |
+| `templates/generic-report` | Real template with fonts, assets and sample data | R-104 |
 | `apps/render-worker` | Manifest catalog uses the full engine; `_smoke` remains | R-102, R-104 |
 | `infra/modules/network` + printer | `vpc_mode` create/lookup, subnets, NAT, endpoints, worker VPC config | R-106 |
 | CI | Template validate/check commands wired in | R-105 |

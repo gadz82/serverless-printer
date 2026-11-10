@@ -5,7 +5,7 @@
 | Level | Coverage |
 |---|---|
 | Unit | Handlebars modes, fixed helpers, prototype access, placeholder AST, hashing, manifest, validation rules, check guard |
-| Integration | `template:new` → validate → preview with sample/`--data`; annual-statement renders through the real use case; `_smoke` regression |
+| Integration | `template:new` → validate → preview with sample/`--data`; generic-report renders through the real use case; `_smoke` regression |
 | Terraform | `fmt`, `validate`, tflint; `vpc_mode` none/create/lookup plans |
 | CI | `template:validate`, `template:check --base origin/main` |
 
@@ -37,7 +37,7 @@ pnpm test
 pnpm test:contract
 pnpm template:validate
 pnpm template:check --base origin/main
-pnpm template:preview annual-statement --data templates/annual-statement/sample.json
+pnpm template:preview generic-report --data templates/generic-report/sample.json
 pnpm test:integration
 pnpm test:render
 pnpm build:worker

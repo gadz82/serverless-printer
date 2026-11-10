@@ -38,7 +38,7 @@
   - browser reuse, request interception, page settings and crash recovery.
 - `scripts/` — complete the CLI: `template:new`, `validate`, `check`, `preview`, `manifest`;
   they call `packages/template-engine`, not a second implementation.
-- `templates/annual-statement` — a real self-contained template with fonts/assets/sample data;
+- `templates/generic-report` — a real self-contained generic business report with fonts/assets/sample data;
   `_smoke` remains the release smoke identity.
 - `infra/modules/network` — optional VPC create/lookup, private subnets, optional NAT, S3 gateway
   endpoint and SQS/Lambda/Events interface endpoints; printer module gains VPC config.
@@ -64,7 +64,7 @@
 ### Slice 1 — Templates and network
 
 - `packages/template-engine` with modes, helpers, placeholder AST, hashing and manifest.
-- Complete `template:*` CLI, `annual-statement` template, validation/check/preview tests.
+- Complete `template:*` CLI, `generic-report` template, validation/check/preview tests.
 - Manifest release integration and `_smoke` regression.
 - `modules/network` plus `vpc_mode` create/lookup wiring and tests.
 
