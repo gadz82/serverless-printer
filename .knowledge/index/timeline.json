@@ -1909,5 +1909,19 @@
     "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "phase": "logic_review",
     "subject": "phase:logic_review"
+  },
+  {
+    "ts": "2026-11-10T20:00:45Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "logic_review",
+    "subject": "gate:G6"
+  },
+  {
+    "ts": "2026-11-10T20:01:43Z",
+    "event": "iteration.closed",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "closed",
+    "subject": "urn:orchid:iteration:2026-11-10-finalize-printer-rendering-callbacks-and-product"
   }
 ]
