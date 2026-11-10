@@ -15,3 +15,5 @@ pnpm-lock.yaml
 AGENTS.md
 SPEC.md
 orchid-sdd.yml
+
+.serena/

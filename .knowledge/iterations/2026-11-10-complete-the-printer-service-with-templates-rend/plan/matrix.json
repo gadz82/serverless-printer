@@ -3,10 +3,65 @@
   "slice": "Slice 1 — templates and network",
   "generatedAt": "2026-11-10T07:30:00Z",
   "prompts": [
-    { "id": "P-101", "title": "Build the shared Handlebars template engine and manifest", "wave": 1, "depends_on": [], "estimate": "L", "effort": "high", "status": "pending", "step": null },
-    { "id": "P-104", "title": "Add the optional network module and worker VPC wiring", "wave": 1, "depends_on": [], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-102", "title": "Implement template:new, validate, check and manifest", "wave": 2, "depends_on": ["P-101"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-103", "title": "Add the generic-report template and local Chrome preview", "wave": 3, "depends_on": ["P-101", "P-102"], "estimate": "M", "effort": "medium", "status": "pending", "step": null },
-    { "id": "P-105", "title": "Wire template validation into CI and document the slice", "wave": 4, "depends_on": ["P-102", "P-103", "P-104"], "estimate": "S", "effort": "low", "status": "pending", "step": null }
+    {
+      "id": "P-101",
+      "title": "Build the shared Handlebars template engine and manifest",
+      "wave": 1,
+      "depends_on": [],
+      "estimate": "L",
+      "effort": "high",
+      "status": "running",
+      "step": "implement",
+      "updatedAt": "2026-11-10T07:15:42Z"
+    },
+    {
+      "id": "P-104",
+      "title": "Add the optional network module and worker VPC wiring",
+      "wave": 1,
+      "depends_on": [],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-102",
+      "title": "Implement template:new, validate, check and manifest",
+      "wave": 2,
+      "depends_on": [
+        "P-101"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-103",
+      "title": "Add the generic-report template and local Chrome preview",
+      "wave": 3,
+      "depends_on": [
+        "P-101",
+        "P-102"
+      ],
+      "estimate": "M",
+      "effort": "medium",
+      "status": "pending",
+      "step": null
+    },
+    {
+      "id": "P-105",
+      "title": "Wire template validation into CI and document the slice",
+      "wave": 4,
+      "depends_on": [
+        "P-102",
+        "P-103",
+        "P-104"
+      ],
+      "estimate": "S",
+      "effort": "low",
+      "status": "pending",
+      "step": null
+    }
   ]
 }

@@ -1,1 +1,66 @@
-{}
+{
+  "P-101": {
+    "dependsOn": [],
+    "wave": 1,
+    "writeScopes": [
+      "packages/template-engine/**",
+      "pnpm-lock.yaml",
+      "pnpm-workspace.yaml"
+    ]
+  },
+  "P-102": {
+    "dependsOn": [
+      "P-101"
+    ],
+    "wave": 2,
+    "writeScopes": [
+      "package.json",
+      "scripts/template-*.test.mjs",
+      "scripts/template-check.mjs",
+      "scripts/template-manifest.mjs",
+      "scripts/template-new.mjs",
+      "scripts/template-validate.mjs"
+    ]
+  },
+  "P-103": {
+    "dependsOn": [
+      "P-101",
+      "P-102"
+    ],
+    "wave": 3,
+    "writeScopes": [
+      "apps/render-worker/src/rendering/**",
+      "apps/render-worker/test/local-chrome-renderer.test.ts",
+      "scripts/template-preview.mjs",
+      "scripts/template-preview.test.mjs",
+      "templates/generic-report/**"
+    ]
+  },
+  "P-104": {
+    "dependsOn": [],
+    "wave": 1,
+    "writeScopes": [
+      "infra/main.tf",
+      "infra/modules/network/**",
+      "infra/modules/printer/lambda.tf",
+      "infra/modules/printer/main.tf",
+      "infra/modules/printer/outputs.tf",
+      "infra/modules/printer/variables.tf",
+      "infra/README.md",
+      "infra/terraform.tfvars.example",
+      "infra/variables.tf"
+    ]
+  },
+  "P-105": {
+    "dependsOn": [
+      "P-102",
+      "P-103",
+      "P-104"
+    ],
+    "wave": 4,
+    "writeScopes": [
+      ".github/workflows/ci.yml",
+      "README.md"
+    ]
+  }
+}
