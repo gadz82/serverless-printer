@@ -13,9 +13,12 @@
 - One deployment, no API/UI/database/environments; queue remains the only entry.
 - Terraform >= 1.11, AWS ~> 6.0; OIDC only; no static keys.
 - Callback security: allowlist + DNS/link-local/metadata checks, scoped IAM.
-- **Worker role ownership:** Terraform supports `worker_role_mode = "create"` (default) or
-  `"existing"` with a same-account `worker_role_arn`. In existing mode the stack creates/modifies
-  no IAM role or policy; the bootstrap deploy role must be allowed to pass the provided ARN.
+- **Role ownership:** two independent roles, each `create` (default) or `existing`:
+  - **caller/integrator role** — `sqs:SendMessage` on the jobs queue only; generated and output,
+    or a provided ARN added to the queue's allowed senders;
+  - **worker execution role** — consume jobs, store prints, publish to `callback_target_arns`;
+    generated or a provided same-account ARN that trusts `lambda.amazonaws.com` and is passable by
+    the deploy role.
 - Budget: Slices 2+3 estimated ~400k–450k build tokens; split Slice 3 if the plan exceeds the
   stop threshold.
 
@@ -38,15 +41,17 @@
   PDF/A.
 - `infra/bootstrap` — expand the deploy role with EC2/VPC permissions for network modes.
 - `infra/modules/printer` — PDF/A env defaults restored; IAM for lambda/events/s3/http; alarms;
-  **worker role mode**:
-  - `worker_role_mode = "create" | "existing"` default `create`;
-  - `worker_role_arn` required for `existing`, forbidden for `create`;
-  - existing ARN must be same-account and trust `lambda.amazonaws.com`;
-  - conditional role/policy resources; resolved ARN feeds Lambda, the KMS key policy, the smoke
-    queue policy and outputs;
-  - the provided role is not modified; its owner supplies the equivalent permissions.
-- `infra/bootstrap` — `additional_worker_role_arns` (or equivalent) added to the deploy role's
-  `iam:PassRole` resources, so a provided role can be attached to Lambda.
+  **two role modes**:
+  - **caller/integrator role:** `caller_role_mode = "create" | "existing"` default `create`;
+    `caller_role_arn` for `existing`; generated role trusts `caller_trusted_principal_arns` (or the
+    deployer account root by default) and can only `sqs:SendMessage` to the jobs queue; the
+    resolved ARN is added to the queue policy and output as `caller_role_arn`;
+  - **worker execution role:** `worker_role_mode = "create" | "existing"` default `create`;
+    `worker_role_arn` for `existing`; same-account and `lambda.amazonaws.com` trust; conditional
+    role/policy; resolved ARN feeds Lambda, KMS and the smoke queue; provided roles are not
+    modified.
+- `infra/bootstrap` — `additional_worker_role_arns` added to the deploy role's `iam:PassRole`
+  resources so a provided worker role can be attached to Lambda.
 - `.github/workflows/ci.yml` — render regression on Ubuntu x86_64; maybe load smoke.
 - `.github/workflows/release.yml` — plain + PDF/A smoke, manifest asset, rollback.
 
@@ -75,7 +80,8 @@
 - Plain + PDF/A smoke; first real template live.
 - Bootstrap deploy-role VPC permissions; cloud verification (OIDC/release/rollback/branch
   protection).
-- Worker role mode (generated/provided) and bootstrap `iam:PassRole` support.
+- Worker and caller role modes (generated/provided), bootstrap `iam:PassRole` support and the
+  generated caller role output.
 
 ## Infrastructure/API/data hypotheses
 
@@ -85,8 +91,9 @@
   egress via NAT/VPC when configured; worker ENI policy already conditional.
 - Bootstrap deploy role gains EC2/VPC actions scoped to the project where AWS permits; otherwise
   documented. It also gains PassRole for provided worker role ARNs.
-- The worker role mode is Terraform-level only: `create` keeps today's least-privilege role;
-  `existing` resolves an ARN and skips all IAM creation/modification. Same-account only.
+- Both role modes are Terraform-level only. `create` keeps least-privilege caller/worker roles;
+  `existing` resolves ARNs and skips IAM creation/modification. The caller role only sends to the
+  jobs queue; the worker role only publishes to delivery channels.
 - No database; prints remain transient; render fixtures are repo artifacts.
 
 ## Regression strategy
@@ -119,45 +126,72 @@
 5. Throughput target and load-test validity.
 6. Cloud/remote prerequisites.
 7. Scope/budget split between Slice 2 and Slice 3.
-8. Role ownership: provided roles are outside least-privilege control; same-account and
-   `lambda.amazonaws.com` trust are mandatory; bootstrap PassRole must include the ARN.
+8. Role ownership: provided caller/worker roles are outside least-privilege control; the worker
+   role must be same-account and trust `lambda.amazonaws.com`; bootstrap PassRole must include a
+   provided worker ARN. Caller and worker roles must remain separate.
 
 ## Role ownership evaluation
 
 ### Interpretation
 
-This is implemented for the **worker execution role** (the role Lambda assumes to consume the jobs
-queue and publish results to delivery channels). The generated role is the current least-privilege
-policy plus the Slice 2 channel permissions. A provided role must be a same-account IAM role with
-an equivalent policy and a trust policy for `lambda.amazonaws.com`.
+The requirement covers two distinct IAM roles:
 
-If the intended requirement is a **caller role** (an external application that publishes jobs to
-the queue and reads delivery queues), that is a separate IAM artifact and should be stated
-explicitly; the current queue `allowed_sender_*` inputs already model caller authorization.
+1. **Caller/integrator role** — allows an external application to publish new prints with
+   `sqs:SendMessage` on the jobs queue. Terraform either creates and outputs this role, or accepts
+   a provided ARN and adds it to the queue's allowed senders. The caller may be in the same or a
+   different account; the trust policy names the caller principals.
+2. **Worker execution role** — allows the Lambda to consume the jobs queue and publish results to
+   the specific delivery channels in `callback_target_arns` (SQS, Lambda, EventBridge and the
+   presigned S3 flow). Terraform either creates it or uses a provided same-account ARN that
+   trusts `lambda.amazonaws.com`. A provided worker role must be passable by the deploy role.
+
+They must stay separate: a shared role would let callers publish results and the worker enqueue
+jobs, violating least privilege. The caller role does not get delivery-channel permissions; the
+worker role does not get jobs-queue send permission.
 
 ### Options
 
 | Option | Cost | Risk | Reversibility | Business impact |
 |---|---|---|---|---|
-| `worker_role_mode = "create"` default (chosen) | Low | Low | High | Least privilege, self-contained stack |
-| `worker_role_mode = "existing"` + same-account ARN | Low | Medium (deployer-owned permissions/trust) | High | Reuses central roles, may be over-privileged |
-| Boolean `create_worker_role` | Low | Low | High | Simpler but less explicit than a mode |
-| Implicit nullable ARN (`null` = create) | Low | Low | High | Concise but easy to misread |
+| Both roles generated (default) | Low | Low | High | Least privilege, self-contained stack |
+| Caller provided, worker generated | Low | Medium (caller-owned permissions/trust) | High | Reuses integrator IAM |
+| Caller generated, worker provided | Low | Medium (worker-owned trust/permissions) | High | Reuses a central Lambda role |
+| Both provided | Low | Medium/High (both outside least-privilege control) | High | Maximum IAM governance reuse |
 
 ### Decision
 
-Use `worker_role_mode` (`create` default, `existing`) plus `worker_role_arn`. Validate the ARN is
-same-account; reject it in `create` mode. Conditionalize the role/policy and feed the resolved ARN
-to Lambda, KMS and the smoke queue. Add `additional_worker_role_arns` to bootstrap's `iam:PassRole`
-so a provided role can be attached. The stack never modifies a provided role; the operator owns its
-trust policy and permissions.
+- `caller_role_mode = "create" | "existing"`, default `create`.
+  - `create`: Terraform creates a role with `sqs:SendMessage` only on the jobs queue and a trust
+    policy for `caller_trusted_principal_arns` (default: the deployer account root). The ARN is
+    output as `caller_role_arn`.
+  - `existing`: `caller_role_arn` is required; Terraform adds that ARN to the jobs queue policy
+    and does not create or modify any IAM role/policy.
+- `worker_role_mode = "create" | "existing"`, default `create`.
+  - `create`: Terraform creates the least-privilege worker role/policy and trust.
+  - `existing`: `worker_role_arn` is required, same-account, trusts `lambda.amazonaws.com`; the
+    stack does not create or modify IAM and uses the ARN for Lambda, KMS and the smoke queue.
+- Bootstrap gains `additional_worker_role_arns` for `iam:PassRole`; the caller role needs no
+  PassRole because it is assumed by the integrator, not Lambda.
 
 ### Trade-offs
 
-- **Generated:** least privilege and reproducible; the stack owns rotation/drift.
-- **Provided:** central IAM governance and reuse; the stack cannot guarantee least privilege or
-  trust correctness, and bootstrap PassRole must be updated for the ARN.
-- **Cross-account:** not supported by Lambda execution roles; reject at validation.
-- **Existing-role policy drift:** a documented owner responsibility; optionally a future `check`
-  block can verify trust/permissions if `iam:GetRole` is available.
+- **Generated:** least privilege and reproducible; Terraform owns trust/policy/drift.
+- **Provided caller:** central integrator IAM; the stack cannot guarantee the role's policy or
+  trust, but it only grants queue access.
+- **Provided worker:** central Lambda-role governance; the stack cannot guarantee least privilege
+  or trust, and bootstrap PassRole must include the ARN.
+- **Cross-account:** allowed for the caller role via its trust principal; **not** allowed for the
+  worker role because Lambda needs a same-account execution role.
+- **Delivery channels:** the integrator supplies `callback_target_arns`; the generated worker
+  policy scopes SQS send/Lambda invoke/EventBridge publish to those ARNs. The S3 channel uses a
+  caller-supplied presigned URL, so no worker S3 permission on the destination bucket is required.
+- **Existing-role drift:** documented owner responsibility; a future check can verify trust and
+  permissions if `iam:GetRole` is available.
+
+### Variables and outputs
+
+- `caller_role_mode`, `caller_role_arn`, `caller_trusted_principal_arns`
+- `worker_role_mode`, `worker_role_arn`
+- Outputs: `caller_role_arn`, `worker_role_arn`, `caller_role_created`, `worker_role_created`
+
 

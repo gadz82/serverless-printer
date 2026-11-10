@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:2026-11-10-finalize-printer-rendering-callbacks-and-product",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-10T11:17:05Z",
+  "generatedAt": "2026-11-10T11:20:16Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
@@ -420,6 +420,110 @@
       ],
       "artifact": "intent/prd.md",
       "hash": "sha256:f70931ccea2f9ebcd5f1d1cc096d96a04d30f49e2a065df5bd19a49955cb373e"
+    },
+    {
+      "@id": "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc",
+      "@type": "orchid:Requirement",
+      "description": "Terraform creates and outputs a caller role allowed to publish jobs to the SQS queue, or uses a provided ARN.",
+      "status": "accepted",
+      "topics": [
+        "terraform",
+        "iam",
+        "caller",
+        "sqs"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:20:16Z",
+      "updatedAt": "2026-11-10T11:20:16Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-215"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:241a0bf910058a298bda2564d97cac063a028cc69f5bd9fe090c4306b7fbe96b"
+    },
+    {
+      "@id": "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33",
+      "@type": "orchid:Requirement",
+      "description": "The caller role only sends jobs; the worker role only publishes results to configured delivery channels.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "least-privilege",
+        "callbacks",
+        "worker"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:20:16Z",
+      "updatedAt": "2026-11-10T11:20:16Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-216"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:241a0bf910058a298bda2564d97cac063a028cc69f5bd9fe090c4306b7fbe96b"
+    },
+    {
+      "@id": "urn:uuid:01a1c52f-f3be-75b5-b290-814044072560",
+      "@type": "orchid:Requirement",
+      "description": "A provided caller role is added to the queue's allowed senders without modifying its IAM policy.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "queue-policy",
+        "caller",
+        "security"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:20:16Z",
+      "updatedAt": "2026-11-10T11:20:16Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-217"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:241a0bf910058a298bda2564d97cac063a028cc69f5bd9fe090c4306b7fbe96b"
+    },
+    {
+      "@id": "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda",
+      "@type": "orchid:Requirement",
+      "description": "The generated caller role trusts configured integrator principals or the deployer account root.",
+      "status": "accepted",
+      "topics": [
+        "iam",
+        "trust",
+        "caller",
+        "security"
+      ],
+      "provenance": {
+        "phase": "intent",
+        "persona": "orchestrator",
+        "run": null
+      },
+      "createdAt": "2026-11-10T11:20:16Z",
+      "updatedAt": "2026-11-10T11:20:16Z",
+      "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+      "scope": "iteration",
+      "aliases": [
+        "R-218"
+      ],
+      "artifact": "intent/prd.md",
+      "hash": "sha256:241a0bf910058a298bda2564d97cac063a028cc69f5bd9fe090c4306b7fbe96b"
     }
   ]
 }

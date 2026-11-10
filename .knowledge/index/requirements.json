@@ -124,5 +124,41 @@
     "prompts": [],
     "scenarios": [],
     "tests": []
+  },
+  "R-215": {
+    "anchors": [],
+    "decisions": [],
+    "description": "Terraform creates and outputs a caller role allowed to publish jobs to the SQS queue, or uses a provided ARN.",
+    "id": "urn:uuid:01a1c52f-f331-725a-aeea-2e90a6d59fbc",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-216": {
+    "anchors": [],
+    "decisions": [],
+    "description": "The caller role only sends jobs; the worker role only publishes results to configured delivery channels.",
+    "id": "urn:uuid:01a1c52f-f37a-7ec9-8ae6-53118fa1ed33",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-217": {
+    "anchors": [],
+    "decisions": [],
+    "description": "A provided caller role is added to the queue's allowed senders without modifying its IAM policy.",
+    "id": "urn:uuid:01a1c52f-f3be-75b5-b290-814044072560",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
+  },
+  "R-218": {
+    "anchors": [],
+    "decisions": [],
+    "description": "The generated caller role trusts configured integrator principals or the deployer account root.",
+    "id": "urn:uuid:01a1c52f-f405-7440-9724-8985e5537bda",
+    "prompts": [],
+    "scenarios": [],
+    "tests": []
   }
 }
