@@ -6,7 +6,7 @@ resource "aws_cloudwatch_log_group" "worker" {
 resource "aws_lambda_function" "worker" {
   function_name = local.worker_name
   description   = "Renders print jobs from ${var.name_prefix}-jobs"
-  role          = aws_iam_role.worker.arn
+  role          = local.worker_role_arn
 
   runtime       = "nodejs24.x"
   architectures = ["x86_64"]

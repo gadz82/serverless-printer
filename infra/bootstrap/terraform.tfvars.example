@@ -8,6 +8,12 @@ github_repo  = "serverless-printer"
 # the account and this bootstrap should look it up instead of creating it.
 create_oidc_provider = true
 
+# Extra same-account worker execution role ARNs the deploy role may pass to
+# Lambda and read for trust validation. Add provided roles here when the main
+# deployment uses worker_role_mode = "existing", then re-apply bootstrap before
+# the main deployment. Cross-account ARNs are rejected.
+additional_worker_role_arns = []
+
 # The defaults are <name_prefix>-tfstate and <name_prefix>-artifacts. Override
 # them when the globally unique S3 names are already taken.
 # state_bucket_name     = "printer-tfstate-123456789012"
@@ -15,6 +21,8 @@ create_oidc_provider = true
 
 tags = {
   # Keep the Project tag equal to name_prefix: the deploy role's KMS identity
-  # policy uses aws:ResourceTag/Project = name_prefix.
+  # policy and EC2 tag conditions use Project = name_prefix. Add every extra
+  # tag key the main deployment applies to network resources so the EC2 tag
+  # key allowlist accepts them.
   Project = "printer"
 }

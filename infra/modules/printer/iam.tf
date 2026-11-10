@@ -1,3 +1,138 @@
+# The lookup is the existence check for a provided worker role; its trust
+# policy is checked by the role contract below. Cross-account ARNs are skipped
+# so that precondition reports the actionable account error.
+data "aws_iam_role" "provided_worker" {
+  count = local.lookup_provided_worker ? 1 : 0
+
+  name = local.provided_worker_role_name
+}
+
+# Cross-variable role validation lives here because Terraform variable
+# validation conditions cannot reference other variables.
+resource "terraform_data" "role_contract" {
+  input = {
+    caller_role_mode              = var.caller_role_mode
+    caller_role_arn               = var.caller_role_arn
+    caller_trusted_principal_arns = var.caller_trusted_principal_arns
+    worker_role_mode              = var.worker_role_mode
+    worker_role_arn               = var.worker_role_arn
+  }
+
+  lifecycle {
+    precondition {
+      condition     = var.caller_role_mode != "create" || var.caller_role_arn == null
+      error_message = "caller_role_arn must be null when caller_role_mode is create; set caller_role_mode = \"existing\" to use a provided role."
+    }
+
+    precondition {
+      condition     = var.caller_role_mode != "existing" || var.caller_role_arn != null
+      error_message = "caller_role_arn is required when caller_role_mode is existing."
+    }
+
+    precondition {
+      condition     = var.worker_role_mode != "create" || var.worker_role_arn == null
+      error_message = "worker_role_arn must be null when worker_role_mode is create; set worker_role_mode = \"existing\" to use a provided role."
+    }
+
+    precondition {
+      condition     = var.worker_role_mode != "existing" || var.worker_role_arn != null
+      error_message = "worker_role_arn is required when worker_role_mode is existing."
+    }
+
+    precondition {
+      condition = (
+        var.worker_role_mode != "existing" ||
+        var.worker_role_arn == null ||
+        try(
+          split(":", var.worker_role_arn)[1] == local.partition &&
+          split(":", var.worker_role_arn)[4] == local.account_id,
+          false,
+        )
+      )
+      error_message = "worker_role_arn must be an IAM role in the current AWS account; Lambda execution roles cannot be cross-account."
+    }
+
+    precondition {
+      condition = (
+        var.worker_role_mode != "existing" ||
+        var.worker_role_arn == null ||
+        !local.lookup_provided_worker ||
+        local.provided_worker_trusts_lambda
+      )
+      error_message = "worker_role_arn must exist in this account and its trust policy must allow lambda.amazonaws.com to assume it."
+    }
+
+    precondition {
+      condition = (
+        var.caller_role_mode != "existing" ||
+        var.caller_role_arn != local.generated_worker_role_arn
+      )
+      error_message = "caller_role_arn must not be the generated worker role; the caller and worker roles must be separate."
+    }
+
+    precondition {
+      condition = (
+        var.worker_role_mode != "existing" ||
+        var.worker_role_arn != local.generated_caller_role_arn
+      )
+      error_message = "worker_role_arn must not be the generated caller role; the caller and worker roles must be separate."
+    }
+
+    precondition {
+      condition = (
+        var.caller_role_mode != "existing" ||
+        var.worker_role_mode != "existing" ||
+        var.caller_role_arn != var.worker_role_arn
+      )
+      error_message = "caller_role_arn and worker_role_arn must be different IAM roles; a shared role merges caller and worker permissions."
+    }
+  }
+}
+
+data "aws_iam_policy_document" "caller_assume_role" {
+  count = local.caller_role_created ? 1 : 0
+
+  statement {
+    sid     = "TrustedCallerPrincipals"
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "AWS"
+      identifiers = local.caller_trusted_principal_arns
+    }
+  }
+}
+
+resource "aws_iam_role" "caller" {
+  count = local.caller_role_created ? 1 : 0
+
+  name               = local.caller_name
+  description        = "Publishes print jobs to the ${var.name_prefix}-jobs queue"
+  assume_role_policy = data.aws_iam_policy_document.caller_assume_role[0].json
+}
+
+data "aws_iam_policy_document" "caller" {
+  count = local.caller_role_created ? 1 : 0
+
+  statement {
+    sid    = "SendJobs"
+    effect = "Allow"
+
+    actions = ["sqs:SendMessage"]
+
+    resources = [aws_sqs_queue.jobs.arn]
+  }
+}
+
+resource "aws_iam_role_policy" "caller" {
+  count = local.caller_role_created ? 1 : 0
+
+  name   = local.caller_name
+  role   = aws_iam_role.caller[0].id
+  policy = data.aws_iam_policy_document.caller[0].json
+}
+
 data "aws_iam_policy_document" "worker_assume_role" {
   statement {
     sid     = "LambdaService"
@@ -12,8 +147,10 @@ data "aws_iam_policy_document" "worker_assume_role" {
 }
 
 resource "aws_iam_role" "worker" {
+  count = local.worker_role_created ? 1 : 0
+
   name               = local.worker_name
-  description        = "Render worker that consumes print jobs and stores PDFs"
+  description        = "Render worker that consumes print jobs and publishes results"
   assume_role_policy = data.aws_iam_policy_document.worker_assume_role.json
 }
 
@@ -104,10 +241,14 @@ data "aws_iam_policy_document" "worker" {
     for_each = length(var.callback_target_arns) > 0 ? [var.callback_target_arns] : []
 
     content {
-      sid    = "SendCallbackResults"
+      sid    = "PublishCallbackResults"
       effect = "Allow"
 
-      actions = ["sqs:SendMessage"]
+      actions = [
+        "events:PutEvents",
+        "lambda:InvokeFunction",
+        "sqs:SendMessage",
+      ]
 
       resources = statement.value
 
@@ -134,7 +275,9 @@ data "aws_iam_policy_document" "worker" {
 }
 
 resource "aws_iam_role_policy" "worker" {
+  count = local.worker_role_created ? 1 : 0
+
   name   = "${local.worker_name}-policy"
-  role   = aws_iam_role.worker.id
+  role   = aws_iam_role.worker[0].id
   policy = data.aws_iam_policy_document.worker.json
 }

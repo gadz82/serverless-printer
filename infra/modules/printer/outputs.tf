@@ -43,9 +43,24 @@ output "function_alias_arn" {
   value       = aws_lambda_alias.live.arn
 }
 
+output "caller_role_arn" {
+  description = "ARN of the caller role allowed to publish jobs, created or provided."
+  value       = local.caller_role_arn
+}
+
+output "caller_role_created" {
+  description = "True when Terraform created the caller role; false when a provided role is used."
+  value       = local.caller_role_created
+}
+
 output "worker_role_arn" {
-  description = "ARN of the render worker execution role."
-  value       = aws_iam_role.worker.arn
+  description = "ARN of the render worker execution role, created or provided."
+  value       = local.worker_role_arn
+}
+
+output "worker_role_created" {
+  description = "True when Terraform created the worker role; false when a provided role is used."
+  value       = local.worker_role_created
 }
 
 output "kms_key_arn" {

@@ -11,10 +11,42 @@ locals {
     "arn:${local.partition}:iam::${local.account_id}:role/${var.name_prefix}-lambda*",
   ]
 
+  caller_role_arns = [
+    "arn:${local.partition}:iam::${local.account_id}:role/${var.name_prefix}-caller",
+  ]
+
   worker_policy_arns = [
     "arn:${local.partition}:iam::${local.account_id}:policy/${var.name_prefix}-*worker*",
     "arn:${local.partition}:iam::${local.account_id}:policy/${var.name_prefix}-lambda*",
   ]
+
+  # The network module creates VPCs, subnets, route tables, gateways, NAT
+  # gateways, endpoints, security groups and Elastic IPs. These patterns scope
+  # tag and delete permissions to the project's region and resource types.
+  project_vpc_arns = [
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:vpc/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:subnet/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:route-table/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:internet-gateway/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:natgateway/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:vpc-endpoint/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:security-group/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:security-group-rule/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:elastic-ip/*",
+  ]
+
+  project_security_group_rule_arns = [
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:security-group-rule/*",
+  ]
+
+  project_security_group_arns = [
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:security-group/*",
+    "arn:${local.partition}:ec2:${var.region}:${local.account_id}:security-group-rule/*",
+  ]
+
+  # Add the tag keys the main deployment applies to network resources here so
+  # tag-on-create and tag updates stay restricted to a finite allowlist.
+  project_tag_keys = distinct(concat(["Project", "Name", "Tier"], keys(var.tags)))
 
   lambda_function_arns = [
     "arn:${local.partition}:lambda:${var.region}:${local.account_id}:function:${var.name_prefix}-*",
@@ -35,6 +67,24 @@ locals {
   alarm_arns = [
     "arn:${local.partition}:cloudwatch:${var.region}:${local.account_id}:alarm:${var.name_prefix}-*",
   ]
+}
+
+resource "terraform_data" "additional_worker_role_contract" {
+  input = var.additional_worker_role_arns
+
+  lifecycle {
+    precondition {
+      condition = alltrue([
+        for arn in var.additional_worker_role_arns :
+        try(
+          split(":", arn)[1] == local.partition &&
+          split(":", arn)[4] == local.account_id,
+          false,
+        )
+      ])
+      error_message = "additional_worker_role_arns must reference IAM roles in the current account and partition."
+    }
+  }
 }
 
 data "aws_iam_policy_document" "deploy_assume_role" {
@@ -384,6 +434,299 @@ data "aws_iam_policy_document" "deploy_permissions" {
     )
   }
 
+  # EC2 create authorization is all-or-nothing: the resource does not exist
+  # yet. The create request must carry the Project tag; tag keys are limited by
+  # TagProjectVpcResourcesOnCreate below.
+  statement {
+    sid    = "CreateProjectVpcResources"
+    effect = "Allow"
+
+    actions = [
+      "ec2:AllocateAddress",
+      "ec2:CreateInternetGateway",
+      "ec2:CreateNatGateway",
+      "ec2:CreateRouteTable",
+      "ec2:CreateSecurityGroup",
+      "ec2:CreateSubnet",
+      "ec2:CreateVpc",
+      "ec2:CreateVpcEndpoint",
+    ]
+
+    resources = ["*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/Project"
+      values   = [var.name_prefix]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+  }
+
+  # Mutating actions are scoped to the project's EC2 resource ARNs and require
+  # the Project tag on the target resource. The ARN list includes every type
+  # these actions can authorize against, including referenced subnets and
+  # security groups.
+  statement {
+    sid    = "ConfigureProjectVpcResources"
+    effect = "Allow"
+
+    actions = [
+      "ec2:AssociateRouteTable",
+      "ec2:AttachInternetGateway",
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:CreateRoute",
+      "ec2:DeleteRoute",
+      "ec2:DetachInternetGateway",
+      "ec2:DisassociateRouteTable",
+      "ec2:ModifySubnetAttribute",
+      "ec2:ModifyVpcAttribute",
+      "ec2:ModifyVpcEndpoint",
+      "ec2:ReleaseAddress",
+      "ec2:ReplaceRoute",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupIngress",
+    ]
+
+    resources = local.project_vpc_arns
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/Project"
+      values   = [var.name_prefix]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+  }
+
+  # ModifySecurityGroupRules operates on rule ARNs, which are not covered by
+  # the security-group resource statement above. Scope it to project rule ARNs
+  # and require the project tag and region.
+  statement {
+    sid       = "ModifyProjectSecurityGroupRules"
+    effect    = "Allow"
+    actions   = ["ec2:ModifySecurityGroupRules"]
+    resources = local.project_security_group_rule_arns
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/Project"
+      values   = [var.name_prefix]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+  }
+
+  # Deletion is scoped by the Project tag on every taggable network resource.
+  statement {
+    sid    = "DeleteProjectVpcResources"
+    effect = "Allow"
+
+    actions = [
+      "ec2:DeleteInternetGateway",
+      "ec2:DeleteNatGateway",
+      "ec2:DeleteRouteTable",
+      "ec2:DeleteSecurityGroup",
+      "ec2:DeleteSubnet",
+      "ec2:DeleteVpc",
+      "ec2:DeleteVpcEndpoints",
+    ]
+
+    resources = local.project_vpc_arns
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/Project"
+      values   = [var.name_prefix]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+  }
+
+  # Describe actions have no resource-level permissions. Describe* calls are
+  # read-only and are also needed for vpc_mode = lookup and VPC endpoint
+  # creation (DescribePrefixLists).
+  statement {
+    sid    = "DescribeProjectVpcResources"
+    effect = "Allow"
+
+    actions = [
+      "ec2:DescribeAddresses",
+      "ec2:DescribeAddressesAttribute",
+      "ec2:DescribeAvailabilityZones",
+      "ec2:DescribeInternetGateways",
+      "ec2:DescribeNatGateways",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribePrefixLists",
+      "ec2:DescribeRouteTables",
+      "ec2:DescribeSecurityGroupRules",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeTags",
+      "ec2:DescribeVpcAttribute",
+      "ec2:DescribeVpcEndpointServices",
+      "ec2:DescribeVpcEndpoints",
+      "ec2:DescribeVpcs",
+    ]
+
+    resources = ["*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+  }
+
+  # Tag-on-create is limited to the project's own create actions and tag keys.
+  # This prevents CreateTags from being used to mark an unrelated resource as
+  # part of the project.
+  statement {
+    sid       = "TagProjectVpcResourcesOnCreate"
+    effect    = "Allow"
+    actions   = ["ec2:CreateTags"]
+    resources = local.project_vpc_arns
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/Project"
+      values   = [var.name_prefix]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+
+    condition {
+      test     = "ForAllValues:StringEquals"
+      variable = "aws:TagKeys"
+      values   = local.project_tag_keys
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "ec2:CreateAction"
+      values = [
+        "AllocateAddress",
+        "AuthorizeSecurityGroupEgress",
+        "AuthorizeSecurityGroupIngress",
+        "CreateInternetGateway",
+        "CreateNatGateway",
+        "CreateRouteTable",
+        "CreateSecurityGroup",
+        "CreateSubnet",
+        "CreateVpc",
+        "CreateVpcEndpoint",
+      ]
+    }
+  }
+
+  # AuthorizeSecurityGroupIngress/Egress can carry TagSpecifications for new
+  # rules. The ConfigureProjectVpcResources statement above authorizes the
+  # security-group change itself; this statement covers the tag-on-create
+  # portion using the same project tag and key restrictions.
+  statement {
+    sid    = "AuthorizeProjectSecurityGroupRulesWithTags"
+    effect = "Allow"
+
+    actions = [
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+    ]
+
+    resources = concat(local.project_security_group_arns, local.project_security_group_rule_arns)
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/Project"
+      values   = [var.name_prefix]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+
+    condition {
+      test     = "ForAllValues:StringEquals"
+      variable = "aws:TagKeys"
+      values   = local.project_tag_keys
+    }
+  }
+
+  # Tag changes require the resource to already be in the project scope. Tag
+  # keys are limited to the project set, so tag-only updates do not need to
+  # resend the Project tag.
+  statement {
+    sid       = "TagProjectVpcResources"
+    effect    = "Allow"
+    actions   = ["ec2:CreateTags"]
+    resources = local.project_vpc_arns
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/Project"
+      values   = [var.name_prefix]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+
+    condition {
+      test     = "ForAllValues:StringEquals"
+      variable = "aws:TagKeys"
+      values   = local.project_tag_keys
+    }
+  }
+
+  statement {
+    sid       = "UntagProjectVpcResources"
+    effect    = "Allow"
+    actions   = ["ec2:DeleteTags"]
+    resources = local.project_vpc_arns
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/Project"
+      values   = [var.name_prefix]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestedRegion"
+      values   = [var.region]
+    }
+
+    condition {
+      test     = "ForAllValues:StringEquals"
+      variable = "aws:TagKeys"
+      values   = local.project_tag_keys
+    }
+  }
+
   # CreateEventSourceMapping has no resource-level permission and is authorized
   # against "*" with the target function ARN as the condition.
   statement {
@@ -420,7 +763,7 @@ data "aws_iam_policy_document" "deploy_permissions" {
   }
 
   statement {
-    sid    = "ManageRenderWorkerRoles"
+    sid    = "ManagePrinterRoles"
     effect = "Allow"
 
     actions = [
@@ -442,7 +785,20 @@ data "aws_iam_policy_document" "deploy_permissions" {
       "iam:UpdateRoleDescription",
     ]
 
-    resources = local.worker_role_arns
+    resources = concat(local.worker_role_arns, local.caller_role_arns)
+  }
+
+  # The main module reads provided worker roles to validate their existence and
+  # trust policy, but must not be able to modify them.
+  dynamic "statement" {
+    for_each = length(var.additional_worker_role_arns) > 0 ? [var.additional_worker_role_arns] : []
+
+    content {
+      sid       = "ReadAdditionalWorkerRoles"
+      effect    = "Allow"
+      actions   = ["iam:GetRole"]
+      resources = statement.value
+    }
   }
 
   statement {
@@ -490,7 +846,7 @@ data "aws_iam_policy_document" "deploy_permissions" {
     effect  = "Allow"
     actions = ["iam:PassRole"]
 
-    resources = local.worker_role_arns
+    resources = distinct(concat(local.worker_role_arns, var.additional_worker_role_arns))
 
     condition {
       test     = "StringEquals"

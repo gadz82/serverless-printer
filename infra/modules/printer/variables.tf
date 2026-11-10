@@ -38,6 +38,66 @@ variable "deploy_role_arn" {
   }
 }
 
+variable "caller_role_mode" {
+  description = "Caller role mode: create the integrator role (default) or use caller_role_arn."
+  type        = string
+  default     = "create"
+
+  validation {
+    condition     = contains(["create", "existing"], var.caller_role_mode)
+    error_message = "caller_role_mode must be one of: create, existing."
+  }
+}
+
+variable "caller_role_arn" {
+  description = "Provided caller role ARN used when caller_role_mode is existing. The role is added to the jobs queue senders but not modified."
+  type        = string
+  default     = null
+  nullable    = true
+
+  validation {
+    condition     = var.caller_role_arn == null || can(regex("^arn:[a-z0-9-]+:iam::[0-9]{12}:role/.+$", var.caller_role_arn))
+    error_message = "caller_role_arn must be null or an IAM role ARN."
+  }
+}
+
+variable "caller_trusted_principal_arns" {
+  description = "Principals allowed to assume the generated caller role. Empty trusts the deployer account root. Existing mode ignores this list."
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition = alltrue([
+      for arn in var.caller_trusted_principal_arns :
+      can(regex("^arn:[a-z0-9-]+:iam::[0-9]{12}:(root|role/.+|user/.+)$", arn))
+    ])
+    error_message = "caller_trusted_principal_arns must contain account root, IAM role or IAM user ARNs."
+  }
+}
+
+variable "worker_role_mode" {
+  description = "Worker execution role mode: create the Lambda role (default) or use worker_role_arn."
+  type        = string
+  default     = "create"
+
+  validation {
+    condition     = contains(["create", "existing"], var.worker_role_mode)
+    error_message = "worker_role_mode must be one of: create, existing."
+  }
+}
+
+variable "worker_role_arn" {
+  description = "Provided same-account worker execution role ARN trusting lambda.amazonaws.com, used when worker_role_mode is existing. Terraform reads the role to validate its trust policy but does not modify it."
+  type        = string
+  default     = null
+  nullable    = true
+
+  validation {
+    condition     = var.worker_role_arn == null || can(regex("^arn:[a-z0-9-]+:iam::[0-9]{12}:role/.+$", var.worker_role_arn))
+    error_message = "worker_role_arn must be null or an IAM role ARN."
+  }
+}
+
 variable "vpc_mode" {
   description = "Worker network mode: none (default), create a VPC, or look up an existing one."
   type        = string
@@ -125,13 +185,16 @@ variable "organization_id" {
 }
 
 variable "callback_target_arns" {
-  description = "ARNs the worker may send SQS results to. The smoke-results queue is always added by the module."
+  description = "Explicit SQS queue, Lambda function or EventBridge event bus ARNs the worker may publish results to. The smoke-results queue is always added by the module. Wildcards and the jobs queue ARN are rejected."
   type        = list(string)
   default     = []
 
   validation {
-    condition     = alltrue([for arn in var.callback_target_arns : can(regex("^arn:[a-z0-9-]+:", arn))])
-    error_message = "callback_target_arns must contain ARNs."
+    condition = alltrue([
+      for arn in var.callback_target_arns :
+      can(regex("^arn:[a-z0-9-]+:", arn)) && !can(regex("[*?]", arn))
+    ])
+    error_message = "callback_target_arns must contain explicit ARNs without wildcards."
   }
 }
 
@@ -158,9 +221,9 @@ variable "handlebars_mode" {
 }
 
 variable "pdfa_allowed_levels" {
-  description = "PDF/A levels jobs may request. Empty in Phase 1 because PDF/A conversion is not implemented (ADR-003)."
+  description = "PDF/A levels jobs may request. Defaults to every supported level."
   type        = list(string)
-  default     = []
+  default     = ["PDF/A-1b", "PDF/A-1a", "PDF/A-2b", "PDF/A-2u", "PDF/A-2a", "PDF/A-3b", "PDF/A-3u", "PDF/A-3a"]
 
   validation {
     condition = alltrue([

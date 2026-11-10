@@ -81,6 +81,12 @@ module "printer" {
   callback_target_arns          = var.callback_target_arns
   callback_allowlist            = var.callback_allowlist
 
+  caller_role_mode              = var.caller_role_mode
+  caller_role_arn               = var.caller_role_arn
+  caller_trusted_principal_arns = var.caller_trusted_principal_arns
+  worker_role_mode              = var.worker_role_mode
+  worker_role_arn               = var.worker_role_arn
+
   handlebars_mode     = var.handlebars_mode
   pdfa_allowed_levels = var.pdfa_allowed_levels
   event_source        = var.event_source
@@ -143,9 +149,24 @@ output "function_alias_arn" {
   value       = module.printer.function_alias_arn
 }
 
+output "caller_role_arn" {
+  description = "ARN of the caller role allowed to publish jobs."
+  value       = module.printer.caller_role_arn
+}
+
+output "caller_role_created" {
+  description = "True when Terraform created the caller role; false when a provided role is used."
+  value       = module.printer.caller_role_created
+}
+
 output "worker_role_arn" {
-  description = "ARN of the render worker execution role."
+  description = "ARN of the render worker execution role, created or provided."
   value       = module.printer.worker_role_arn
+}
+
+output "worker_role_created" {
+  description = "True when Terraform created the worker role; false when a provided role is used."
+  value       = module.printer.worker_role_created
 }
 
 output "kms_key_arn" {

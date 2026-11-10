@@ -17,17 +17,30 @@ release = "dev"
 artifacts_bucket = "printer-artifacts"
 deploy_role_arn  = "arn:aws:iam::123456789012:role/printer-deploy"
 
-# Who may send jobs to the jobs queue. At least one of these is expected in a
-# real deployment; the deploy role is always allowed so the release smoke can
-# submit its job.
+# Caller and worker roles. The default creates both roles. Set a mode to
+# "existing" to use a provided ARN instead; provided roles are not modified.
+# Existing caller roles may be in another account; existing worker roles must
+# be in this account and trust lambda.amazonaws.com.
+caller_role_mode              = "create"
+caller_role_arn               = null
+caller_trusted_principal_arns = [] # Empty trusts the deployer account root.
+worker_role_mode              = "create"
+worker_role_arn               = null
+
+# Who may send jobs to the jobs queue. The generated or provided caller role is
+# always allowed. The release smoke sends through the deploy role's IAM policy,
+# which is not a queue-policy exception.
 allowed_sender_account_ids    = ["123456789012"]
 allowed_sender_principal_arns = []
 # organization_id             = "o-a1b2c3d4e5"
 
-# SQS result targets the worker may send to. The <name_prefix>-smoke-results
-# queue is added automatically for the release smoke.
+# Explicit result targets the worker may publish to: SQS queue ARNs, Lambda
+# function ARNs or EventBridge event bus ARNs. Wildcards and the jobs queue ARN
+# are rejected. The <name_prefix>-smoke-results queue is always added.
 callback_target_arns = [
   "arn:aws:sqs:eu-central-1:123456789012:printer-callbacks",
+  # "arn:aws:lambda:eu-central-1:123456789012:function:printer-results",
+  # "arn:aws:events:eu-central-1:123456789012:event-bus/printer-results",
 ]
 
 # HTTPS host patterns allowed for http callbacks and ping URLs.
@@ -36,8 +49,19 @@ callback_allowlist = [
   "https://*.example.net",
 ]
 
-handlebars_mode     = "lenient"
-pdfa_allowed_levels = [] # Phase 1 rejects PDF/A requests (ADR-003).
+handlebars_mode = "lenient"
+# Defaults to all eight levels; set a subset to restrict PDF/A requests. The
+# setting only takes effect once the P-202/P-204/P-209 PDF/A work is deployed.
+pdfa_allowed_levels = [
+  "PDF/A-1b",
+  "PDF/A-1a",
+  "PDF/A-2b",
+  "PDF/A-2u",
+  "PDF/A-2a",
+  "PDF/A-3b",
+  "PDF/A-3u",
+  "PDF/A-3a",
+]
 
 event_source        = "printer"
 presign_ttl_seconds = 900

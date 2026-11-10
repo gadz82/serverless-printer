@@ -65,6 +65,20 @@ variable "artifacts_bucket_name" {
   }
 }
 
+variable "additional_worker_role_arns" {
+  description = "Additional same-account and same-partition worker execution role ARNs the deploy role may pass to Lambda and read for trust validation, typically provided roles used with worker_role_mode = existing."
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition = alltrue([
+      for arn in var.additional_worker_role_arns :
+      can(regex("^arn:[a-z0-9-]+:iam::[0-9]{12}:role/.+$", arn)) && !can(regex("[*?]", arn))
+    ])
+    error_message = "additional_worker_role_arns must contain explicit IAM role ARNs without wildcards."
+  }
+}
+
 variable "tags" {
   description = "Tags applied to every resource that supports tagging."
   type        = map(string)
