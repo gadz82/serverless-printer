@@ -44,7 +44,7 @@ await build({
   target: "node24",
   outfile: handlerOutput,
   banner: {
-    js: 'import { createRequire } from "node:module"; const require = createRequire(import.meta.url);',
+    js: 'import { createRequire as __printerCreateRequire } from "node:module"; const require = __printerCreateRequire(import.meta.url);',
   },
   logLevel: "info",
 });
