@@ -9,6 +9,9 @@ is the only deployment.
 The one-time foundation (state bucket, artifacts bucket, GitHub OIDC roles) is
 `infra/bootstrap`; apply that first. See its [README](bootstrap/README.md).
 
+For incidents and operator procedures, use the [operations runbook](../docs/runbook.md): rollback,
+DLQ redrive, template removal, KMS/state recovery, alarms, role modes and VPC operations.
+
 ## What it creates
 
 | Resource              | Name                                                                                    | Purpose                                                                    |
@@ -251,14 +254,25 @@ narrow or extend that trust. This list is ignored in `existing` mode.
 
 ## Alarms and logs
 
-Alarms are off by default. To enable both alarms:
+Alarms are off by default. Terraform does not create the SNS topic or its subscriptions; the
+`alarm_sns_topic_arn` input must name an existing topic. To enable both alarms:
 
 ```hcl
 enable_alarms       = true
 alarm_sns_topic_arn = "arn:aws:sns:eu-central-1:123456789012:printer-alerts"
 ```
 
-`log_retention_days` defaults to 30 and accepts only CloudWatch Logs retention values.
+| Input                 | Default | Behaviour                                                                       |
+| --------------------- | ------- | ------------------------------------------------------------------------------- |
+| `enable_alarms`       | `false` | Creates `<name_prefix>-jobs-dlq-depth` and `<name_prefix>-render-worker-errors` |
+| `alarm_sns_topic_arn` | `null`  | Existing SNS topic for `ALARM` actions; required when `enable_alarms` is true   |
+| `log_retention_days`  | `30`    | CloudWatch Logs retention; accepts only supported retention values              |
+
+The DLQ alarm watches `AWS/SQS ApproximateNumberOfMessagesVisible` on the DLQ (`Maximum`, five
+minutes, threshold `>= 1`). The worker alarm watches `AWS/Lambda Errors` on the function (`Sum`,
+five minutes, threshold `>= 1`). Both treat missing data as not breaching. Respond with the
+[alarm procedures](../docs/runbook.md#alarm-definitions-and-response); the same runbook covers
+[DLQ redrive](../docs/runbook.md#dlq-redrive) and [rollback](../docs/runbook.md#rollback).
 
 ## PDF/A defaults
 

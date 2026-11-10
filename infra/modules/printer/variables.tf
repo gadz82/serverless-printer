@@ -335,13 +335,13 @@ variable "reserved_concurrency" {
 }
 
 variable "enable_alarms" {
-  description = "Create the DLQ-depth and worker-error CloudWatch alarms."
+  description = "Create the DLQ-depth and worker-error CloudWatch alarms. Requires alarm_sns_topic_arn."
   type        = bool
   default     = false
 }
 
 variable "alarm_sns_topic_arn" {
-  description = "SNS topic ARN that receives alarm notifications when enable_alarms is true."
+  description = "Existing SNS topic ARN that receives alarm notifications; required when enable_alarms is true."
   type        = string
   default     = null
   nullable    = true
