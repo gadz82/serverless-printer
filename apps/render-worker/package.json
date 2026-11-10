@@ -25,6 +25,8 @@
     "@aws-sdk/s3-request-presigner": "catalog:",
     "@printer/contracts": "workspace:*",
     "@printer/domain": "workspace:*",
+    "@sparticuz/chromium": "catalog:",
+    "pdf-lib": "catalog:",
     "puppeteer-core": "catalog:",
     "uuid": "catalog:"
   },

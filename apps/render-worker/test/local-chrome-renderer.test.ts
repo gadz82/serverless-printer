@@ -62,13 +62,16 @@ describe("local Chrome renderer", () => {
   });
 
   describe("request policy", () => {
-    it.each([
-      "file:///tmp/templates/generic-report/styles.css",
-      "data:text/css,body%7Bcolor%3Ablack%7D",
-      "about:blank",
-    ])("allows %s", (url) => {
-      expect(isAllowedRequestUrl(url)).toBe(true);
-    });
+    const bundledStylesheetUrl = pathToFileURL(
+      path.join(GENERIC_REPORT_DIRECTORY, "styles.css"),
+    ).href;
+
+    it.each([bundledStylesheetUrl, "data:text/css,body%7Bcolor%3Ablack%7D", "about:blank"])(
+      "allows %s",
+      (url) => {
+        expect(isAllowedRequestUrl(url, { fileRoots: [GENERIC_REPORT_DIRECTORY] })).toBe(true);
+      },
+    );
 
     it.each([
       "https://example.com/styles.css",
@@ -78,7 +81,7 @@ describe("local Chrome renderer", () => {
       "javascript:alert(1)",
       "not a URL",
     ])("blocks %s", (url) => {
-      expect(isAllowedRequestUrl(url)).toBe(false);
+      expect(isAllowedRequestUrl(url, { fileRoots: [GENERIC_REPORT_DIRECTORY] })).toBe(false);
     });
   });
 

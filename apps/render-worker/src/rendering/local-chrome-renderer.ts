@@ -1,32 +1,25 @@
 import { existsSync } from "node:fs";
-import path from "node:path";
-import { pathToFileURL } from "node:url";
 
-import puppeteer, { type Browser, type Page, type PDFOptions } from "puppeteer-core";
+import puppeteer, { type Browser } from "puppeteer-core";
 
-/**
- * Headers and footers are rendered in Chrome's margin boxes. They must carry
- * their own inline styles because the template's print stylesheet does not
- * apply to them.
- */
-export const DEFAULT_HEADER_TEMPLATE =
-  '<div style="box-sizing: border-box; color: #52606d; display: flex; font-size: 8px; justify-content: space-between; padding: 0 16mm; width: 100%;">' +
-  '<span class="title"></span>' +
-  '<span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>' +
-  "</div>";
+import { buildHtmlDocument } from "./html-document.js";
+import {
+  DEFAULT_FOOTER_TEMPLATE,
+  DEFAULT_HEADER_TEMPLATE,
+  createPdfOptions,
+  type PdfOptionsOverrides,
+} from "./page-settings.js";
+import { renderHtmlOnPage, type HtmlRenderInput, type RenderingPage } from "./render-page.js";
+import { isAllowedRequestUrl, type BlockedRequest } from "./request-policy.js";
 
-export const DEFAULT_FOOTER_TEMPLATE =
-  '<div style="box-sizing: border-box; color: #52606d; display: flex; font-size: 8px; justify-content: space-between; padding: 0 16mm; width: 100%;">' +
-  "<span>Printer</span>" +
-  '<span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>' +
-  "</div>";
-
-const PAGE_MARGIN = {
-  top: "20mm",
-  right: "16mm",
-  bottom: "18mm",
-  left: "16mm",
-} as const;
+export {
+  buildHtmlDocument,
+  createPdfOptions,
+  DEFAULT_FOOTER_TEMPLATE,
+  DEFAULT_HEADER_TEMPLATE,
+  isAllowedRequestUrl,
+};
+export type { BlockedRequest, PdfOptionsOverrides };
 
 const CHROME_ARGUMENTS = [
   "--no-sandbox",
@@ -53,15 +46,7 @@ const DEFAULT_CHROME_PATHS: Partial<Record<NodeJS.Platform, readonly string[]>> 
   ],
 };
 
-export type LocalChromeRenderInput = {
-  readonly html: string;
-  readonly baseDirectory: string;
-};
-
-export type BlockedRequest = {
-  readonly url: string;
-  readonly resourceType: string;
-};
+export type LocalChromeRenderInput = HtmlRenderInput;
 
 export type LocalChromeRendererOptions = {
   readonly chromePath?: string;
@@ -74,11 +59,6 @@ export type ResolveChromeExecutableOptions = {
   readonly env?: Readonly<Record<string, string | undefined>>;
   readonly platform?: NodeJS.Platform;
   readonly exists?: (candidate: string) => boolean;
-};
-
-export type PdfOptionsOverrides = {
-  readonly headerTemplate?: string;
-  readonly footerTemplate?: string;
 };
 
 export class ChromeNotFoundError extends Error {
@@ -103,71 +83,6 @@ export class LocalChromeRenderError extends Error {
     super(message, options);
     this.name = "LocalChromeRenderError";
   }
-}
-
-/**
- * Returns the same PDF settings the Lambda renderer will use.
- */
-export function createPdfOptions(overrides: PdfOptionsOverrides = {}): PDFOptions {
-  return {
-    format: "A4",
-    printBackground: true,
-    preferCSSPageSize: true,
-    tagged: true,
-    displayHeaderFooter: true,
-    headerTemplate: overrides.headerTemplate ?? DEFAULT_HEADER_TEMPLATE,
-    footerTemplate: overrides.footerTemplate ?? DEFAULT_FOOTER_TEMPLATE,
-    margin: { ...PAGE_MARGIN },
-  };
-}
-
-/**
- * The renderer may load bundled template files, embedded data and the blank
- * document only. Every network scheme is rejected before Chrome requests it.
- */
-export function isAllowedRequestUrl(url: string): boolean {
-  let parsed: URL;
-  try {
-    parsed = new URL(url);
-  } catch {
-    return false;
-  }
-
-  return parsed.protocol === "file:" || parsed.protocol === "data:" || parsed.protocol === "about:";
-}
-
-/**
- * Inserts a <base> so relative stylesheet and asset URLs resolve inside the
- * template folder while the document itself is supplied through setContent().
- */
-export function buildHtmlDocument(html: string, baseDirectory: string): string {
-  const baseElement = `<base href="${escapeHtmlAttribute(directoryToFileUrl(baseDirectory))}" />`;
-  const headPattern = /<head\b[^>]*>/i;
-
-  if (headPattern.test(html)) {
-    return html.replace(headPattern, (head) => `${head}\n    ${baseElement}`);
-  }
-
-  const htmlPattern = /<html\b[^>]*>/i;
-  if (htmlPattern.test(html)) {
-    return html.replace(
-      htmlPattern,
-      (htmlTag) => `${htmlTag}\n  <head>\n    ${baseElement}\n  </head>`,
-    );
-  }
-
-  return [
-    "<!doctype html>",
-    '<html lang="en">',
-    "  <head>",
-    `    ${baseElement}`,
-    "  </head>",
-    "  <body>",
-    html,
-    "  </body>",
-    "</html>",
-    "",
-  ].join("\n");
 }
 
 /**
@@ -226,23 +141,17 @@ export class LocalChromeRenderer {
       }
 
       const page = await browser.newPage();
-      await this.preparePage(page);
 
       try {
-        // setContent() keeps the current document URL and origin. Starting on
-        // a file: document lets the template <base> load local CSS, which an
-        // about:blank document would reject as a local-resource request.
-        await this.openFileOrigin(page, input.baseDirectory);
-        await page.setContent(buildHtmlDocument(input.html, input.baseDirectory), {
-          waitUntil: "load",
-        });
-
-        return await page.pdf(
-          createPdfOptions({
+        return await renderHtmlOnPage(page as RenderingPage, input, {
+          pdfOptions: createPdfOptions({
             headerTemplate: this.options.headerTemplate,
             footerTemplate: this.options.footerTemplate,
           }),
-        );
+          timeoutMs: 60_000,
+          fileRoots: [input.baseDirectory],
+          onRequestBlocked: this.options.onRequestBlocked,
+        });
       } catch (error) {
         throw new LocalChromeRenderError(
           `Chrome failed to render the HTML document: ${errorMessage(error)}`,
@@ -255,56 +164,6 @@ export class LocalChromeRenderer {
       }
     }
   }
-
-  private async preparePage(page: Page): Promise<void> {
-    await page.setJavaScriptEnabled(false);
-    await page.setRequestInterception(true);
-    page.on("request", (request) => {
-      const url = request.url();
-
-      if (isAllowedRequestUrl(url)) {
-        void request.continue().catch(() => undefined);
-        return;
-      }
-
-      this.options.onRequestBlocked?.({
-        url,
-        resourceType: request.resourceType(),
-      });
-      void request.abort("blockedbyclient").catch(() => undefined);
-    });
-  }
-
-  private async openFileOrigin(page: Page, baseDirectory: string): Promise<void> {
-    const absoluteDirectory = path.resolve(baseDirectory);
-    const indexFile = path.join(absoluteDirectory, "index.html");
-    const originUrl = existsSync(indexFile)
-      ? pathToFileURL(indexFile).href
-      : directoryToFileUrl(absoluteDirectory);
-
-    try {
-      await page.goto(originUrl, { waitUntil: "domcontentloaded" });
-    } catch {
-      await page.goto("file:///", { waitUntil: "domcontentloaded" });
-    }
-  }
-}
-
-function directoryToFileUrl(directory: string): string {
-  const absoluteDirectory = path.resolve(directory);
-  const withTrailingSeparator = absoluteDirectory.endsWith(path.sep)
-    ? absoluteDirectory
-    : `${absoluteDirectory}${path.sep}`;
-
-  return pathToFileURL(withTrailingSeparator).href;
-}
-
-function escapeHtmlAttribute(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
 }
 
 function errorMessage(error: unknown): string {
