@@ -3,7 +3,7 @@
   "@id": "urn:orchid:manifest:serverless-printer:none",
   "@type": "orchid:Manifest",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-09T22:08:45Z",
+  "generatedAt": "2026-11-10T06:33:11Z",
   "project": {
     "name": "serverless-printer",
     "profile": "backend"
