@@ -1923,5 +1923,19 @@
     "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
     "phase": "closed",
     "subject": "urn:orchid:iteration:2026-11-10-finalize-printer-rendering-callbacks-and-product"
+  },
+  {
+    "ts": "2026-11-10T20:02:21Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "handover",
+    "subject": "phase:handover"
+  },
+  {
+    "ts": "2026-11-10T20:09:36Z",
+    "event": "handover.accepted",
+    "iteration": "2026-11-10-finalize-printer-rendering-callbacks-and-product",
+    "phase": "complete",
+    "subject": "urn:orchid:iteration:2026-11-10-finalize-printer-rendering-callbacks-and-product"
   }
 ]
