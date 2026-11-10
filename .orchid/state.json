@@ -217,6 +217,17 @@
       "updatedAt": "2026-11-10T15:10:09Z",
       "note": "Two independent reviews PASS after XMP/Info/allowlist/safety fixes; 151 worker tests pass; worktree and branch removed",
       "evidence": "plan/prompts/_bus/outbox/P-202/report.md"
+    },
+    "P-203": {
+      "id": "P-203",
+      "status": "done",
+      "step": "implement",
+      "attempt": 1,
+      "runId": "01a1c602-9acb-7978-b7de-08d51d147142",
+      "startedAt": "2026-11-10T15:10:21Z",
+      "updatedAt": "2026-11-10T15:48:07Z",
+      "note": "Independent review PASS; 55 callback/SSRF tests pass; P-204 integration obligations recorded; worktree and branch removed",
+      "evidence": "plan/prompts/_bus/outbox/P-203/report.md"
     }
   },
   "runs": {
@@ -813,11 +824,44 @@
       },
       "completedAt": "2026-11-10T15:10:09Z",
       "note": "Two independent reviews PASS after XMP/Info/allowlist/safety fixes; 151 worker tests pass; worktree and branch removed"
+    },
+    "01a1c602-9acb-7978-b7de-08d51d147142": {
+      "id": "01a1c602-9acb-7978-b7de-08d51d147142",
+      "prompt": "P-203",
+      "phase": "build",
+      "attempt": 1,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T15:10:21Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-203",
+        "effort": "medium",
+        "requestedEffort": "medium",
+        "source": "P-203.effort",
+        "requestedSource": "P-203.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"medium\". Set models.efforts.medium.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-10T15:48:07Z",
+      "note": "Independent review PASS; 55 callback/SSRF tests pass; P-204 integration obligations recorded; worktree and branch removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c602-69d7-7250-ace6-1074e9d29b91",
+  "lastEvent": "01a1c625-2ae9-7b32-8448-218385c9229f",
   "memoryEvent": "01a1c533-b7a0-7e1a-a7dd-be0dbda89827"
 }
