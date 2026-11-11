@@ -1,0 +1,9 @@
+# Append to TF_VARS or a manual terraform.tfvars.
+# create mode: the worker gets private subnets and endpoints. A private callback
+# target must be reachable through the VPC; use a NAT gateway only for targets
+# outside the VPC or its connected networks.
+vpc_mode           = "create"
+vpc_cidr           = "10.0.0.0/16"
+az_count           = 2
+enable_nat_gateway = false
+callback_allowlist = ["https://internal.example.corp"]

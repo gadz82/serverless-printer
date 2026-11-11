@@ -1,0 +1,5 @@
+# Append to TF_VARS or a manual terraform.tfvars.
+callback_target_arns = [
+  "arn:aws:lambda:eu-central-1:123456789012:function:printer-results",
+  "arn:aws:lambda:eu-central-1:123456789012:function:printer-errors",
+]

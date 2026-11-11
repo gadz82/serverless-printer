@@ -169,3 +169,6 @@ limited to 256 KB, and `{}` matches every event. See
 
 The README includes complete [sample configurations](../README.md#sample-configurations) for an
 HTTP invoice, an S3 PDF/A archive and EventBridge ingress.
+
+Every example folder under [`examples/`](../examples/README.md) contains a complete
+`sqs-payload.json` and the Terraform snippet for its output channel.

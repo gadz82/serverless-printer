@@ -1,0 +1,3 @@
+# Append to TF_VARS or a manual terraform.tfvars.
+callback_allowlist = ["https://api.example.com"]
+# PDF/A-2b is enabled by default; keep it in pdfa_allowed_levels if you restrict levels.

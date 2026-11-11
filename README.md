@@ -79,6 +79,55 @@ The worker uses JavaScript-disabled rendering, blocks external network requests,
 Retries use SQS redelivery and a dead-letter queue. The `printId` is a UUIDv5 derived from the
 inbound SQS message id, so a retry overwrites the same object and callers can deduplicate.
 
+## SQS payload at a glance
+
+The queue message body is the job itself — not an SQS event envelope. A complete standard job:
+
+```json
+{
+  "templateId": "generic-report",
+  "refId": "example-http-standard-001",
+  "options": { "pdfA": false },
+  "webhooks": {
+    "success": {
+      "channel": "http",
+      "value": "https://api.example.com/printer/results",
+      "pingUrl": "https://api.example.com/printer/ping"
+    },
+    "failure": {
+      "channel": "http",
+      "value": "https://api.example.com/printer/errors"
+    }
+  },
+  "payload": {
+    "title": "Quarterly business report",
+    "customer": { "name": "Sample Customer" },
+    "items": [
+      { "description": "Consulting hours", "quantity": 12, "unitPrice": 150, "amount": 1800 },
+      { "description": "Support plan", "quantity": 1, "unitPrice": 950, "amount": 950 },
+      { "description": "Implementation", "quantity": 1, "unitPrice": 1450, "amount": 1450 }
+    ],
+    "total": 4200,
+    "generatedAt": "2026-11-01T09:30:00.000Z"
+  }
+}
+```
+
+Send it with the SQS API or CLI:
+
+```sh
+aws sqs send-message \
+  --queue-url "$JOBS_QUEUE_URL" \
+  --message-body file://examples/01-http-standard/sqs-payload.json \
+  --region "$AWS_REGION"
+```
+
+The `SendMessage` request is `{"QueueUrl": "…", "MessageBody": "<the JSON above as a string>"}`.
+Optional SQS message attributes (for example `traceparent`) are passed through but not required.
+Every folder under [`examples/`](examples/README.md) contains the exact `sqs-payload.json` for its
+output channel; the EventBridge ingress example also shows the event whose `detail` becomes that
+payload.
+
 ## Where results go
 
 The job chooses one success channel and an optional failure channel:
@@ -223,21 +272,22 @@ VPC need NAT. This is the option for internal APIs that are not publicly reachab
 
 ## Documentation and technical resources
 
-| Guide                                                                     | Contents                                                                           |
-| ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [Usage and job contract](docs/usage.md)                                   | Job/result fields, PDF/A levels, channels, examples, retries and deduplication     |
-| [Architecture](docs/architecture.md)                                      | Runtime flow, ports and adapters, AWS resources, security and scaling              |
-| [Templates](docs/templates.md)                                            | Template layout, Handlebars helpers, validation, preview and manifest              |
-| [Deployment](docs/deployment.md)                                          | Bootstrap, VPC/role modes, alarms, release, rollback and capacity                  |
-| [Development](docs/development.md)                                        | Workspace layout, commands, tests, local LocalStack flow and conventions           |
-| [Operations runbook](docs/runbook.md)                                     | Alarms, DLQ redrive, template removal, KMS/state recovery, rollback and VPC checks |
-| [Cloud verification](docs/cloud-verification.md)                          | First deployment, branch protection, smoke, rollback and evidence checklist        |
-| [Load test and Power Tuning](docs/load-test.md)                           | Capacity harness, 1/20-page matrix, p95/memory reporting and tuning                |
-| [Technical specification](docs/specification.md)                          | Full requirement and contract reference (historical source of truth)               |
-| [Infrastructure](infra/README.md)                                         | Terraform resources, inputs, role/VPC details and outputs                          |
-| [Bootstrap](infra/bootstrap/README.md)                                    | One-time state/artifact buckets, OIDC and deploy/plan roles                        |
-| [Contracts](packages/contracts)                                           | JSON Schemas, generated types and validation                                       |
-| [CI](.github/workflows/ci.yml) / [release](.github/workflows/release.yml) | Checks, semantic-release, OIDC deploy, smoke and manifest publication              |
+| Guide                                                                     | Contents                                                                                                |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| [Usage and job contract](docs/usage.md)                                   | Job/result fields, PDF/A levels, channels, examples, retries and deduplication                          |
+| [Architecture](docs/architecture.md)                                      | Runtime flow, ports and adapters, AWS resources, security and scaling                                   |
+| [Templates](docs/templates.md)                                            | Template layout, Handlebars helpers, validation, preview and manifest                                   |
+| [Deployment](docs/deployment.md)                                          | Bootstrap, VPC/role modes, alarms, release, rollback and capacity                                       |
+| [Development](docs/development.md)                                        | Workspace layout, commands, tests, local LocalStack flow and conventions                                |
+| [Operations runbook](docs/runbook.md)                                     | Alarms, DLQ redrive, template removal, KMS/state recovery, rollback and VPC checks                      |
+| [Cloud verification](docs/cloud-verification.md)                          | First deployment, branch protection, smoke, rollback and evidence checklist                             |
+| [Load test and Power Tuning](docs/load-test.md)                           | Capacity harness, 1/20-page matrix, p95/memory reporting and tuning                                     |
+| [Output channel examples](examples/README.md)                             | Eight copy-pasteable SQS payloads and Terraform snippets for HTTP, Lambda, SQS, EventBridge, S3 and VPC |
+| [Technical specification](docs/specification.md)                          | Full requirement and contract reference (historical source of truth)                                    |
+| [Infrastructure](infra/README.md)                                         | Terraform resources, inputs, role/VPC details and outputs                                               |
+| [Bootstrap](infra/bootstrap/README.md)                                    | One-time state/artifact buckets, OIDC and deploy/plan roles                                             |
+| [Contracts](packages/contracts)                                           | JSON Schemas, generated types and validation                                                            |
+| [CI](.github/workflows/ci.yml) / [release](.github/workflows/release.yml) | Checks, semantic-release, OIDC deploy, smoke and manifest publication                                   |
 
 ## Project status
 

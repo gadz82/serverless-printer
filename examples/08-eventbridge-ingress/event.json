@@ -1,0 +1,55 @@
+{
+  "version": "0",
+  "id": "6f1c2b0e-8a4d-4f7e-9c1a-2d3b4e5f6a7b",
+  "detail-type": "Invoice Ready",
+  "source": "my.billing",
+  "account": "123456789012",
+  "time": "2026-11-01T09:30:00Z",
+  "region": "eu-central-1",
+  "resources": [],
+  "detail": {
+    "templateId": "generic-report",
+    "refId": "example-eventbridge-ingress-001",
+    "options": {
+      "pdfA": false
+    },
+    "webhooks": {
+      "success": {
+        "channel": "sqs",
+        "value": "arn:aws:sqs:eu-central-1:123456789012:printer-results"
+      },
+      "failure": {
+        "channel": "sqs",
+        "value": "arn:aws:sqs:eu-central-1:123456789012:printer-errors"
+      }
+    },
+    "payload": {
+      "title": "Quarterly business report",
+      "customer": {
+        "name": "Sample Customer"
+      },
+      "items": [
+        {
+          "description": "Consulting hours",
+          "quantity": 12,
+          "unitPrice": 150,
+          "amount": 1800
+        },
+        {
+          "description": "Support plan",
+          "quantity": 1,
+          "unitPrice": 950,
+          "amount": 950
+        },
+        {
+          "description": "Implementation",
+          "quantity": 1,
+          "unitPrice": 1450,
+          "amount": 1450
+        }
+      ],
+      "total": 4200,
+      "generatedAt": "2026-11-01T09:30:00.000Z"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+# Append to TF_VARS or a manual terraform.tfvars.
+# The event detail must be a complete job body. EventBridge caps events at 256 KB.
+job_rule = {
+  bus_name      = "default"
+  event_pattern = "{\"source\":[\"my.billing\"],\"detail-type\":[\"Invoice Ready\"]}"
+}
+
+# The ingress result uses SQS callbacks, so allow both queues.
+callback_target_arns = [
+  "arn:aws:sqs:eu-central-1:123456789012:printer-results",
+  "arn:aws:sqs:eu-central-1:123456789012:printer-errors",
+]

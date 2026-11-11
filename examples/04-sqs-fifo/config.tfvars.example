@@ -1,0 +1,5 @@
+# Append to TF_VARS or a manual terraform.tfvars.
+callback_target_arns = [
+  "arn:aws:sqs:eu-central-1:123456789012:printer-results.fifo",
+  "arn:aws:sqs:eu-central-1:123456789012:printer-errors.fifo",
+]

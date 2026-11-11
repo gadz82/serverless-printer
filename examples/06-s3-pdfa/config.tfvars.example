@@ -1,0 +1,3 @@
+# Append to TF_VARS or a manual terraform.tfvars.
+# The failure webhook uses HTTP, so the allowlist needs its host.
+callback_allowlist = ["https://api.example.com"]
