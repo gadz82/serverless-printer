@@ -2056,5 +2056,124 @@
     "iteration": "2026-11-10-add-optional-eventbridge-job-ingress",
     "phase": "complete",
     "subject": "urn:orchid:iteration:2026-11-10-add-optional-eventbridge-job-ingress"
+  },
+  {
+    "ts": "2026-11-10T21:48:47Z",
+    "event": "iteration.started",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "intent",
+    "subject": "urn:orchid:iteration:2026-11-10-add-output-channel-examples"
+  },
+  {
+    "ts": "2026-11-10T21:49:14Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "intent",
+    "subject": "gate:G1"
+  },
+  {
+    "ts": "2026-11-10T21:49:14Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "discovery",
+    "subject": "phase:discovery"
+  },
+  {
+    "ts": "2026-11-10T21:49:15Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "discovery",
+    "subject": "gate:G2"
+  },
+  {
+    "ts": "2026-11-10T21:49:29Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "assessment",
+    "subject": "phase:assessment"
+  },
+  {
+    "ts": "2026-11-10T21:49:29Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "assessment",
+    "subject": "gate:G3"
+  },
+  {
+    "ts": "2026-11-10T21:49:29Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "planning",
+    "subject": "phase:planning"
+  },
+  {
+    "ts": "2026-11-10T21:49:29Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "planning",
+    "subject": "gate:G4"
+  },
+  {
+    "ts": "2026-11-10T21:49:29Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "build",
+    "subject": "phase:build"
+  },
+  {
+    "ts": "2026-11-10T21:49:53Z",
+    "event": "prompt.started",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "build",
+    "subject": "prompt:P-001"
+  },
+  {
+    "ts": "2026-11-11T06:28:16Z",
+    "event": "prompt.completed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "build",
+    "subject": "prompt:P-001"
+  },
+  {
+    "ts": "2026-11-11T06:28:16Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "build",
+    "subject": "gate:G5"
+  },
+  {
+    "ts": "2026-11-11T06:28:16Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "logic_review",
+    "subject": "phase:logic_review"
+  },
+  {
+    "ts": "2026-11-11T06:28:34Z",
+    "event": "gate.passed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "logic_review",
+    "subject": "gate:G6"
+  },
+  {
+    "ts": "2026-11-11T06:28:34Z",
+    "event": "iteration.closed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "closed",
+    "subject": "urn:orchid:iteration:2026-11-10-add-output-channel-examples"
+  },
+  {
+    "ts": "2026-11-11T06:28:48Z",
+    "event": "phase.changed",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "handover",
+    "subject": "phase:handover"
+  },
+  {
+    "ts": "2026-11-11T06:28:48Z",
+    "event": "handover.accepted",
+    "iteration": "2026-11-10-add-output-channel-examples",
+    "phase": "complete",
+    "subject": "urn:orchid:iteration:2026-11-10-add-output-channel-examples"
   }
 ]

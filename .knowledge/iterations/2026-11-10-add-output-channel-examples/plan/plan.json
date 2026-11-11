@@ -1,0 +1,23 @@
+{
+  "iteration": "2026-11-10-add-output-channel-examples",
+  "generatedAt": "2026-11-10T23:20:00Z",
+  "rigor": "S",
+  "waves": [{ "wave": 1, "prompts": ["P-001"] }],
+  "prompts": [
+    {
+      "id": "P-001",
+      "title": "Add eight output-channel examples and contract validation",
+      "type": "build",
+      "wave": 1,
+      "depends_on": [],
+      "personas": ["DEV", "QE", "TECH_LEAD"],
+      "estimate": "S",
+      "effort": "low",
+      "scope": {
+        "write": ["examples/**", "tests/examples/**", "README.md", "docs/usage.md"]
+      }
+    }
+  ],
+  "critical_path": ["P-001"],
+  "budget": { "per_iteration_warn": 50000, "per_iteration_stop": 120000, "estimated_total_tokens": 18000 }
+}

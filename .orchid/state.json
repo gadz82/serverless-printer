@@ -3,8 +3,8 @@
   "skillVersion": "1.0.0",
   "configHash": "sha256:41703e3feb00993bfe643eccb28fa85849e594be915c08b248618f7e53e2b20b",
   "activeIteration": null,
-  "lastIteration": "2026-11-10-add-optional-eventbridge-job-ingress",
-  "iterationTitle": "Add optional EventBridge job ingress",
+  "lastIteration": "2026-11-10-add-output-channel-examples",
+  "iterationTitle": "Add output channel examples",
   "iterationRigor": "S",
   "phase": "complete",
   "gates": {
@@ -24,11 +24,11 @@
       "id": "P-001",
       "status": "done",
       "step": "implement",
-      "attempt": 2,
-      "runId": "01a1c71f-ecf9-764d-b0d9-1a291f3bc765",
-      "startedAt": "2026-11-10T20:22:00Z",
-      "updatedAt": "2026-11-10T20:47:52Z",
-      "note": "Independent review PASS after detail input_path, scoped bootstrap EventBridge permissions and expanded tests; 6/6 module tests and repo checks pass; branch/worktree removed",
+      "attempt": 3,
+      "runId": "01a1c770-63af-7ec1-97cc-eb47e51d6be9",
+      "startedAt": "2026-11-10T21:49:53Z",
+      "updatedAt": "2026-11-11T06:28:16Z",
+      "note": "Eight examples, explicit SQS payloads, config snippets and 2 contract tests pass; independent review PASS; branch/worktree removed",
       "evidence": "plan/prompts/_bus/outbox/P-001/report.md"
     },
     "P-002": {
@@ -1198,11 +1198,44 @@
       },
       "completedAt": "2026-11-10T20:47:52Z",
       "note": "Independent review PASS after detail input_path, scoped bootstrap EventBridge permissions and expanded tests; 6/6 module tests and repo checks pass; branch/worktree removed"
+    },
+    "01a1c770-63af-7ec1-97cc-eb47e51d6be9": {
+      "id": "01a1c770-63af-7ec1-97cc-eb47e51d6be9",
+      "prompt": "P-001",
+      "phase": "build",
+      "attempt": 3,
+      "step": "implement",
+      "status": "completed",
+      "startedAt": "2026-11-10T21:49:53Z",
+      "routing": {
+        "phase": "build",
+        "prompt": "P-001",
+        "effort": "low",
+        "requestedEffort": "low",
+        "source": "P-001.effort",
+        "requestedSource": "P-001.effort",
+        "expected": {
+          "agent": null,
+          "model": null
+        },
+        "current": {
+          "agent": "opencode",
+          "agentSource": "OPENCODE",
+          "model": null,
+          "modelSource": null
+        },
+        "status": "unassigned",
+        "message": "No agent/model is assigned to effort \"low\". Set models.efforts.low.agent and/or .model in orchid-sdd.yml.",
+        "expectedText": "",
+        "currentText": "agent=opencode model=unknown"
+      },
+      "completedAt": "2026-11-11T06:28:16Z",
+      "note": "Eight examples, explicit SQS payloads, config snippets and 2 contract tests pass; independent review PASS; branch/worktree removed"
     }
   },
   "currentPrompt": null,
   "currentRun": null,
   "lastHandoff": null,
-  "lastEvent": "01a1c760-f683-7700-b4fd-22b64c316eb2",
-  "memoryEvent": "01a1c760-cc66-7d86-b778-1883e5b367a2"
+  "lastEvent": "01a1c94b-7805-7b1e-a2c8-afd8f3edb733",
+  "memoryEvent": "01a1c94b-41e1-700f-a7c6-c3154599f5cb"
 }

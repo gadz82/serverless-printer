@@ -1,0 +1,42 @@
+{
+  "@context": "context/orchid-v1.jsonld",
+  "@id": "urn:orchid:iteration:2026-11-10-add-output-channel-examples",
+  "@type": "orchid:IterationSnapshot",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-11-11T06:28:34Z",
+  "project": {
+    "name": "serverless-printer",
+    "profile": "backend"
+  },
+  "iteration": {
+    "@id": "urn:orchid:iteration:2026-11-10-add-output-channel-examples",
+    "title": "Add output channel examples",
+    "phase": "closed",
+    "status": "closed",
+    "specVersion": "1.0.0",
+    "rigor": "S",
+    "closedAt": "2026-11-11T06:28:34Z"
+  },
+  "gates": {
+    "G0": "passed",
+    "G1": "passed",
+    "G2": "passed",
+    "G3": "passed",
+    "G4": "passed",
+    "G5": "passed",
+    "G6": "passed",
+    "G7": "passed",
+    "G8": "pending"
+  },
+  "nodes": [],
+  "workspace": {
+    "enabled": false,
+    "root": {
+      "branch": "main",
+      "head": "c332fce",
+      "origin": "git@github.com:gadz82/serverless-printer.git",
+      "dirty": 7
+    },
+    "repos": []
+  }
+}

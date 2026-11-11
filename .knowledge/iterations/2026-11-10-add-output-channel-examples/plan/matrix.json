@@ -1,0 +1,17 @@
+{
+  "iteration": "2026-11-10-add-output-channel-examples",
+  "generatedAt": "2026-11-10T23:20:00Z",
+  "prompts": [
+    {
+      "id": "P-001",
+      "title": "Add eight output-channel examples and contract validation",
+      "wave": 1,
+      "depends_on": [],
+      "estimate": "S",
+      "effort": "low",
+      "status": "done",
+      "step": "implement",
+      "updatedAt": "2026-11-11T06:28:16Z"
+    }
+  ]
+}
