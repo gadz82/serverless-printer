@@ -17,17 +17,34 @@ coverage/
 templates.manifest.json
 .release-version
 .husky/_/
+*.log
+*.tmp
+*.tsbuildinfo
+.eslintcache
+.cache/
+.turbo/
+test-results/
+playwright-report/
 
-# Terraform
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Terraform local artifacts
 .terraform/
 *.tfstate
 *.tfstate.*
 infra/terraform.tfvars
 *.tfplan
+crash.log
+infra/modules/**/.terraform.lock.hcl
 
 # macOS metadata
 .DS_Store
+._*
 
-# IDE metadata
+# IDE and local assistant state
 .idea/
 .vscode/
+.serena/
