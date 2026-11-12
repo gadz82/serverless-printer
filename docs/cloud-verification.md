@@ -91,8 +91,9 @@ gh variable set TF_VARS --body "$(cat infra/terraform.tfvars)"
 ```
 
 `AWS_PLAN_ROLE_ARN` enables the pull-request `Terraform plan` job; that job also requires
-`AWS_REGION` and a same-repository PR (forks show a skipped notice). The release workflow fails
-closed when `TF_VARS` is absent or empty. Keep `infra/terraform.tfvars` local and out of commits.
+`AWS_REGION` and a same-repository PR (forks show a skipped notice). The release workflow skips
+release/deploy with a notice when none of the deployment variables are set, and fails closed when
+the configuration is partial. Keep `infra/terraform.tfvars` local and out of commits.
 
 `TF_VARS` must contain the operator values from
 [`infra/terraform.tfvars.example`](../infra/terraform.tfvars.example): `name_prefix`, `region`,

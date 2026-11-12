@@ -51,8 +51,11 @@ Variables):
 | `ARTIFACTS_BUCKET`    | Bootstrap artifacts bucket                        |
 | `TF_STATE_KEY`        | Optional; defaults to `printer/terraform.tfstate` |
 
-The release workflow materializes `TF_VARS` into `infra/terraform.tfvars` and fails closed if it is
-absent or empty. Never put secrets in `TF_VARS`.
+The release workflow runs a preflight check before releasing. When **none** of the deployment
+variables are set, it skips release/deploy with a notice so pushes to `main` stay green before the
+first deployment. A **partial** configuration fails closed with the missing variable names. When
+the configuration is complete, the workflow materializes `TF_VARS` into `infra/terraform.tfvars`
+and deploys. Never put secrets in `TF_VARS`.
 
 ## Deployment options
 

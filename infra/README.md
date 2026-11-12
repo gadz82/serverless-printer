@@ -110,7 +110,9 @@ five minutes and retry. The bootstrap deploy role scopes KMS administration with
 A GitHub-hosted checkout cannot see the gitignored `infra/terraform.tfvars`. Set the repository
 variable `TF_VARS` to the full non-secret contents of `terraform.tfvars` (at minimum `name_prefix`,
 sender/callback settings, alarms, tags and any non-default network settings). The release workflow
-materializes it into `infra/terraform.tfvars` and fails closed when it is absent or empty.
+skips release/deploy with a notice when none of the deployment variables are set, and fails closed
+when the configuration is partial. Once configured, it materializes `TF_VARS` into
+`infra/terraform.tfvars` and deploys.
 
 Workflow-owned values override the file: `release`, `artifacts_bucket`, `region` and
 `deploy_role_arn` are passed as `-var` after `-var-file`, so the deploy always targets the

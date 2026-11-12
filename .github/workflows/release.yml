@@ -7,6 +7,8 @@ name: release
 #   only accepts refs/heads/main.
 # - TF_VARS must contain the non-secret operator values from
 #   infra/terraform.tfvars.example; the workflow writes infra/terraform.tfvars.
+# - Until the deployment variables are configured, the preflight job skips
+#   release/deploy with a notice. A partial configuration fails closed.
 on:
   push:
     branches:
@@ -28,8 +30,54 @@ permissions:
   actions: read
 
 jobs:
+  preflight:
+    name: Deployment configuration
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      enabled: ${{ steps.check.outputs.enabled }}
+    steps:
+      - name: Check deployment variables
+        id: check
+        env:
+          TF_VARS: ${{ vars.TF_VARS }}
+          AWS_DEPLOY_ROLE_ARN: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
+          ARTIFACTS_BUCKET: ${{ vars.ARTIFACTS_BUCKET }}
+        run: |
+          set -euo pipefail
+          missing=()
+          if ! printf '%s' "${TF_VARS:-}" | grep -q '[^[:space:]]'; then
+            missing+=(TF_VARS)
+          fi
+          if [ -z "${AWS_DEPLOY_ROLE_ARN:-}" ]; then
+            missing+=(AWS_DEPLOY_ROLE_ARN)
+          fi
+          if [ -z "${AWS_REGION:-}" ]; then
+            missing+=(AWS_REGION)
+          fi
+          if [ -z "${TF_STATE_BUCKET:-}" ]; then
+            missing+=(TF_STATE_BUCKET)
+          fi
+          if [ -z "${ARTIFACTS_BUCKET:-}" ]; then
+            missing+=(ARTIFACTS_BUCKET)
+          fi
+          if [ "${#missing[@]}" -eq 0 ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "Deployment configuration is complete."
+          elif [ "${#missing[@]}" -eq 5 ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Deployment is not configured yet; skipping release/deploy. Set the repository variables documented in docs/deployment.md when you are ready to deploy."
+          else
+            echo "::error::Incomplete deployment configuration. Missing: ${missing[*]}. Set all required repository variables together."
+            exit 1
+          fi
+
   deploy:
     name: Release and deploy
+    needs: preflight
+    if: needs.preflight.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
